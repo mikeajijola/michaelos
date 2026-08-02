@@ -25,9 +25,14 @@ export function advanceGateway(progress: GatewayProgress, input: GatewayInput, n
 export function resolveTemplate(template: readonly string[], params: Record<string, unknown>) {
   return template.map(token => token.replace(/^<(.+)>$/, (_, key) => String(params[key] ?? `<${key}>`))).join(" ");
 }
+function quoteCli(value: unknown) {
+  const text = String(value);
+  if (/^[A-Za-z0-9_./:@+-]+$/.test(text)) return text;
+  return `"${text.replace(/(["\\$`])/g, "\\$1")}"`;
+}
 export function resolveCli(capability: CapabilityDefinition, params: Record<string, unknown>) {
   let command = capability.cli.command;
-  for (const param of capability.params) command = command.replace(`<${param.name}>`, String(params[param.name] ?? `<${param.name}>`));
+  for (const param of capability.params) command = command.replace(`<${param.name}>`, params[param.name] === undefined ? `<${param.name}>` : quoteCli(params[param.name]));
   return command;
 }
 function coerce(value: unknown, param: CapabilityParameter) {

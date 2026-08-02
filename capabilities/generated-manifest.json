@@ -1,5 +1,82 @@
 [
   {
+    "id": "lily.open",
+    "schemaVersion": 1,
+    "description": "Open the compact Lily Panel.",
+    "parameters": [],
+    "cliCommand": "run lily.open",
+    "actionKeyTemplate": [
+      "LILY",
+      "OPEN",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Lily",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "lily.close",
+    "schemaVersion": 1,
+    "description": "Close the compact Lily Panel.",
+    "parameters": [],
+    "cliCommand": "run lily.close",
+    "actionKeyTemplate": [
+      "LILY",
+      "CLOSE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Close Lily",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "lily.clearConversation",
+    "schemaVersion": 1,
+    "description": "Clear the locally stored Lily conversation.",
+    "parameters": [],
+    "cliCommand": "run lily.clearConversation",
+    "actionKeyTemplate": [
+      "LILY",
+      "CLEAR",
+      "ENTER"
+    ],
+    "accessibleLabel": "Clear Lily conversation",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "lily.resetPosition",
+    "schemaVersion": 1,
+    "description": "Reset the Lily Bubble to its default safe position.",
+    "parameters": [],
+    "cliCommand": "run lily.resetPosition",
+    "actionKeyTemplate": [
+      "LILY",
+      "RESET",
+      "POSITION",
+      "ENTER"
+    ],
+    "accessibleLabel": "Reset Lily position",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "lily.openConsole",
+    "schemaVersion": 1,
+    "description": "Open the Agent Console with the shared Lily conversation.",
+    "parameters": [],
+    "cliCommand": "run lily.openConsole",
+    "actionKeyTemplate": [
+      "LILY",
+      "OPEN",
+      "CONSOLE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open full Agent Console",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
     "id": "system.openCommandSurface",
     "schemaVersion": 1,
     "description": "Open the floating agent capability console.",
@@ -98,7 +175,7 @@
   {
     "id": "system.openAiConsole",
     "schemaVersion": 1,
-    "description": "Open the console on the experimental deterministic natural-language search tab.",
+    "description": "Open the Agent Console on the Lily tab. Retained for history compatibility.",
     "parameters": [],
     "cliCommand": "run system.openAiConsole",
     "actionKeyTemplate": [
@@ -107,7 +184,7 @@
       "AI",
       "ENTER"
     ],
-    "accessibleLabel": "Open deterministic capability search",
+    "accessibleLabel": "Open Lily in the Agent Console",
     "risk": "read",
     "navigatorEnabled": false
   },
@@ -258,7 +335,7 @@
     ],
     "accessibleLabel": "Open Home",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goProjects",
@@ -273,7 +350,7 @@
     ],
     "accessibleLabel": "Open Projects",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goExperience",
@@ -288,7 +365,7 @@
     ],
     "accessibleLabel": "Open Experience",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goBlog",
@@ -303,7 +380,7 @@
     ],
     "accessibleLabel": "Open Blog",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goCv",
@@ -318,7 +395,7 @@
     ],
     "accessibleLabel": "Open Cv",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goCapabilities",
@@ -333,7 +410,7 @@
     ],
     "accessibleLabel": "Open Capabilities",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goBack",
@@ -370,7 +447,7 @@
     ],
     "accessibleLabel": "List portfolio projects",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "project.search",
@@ -393,7 +470,7 @@
     ],
     "accessibleLabel": "Search portfolio projects",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "project.view",
@@ -416,7 +493,7 @@
     ],
     "accessibleLabel": "Open project details",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "project.filter",
@@ -478,7 +555,7 @@
     ],
     "accessibleLabel": "List professional experience",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "experience.view",
@@ -501,7 +578,7 @@
     ],
     "accessibleLabel": "View experience details",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "experience.filter",
@@ -524,7 +601,7 @@
     ],
     "accessibleLabel": "Filter professional experience",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.list",
@@ -539,7 +616,7 @@
     ],
     "accessibleLabel": "List published articles",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.search",
@@ -562,7 +639,7 @@
     ],
     "accessibleLabel": "Search published articles",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.view",
@@ -585,7 +662,7 @@
     ],
     "accessibleLabel": "Open article",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.filterByTag",
@@ -648,7 +725,7 @@
     ],
     "accessibleLabel": "List skills",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "skill.search",
@@ -671,7 +748,7 @@
     ],
     "accessibleLabel": "Search skills",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "skill.filterByCategory",
@@ -710,7 +787,7 @@
     ],
     "accessibleLabel": "View curriculum vitae",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "cv.navigateSection",
@@ -733,7 +810,7 @@
     ],
     "accessibleLabel": "Navigate CV section",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "cv.exportJson",
@@ -749,7 +826,7 @@
     ],
     "accessibleLabel": "Export CV as JSON",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "cv.print",
@@ -779,7 +856,7 @@
     ],
     "accessibleLabel": "Get latest capability execution",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "inspector.listHistory",
@@ -794,7 +871,7 @@
     ],
     "accessibleLabel": "List capability history",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "inspector.filterHistory",

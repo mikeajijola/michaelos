@@ -1,6 +1,10 @@
 node_modules/
 .next/
+.eve/
+.output/
 out/
 *.log
 *.tsbuildinfo
 .DS_Store
+.vercel
+.env*

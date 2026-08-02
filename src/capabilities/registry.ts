@@ -18,8 +18,13 @@ const handlers: Record<string, Handler> = {
   "system.restoreCommandSurface": async (_, c) => { c.surface.restore(); return { minimised: false }; },
   "system.toggleCommandSurface": async (_, c) => { c.surface.toggle(); return { toggled: true }; },
   "system.openTerminal": async (_, c) => { c.surface.open("terminal"); return { open: true, tab: "terminal" }; },
-  "system.openAiConsole": async (_, c) => { c.surface.open("agent"); return { open: true, tab: "agent" }; },
+  "system.openAiConsole": async (_, c) => { c.surface.open("lily"); return { open: true, tab: "lily" }; },
   "system.openInspector": async (_, c) => { c.surface.open("inspector"); return { open: true, tab: "inspector" }; },
+  "lily.open": async () => { window.dispatchEvent(new CustomEvent("lily-control", { detail: { action: "open" } })); return { open: true }; },
+  "lily.close": async () => { window.dispatchEvent(new CustomEvent("lily-control", { detail: { action: "close" } })); return { open: false }; },
+  "lily.clearConversation": async () => { window.dispatchEvent(new CustomEvent("lily-control", { detail: { action: "clear" } })); return { cleared: true }; },
+  "lily.resetPosition": async () => { window.dispatchEvent(new CustomEvent("lily-control", { detail: { action: "reset-position" } })); return { reset: true }; },
+  "lily.openConsole": async (_, c) => { c.surface.open("lily"); return { open: true, tab: "lily" }; },
   "system.getApplicationInfo": async () => ({ runtime: "browser", architecture: "capability-first", persistence: "SQLite WASM + OPFS", backend: false, version: "2.0.0" }),
   "system.auditCapabilities": async () => auditCapabilities(capabilities),
   "system.getCapabilityDelta": async () => getCapabilityDelta(generateCapabilityManifest(capabilities), baselineManifest as unknown as CapabilityManifestEntry[]),
@@ -48,7 +53,7 @@ const handlers: Record<string, Handler> = {
   "project.filter": async p => ({ projects: projects.filter(x => contains([x.status, ...x.technologies], p.value)), filter: p.value }),
   "project.openExternal": async p => { const project = findProject(p.slug); const url = project.url ?? project.repositoryUrl; if (!url) throw new CapabilityError("PROJECT_URL_NOT_FOUND", `No external URL is available for "${project.slug}".`, project.slug); return openExternal(url); },
   "experience.list": async () => ({ experience }),
-  "experience.view": async p => { const item = experience.find(x => x.id === p.id); if (!item) throw new CapabilityError("EXPERIENCE_NOT_FOUND", `No experience exists with ID "${p.id}".`, p.id); return { experience: item }; },
+  "experience.view": async (p, c) => { const item = experience.find(x => x.id === p.id); if (!item) throw new CapabilityError("EXPERIENCE_NOT_FOUND", `No experience exists with ID "${p.id}".`, p.id); const path = `/experience?experience=${item.id}`; c.navigate(path); return { experience: item, path, message: `Opened ${item.title}` }; },
   "experience.filter": async p => ({ experience: experience.filter(x => contains([x.organisation, x.title, x.summary], p.query)), query: p.query }),
   "article.list": async () => ({ articles: articles.filter(x => x.status === "published") }),
   "article.search": async p => ({ articles: articles.filter(x => contains([x.title, x.summary, x.tags.join(" ")], p.query)), query: p.query }),
@@ -72,18 +77,24 @@ const handlers: Record<string, Handler> = {
 };
 
 type Spec = Omit<CapabilityDefinition, "execute" | "examples"> & { example?: Record<string, unknown> };
+const navigatorIds = new Set(["navigation.goHome", "navigation.goProjects", "navigation.goExperience", "navigation.goBlog", "navigation.goCv", "navigation.goCapabilities", "project.list", "project.search", "project.view", "experience.list", "experience.filter", "experience.view", "article.list", "article.search", "article.view", "skill.list", "skill.search", "cv.view", "cv.navigateSection", "cv.exportJson", "inspector.getLastExecution", "inspector.listHistory"]);
 const define = (spec: Spec): CapabilityDefinition => ({ ...spec, examples: [{ description: `Example for ${spec.title.toLowerCase()}.`, params: spec.example ?? {} }], execute: handlers[spec.id] });
-const base = (id: string, title: string, description: string, cli: string, keyboard: readonly string[], accessibility: string, params: CapabilityParameter[] = [], example: Record<string, unknown> = {}): Spec => ({ id, schemaVersion: 1, title, description, cli: { enabled: true, command: cli }, keyboard: { template: keyboard }, actionKeys: { enabled: true, sequence: keyboard }, navigator: { enabled: false }, accessibility: { label: accessibility }, risk: "read", params, example });
+const base = (id: string, title: string, description: string, cli: string, keyboard: readonly string[], accessibility: string, params: CapabilityParameter[] = [], example: Record<string, unknown> = {}): Spec => ({ id, schemaVersion: 1, title, description, cli: { enabled: true, command: cli }, keyboard: { template: keyboard }, actionKeys: { enabled: true, sequence: keyboard }, navigator: { enabled: navigatorIds.has(id) }, accessibility: { label: accessibility }, risk: "read", params, example });
 const simple = (id: string, title: string, description: string, tokens: readonly string[], accessibility: string) => define(base(id, title, description, `run ${id}`, [...tokens, "ENTER"], accessibility));
 
 export const capabilities: CapabilityDefinition[] = [
+  simple("lily.open", "Open Lily", "Open the compact Lily Panel.", ["LILY", "OPEN"], "Open Lily"),
+  simple("lily.close", "Close Lily", "Close the compact Lily Panel.", ["LILY", "CLOSE"], "Close Lily"),
+  simple("lily.clearConversation", "Clear Lily conversation", "Clear the locally stored Lily conversation.", ["LILY", "CLEAR"], "Clear Lily conversation"),
+  simple("lily.resetPosition", "Reset Lily position", "Reset the Lily Bubble to its default safe position.", ["LILY", "RESET", "POSITION"], "Reset Lily position"),
+  simple("lily.openConsole", "Open full Agent Console", "Open the Agent Console with the shared Lily conversation.", ["LILY", "OPEN", "CONSOLE"], "Open full Agent Console"),
   simple("system.openCommandSurface", "Open command surface", "Open the floating agent capability console.", ["SYSTEM", "OPEN", "CONSOLE"], "Open agent capability console"),
   simple("system.closeCommandSurface", "Close command surface", "Close the floating agent capability console.", ["SYSTEM", "CLOSE", "CONSOLE"], "Close agent capability console"),
   simple("system.minimiseCommandSurface", "Minimise command surface", "Minimise the floating capability console.", ["SYSTEM", "MINIMISE", "CONSOLE"], "Minimise agent capability console"),
   simple("system.restoreCommandSurface", "Restore command surface", "Restore the floating capability console.", ["SYSTEM", "RESTORE", "CONSOLE"], "Restore agent capability console"),
   simple("system.toggleCommandSurface", "Toggle command surface", "Toggle the floating capability console.", ["SYSTEM", "TOGGLE", "CONSOLE"], "Toggle agent capability console"),
   simple("system.openTerminal", "Open Agent CLI", "Open the console on the Agent CLI tab.", ["SYSTEM", "OPEN", "TERMINAL"], "Open Agent CLI"),
-  simple("system.openAiConsole", "Open deterministic search", "Open the console on the experimental deterministic natural-language search tab.", ["SYSTEM", "OPEN", "AI"], "Open deterministic capability search"),
+  simple("system.openAiConsole", "Open Lily (legacy alias)", "Open the Agent Console on the Lily tab. Retained for history compatibility.", ["SYSTEM", "OPEN", "AI"], "Open Lily in the Agent Console"),
   simple("system.openInspector", "Open capability inspector", "Open the console on the Inspector tab.", ["SYSTEM", "OPEN", "INSPECTOR"], "Open capability inspector"),
   simple("system.getApplicationInfo", "Get application info", "Describe the browser runtime and architecture.", ["SYSTEM", "INFO"], "Get application information"),
   simple("system.auditCapabilities", "Audit capabilities", "Validate registered capability definitions and invocation mappings.", ["SYSTEM", "AUDIT", "CAPABILITIES"], "Audit registered capabilities"),

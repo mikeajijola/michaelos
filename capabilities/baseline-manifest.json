@@ -1,5 +1,82 @@
 [
   {
+    "id": "lily.open",
+    "schemaVersion": 1,
+    "description": "Open the compact Lily Panel.",
+    "parameters": [],
+    "cliCommand": "run lily.open",
+    "actionKeyTemplate": [
+      "LILY",
+      "OPEN",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Lily",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "lily.close",
+    "schemaVersion": 1,
+    "description": "Close the compact Lily Panel.",
+    "parameters": [],
+    "cliCommand": "run lily.close",
+    "actionKeyTemplate": [
+      "LILY",
+      "CLOSE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Close Lily",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "lily.clearConversation",
+    "schemaVersion": 1,
+    "description": "Clear the locally stored Lily conversation.",
+    "parameters": [],
+    "cliCommand": "run lily.clearConversation",
+    "actionKeyTemplate": [
+      "LILY",
+      "CLEAR",
+      "ENTER"
+    ],
+    "accessibleLabel": "Clear Lily conversation",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "lily.resetPosition",
+    "schemaVersion": 1,
+    "description": "Reset the Lily Bubble to its default safe position.",
+    "parameters": [],
+    "cliCommand": "run lily.resetPosition",
+    "actionKeyTemplate": [
+      "LILY",
+      "RESET",
+      "POSITION",
+      "ENTER"
+    ],
+    "accessibleLabel": "Reset Lily position",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "lily.openConsole",
+    "schemaVersion": 1,
+    "description": "Open the Agent Console with the shared Lily conversation.",
+    "parameters": [],
+    "cliCommand": "run lily.openConsole",
+    "actionKeyTemplate": [
+      "LILY",
+      "OPEN",
+      "CONSOLE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open full Agent Console",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
     "id": "system.openCommandSurface",
     "schemaVersion": 1,
     "description": "Open the floating agent capability console.",
@@ -98,7 +175,7 @@
   {
     "id": "system.openAiConsole",
     "schemaVersion": 1,
-    "description": "Open the console on the AI Console tab.",
+    "description": "Open the Agent Console on the Lily tab. Retained for history compatibility.",
     "parameters": [],
     "cliCommand": "run system.openAiConsole",
     "actionKeyTemplate": [
@@ -107,7 +184,7 @@
       "AI",
       "ENTER"
     ],
-    "accessibleLabel": "Open AI Console",
+    "accessibleLabel": "Open Lily in the Agent Console",
     "risk": "read",
     "navigatorEnabled": false
   },
@@ -143,6 +220,109 @@
     "navigatorEnabled": false
   },
   {
+    "id": "system.auditCapabilities",
+    "schemaVersion": 1,
+    "description": "Validate registered capability definitions and invocation mappings.",
+    "parameters": [],
+    "cliCommand": "run system.auditCapabilities",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "AUDIT",
+      "CAPABILITIES",
+      "ENTER"
+    ],
+    "accessibleLabel": "Audit registered capabilities",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.getCapabilityDelta",
+    "schemaVersion": 1,
+    "description": "Compare the current generated manifest with the accepted baseline.",
+    "parameters": [],
+    "cliCommand": "run system.getCapabilityDelta",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "CAPABILITY",
+      "DELTA",
+      "ENTER"
+    ],
+    "accessibleLabel": "Compare capabilities with the accepted baseline",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.reportCapabilityIssue",
+    "schemaVersion": 1,
+    "description": "Store a capability issue locally in browser SQLite.",
+    "parameters": [
+      {
+        "name": "capabilityId",
+        "description": "Related capability ID, when known.",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "reportType",
+        "description": "Type of capability or QA issue.",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "severity",
+        "description": "Issue severity.",
+        "type": "enum",
+        "required": true,
+        "values": [
+          "info",
+          "warning",
+          "error"
+        ]
+      },
+      {
+        "name": "details",
+        "description": "Human-readable issue details.",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "route",
+        "description": "Route where the issue occurred.",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "cliCommand": "run system.reportCapabilityIssue --reportType <reportType> --severity <severity> --details <details>",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "REPORT",
+      "<reportType>",
+      "<severity>",
+      "<details>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Report a local capability issue",
+    "risk": "write",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.exportCapabilityReports",
+    "schemaVersion": 1,
+    "description": "Download locally stored capability reports as JSON.",
+    "parameters": [],
+    "cliCommand": "run system.exportCapabilityReports",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "EXPORT",
+      "CAPABILITY",
+      "REPORTS",
+      "ENTER"
+    ],
+    "accessibleLabel": "Export local capability reports",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
     "id": "navigation.goHome",
     "schemaVersion": 1,
     "description": "Navigate to the home page.",
@@ -155,7 +335,7 @@
     ],
     "accessibleLabel": "Open Home",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goProjects",
@@ -170,7 +350,7 @@
     ],
     "accessibleLabel": "Open Projects",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goExperience",
@@ -185,7 +365,7 @@
     ],
     "accessibleLabel": "Open Experience",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goBlog",
@@ -200,7 +380,7 @@
     ],
     "accessibleLabel": "Open Blog",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goCv",
@@ -215,7 +395,7 @@
     ],
     "accessibleLabel": "Open Cv",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goCapabilities",
@@ -230,7 +410,7 @@
     ],
     "accessibleLabel": "Open Capabilities",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goBack",
@@ -267,7 +447,7 @@
     ],
     "accessibleLabel": "List portfolio projects",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "project.search",
@@ -290,7 +470,7 @@
     ],
     "accessibleLabel": "Search portfolio projects",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "project.view",
@@ -313,7 +493,7 @@
     ],
     "accessibleLabel": "Open project details",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "project.filter",
@@ -375,7 +555,7 @@
     ],
     "accessibleLabel": "List professional experience",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "experience.view",
@@ -398,7 +578,7 @@
     ],
     "accessibleLabel": "View experience details",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "experience.filter",
@@ -421,7 +601,7 @@
     ],
     "accessibleLabel": "Filter professional experience",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.list",
@@ -436,7 +616,7 @@
     ],
     "accessibleLabel": "List published articles",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.search",
@@ -459,7 +639,7 @@
     ],
     "accessibleLabel": "Search published articles",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.view",
@@ -482,7 +662,7 @@
     ],
     "accessibleLabel": "Open article",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.filterByTag",
@@ -545,7 +725,7 @@
     ],
     "accessibleLabel": "List skills",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "skill.search",
@@ -568,7 +748,7 @@
     ],
     "accessibleLabel": "Search skills",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "skill.filterByCategory",
@@ -607,7 +787,7 @@
     ],
     "accessibleLabel": "View curriculum vitae",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "cv.navigateSection",
@@ -630,7 +810,7 @@
     ],
     "accessibleLabel": "Navigate CV section",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "cv.exportJson",
@@ -646,7 +826,7 @@
     ],
     "accessibleLabel": "Export CV as JSON",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "cv.print",
@@ -676,7 +856,7 @@
     ],
     "accessibleLabel": "Get latest capability execution",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "inspector.listHistory",
@@ -691,7 +871,7 @@
     ],
     "accessibleLabel": "List capability history",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "inspector.filterHistory",
