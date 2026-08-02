@@ -1,6 +1,7 @@
 import { articles, experience, projects, skills } from "@/data/content";
 import type { CapabilityContext, CapabilityDefinition, CapabilityParameter } from "./types";
 import { CapabilityError } from "./types";
+import { auditCapabilities } from "./governance";
 
 type Handler = (params: Record<string, unknown>, context: CapabilityContext) => Promise<unknown>;
 const text = (name: string, description: string): CapabilityParameter => ({ name, description, type: "string", required: true });
@@ -19,6 +20,7 @@ const handlers: Record<string, Handler> = {
   "system.openAiConsole": async (_, c) => { c.surface.open("agent"); return { open: true, tab: "agent" }; },
   "system.openInspector": async (_, c) => { c.surface.open("inspector"); return { open: true, tab: "inspector" }; },
   "system.getApplicationInfo": async () => ({ runtime: "browser", architecture: "capability-first", persistence: "SQLite WASM + OPFS", backend: false, version: "2.0.0" }),
+  "system.auditCapabilities": async () => auditCapabilities(capabilities),
   "navigation.goHome": async (_, c) => { c.navigate("/"); return { path: "/" }; },
   "navigation.goProjects": async (_, c) => { c.navigate("/projects"); return { path: "/projects" }; },
   "navigation.goExperience": async (_, c) => { c.navigate("/experience"); return { path: "/experience" }; },
@@ -57,7 +59,7 @@ const handlers: Record<string, Handler> = {
 
 type Spec = Omit<CapabilityDefinition, "execute" | "examples"> & { example?: Record<string, unknown> };
 const define = (spec: Spec): CapabilityDefinition => ({ ...spec, examples: [{ description: `Example for ${spec.title.toLowerCase()}.`, params: spec.example ?? {} }], execute: handlers[spec.id] });
-const base = (id: string, title: string, description: string, cli: string, keyboard: readonly string[], accessibility: string, params: CapabilityParameter[] = [], example: Record<string, unknown> = {}): Spec => ({ id, title, description, cli: { command: cli }, keyboard: { template: keyboard }, accessibility: { label: accessibility }, risk: "read", params, example });
+const base = (id: string, title: string, description: string, cli: string, keyboard: readonly string[], accessibility: string, params: CapabilityParameter[] = [], example: Record<string, unknown> = {}): Spec => ({ id, schemaVersion: 1, title, description, cli: { enabled: true, command: cli }, keyboard: { template: keyboard }, actionKeys: { enabled: true, sequence: keyboard }, navigator: { enabled: false }, accessibility: { label: accessibility }, risk: "read", params, example });
 const simple = (id: string, title: string, description: string, tokens: readonly string[], accessibility: string) => define(base(id, title, description, `run ${id}`, [...tokens, "ENTER"], accessibility));
 
 export const capabilities: CapabilityDefinition[] = [
@@ -70,6 +72,7 @@ export const capabilities: CapabilityDefinition[] = [
   simple("system.openAiConsole", "Open deterministic search", "Open the console on the experimental deterministic natural-language search tab.", ["SYSTEM", "OPEN", "AI"], "Open deterministic capability search"),
   simple("system.openInspector", "Open capability inspector", "Open the console on the Inspector tab.", ["SYSTEM", "OPEN", "INSPECTOR"], "Open capability inspector"),
   simple("system.getApplicationInfo", "Get application info", "Describe the browser runtime and architecture.", ["SYSTEM", "INFO"], "Get application information"),
+  simple("system.auditCapabilities", "Audit capabilities", "Validate registered capability definitions and invocation mappings.", ["SYSTEM", "AUDIT", "CAPABILITIES"], "Audit registered capabilities"),
   ...[["Home","/","HOME"],["Projects","/projects","PROJECTS"],["Experience","/experience","EXPERIENCE"],["Blog","/blog","BLOG"],["Cv","/cv","CV"],["Capabilities","/capabilities","CAPABILITIES"]].map(([name,,token]) => simple(`navigation.go${name}`, `Go to ${name}`, `Navigate to the ${name.toLowerCase()} page.`, ["NAVIGATION", token], `Open ${name}`)),
   simple("navigation.goBack", "Go back", "Return to the previous browser history entry.", ["NAVIGATION", "BACK"], "Go back"),
   define(base("project.list", "List projects", "Return all portfolio projects.", "run project.list", ["PROJECT", "LIST", "ENTER"], "List portfolio projects", [{ name: "featured", description: "Only featured projects.", type: "boolean", required: false }])),

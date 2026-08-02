@@ -1,0 +1,808 @@
+[
+  {
+    "id": "system.openCommandSurface",
+    "schemaVersion": 1,
+    "description": "Open the floating agent capability console.",
+    "parameters": [],
+    "cliCommand": "run system.openCommandSurface",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "OPEN",
+      "CONSOLE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open agent capability console",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.closeCommandSurface",
+    "schemaVersion": 1,
+    "description": "Close the floating agent capability console.",
+    "parameters": [],
+    "cliCommand": "run system.closeCommandSurface",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "CLOSE",
+      "CONSOLE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Close agent capability console",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.minimiseCommandSurface",
+    "schemaVersion": 1,
+    "description": "Minimise the floating capability console.",
+    "parameters": [],
+    "cliCommand": "run system.minimiseCommandSurface",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "MINIMISE",
+      "CONSOLE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Minimise agent capability console",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.restoreCommandSurface",
+    "schemaVersion": 1,
+    "description": "Restore the floating capability console.",
+    "parameters": [],
+    "cliCommand": "run system.restoreCommandSurface",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "RESTORE",
+      "CONSOLE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Restore agent capability console",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.toggleCommandSurface",
+    "schemaVersion": 1,
+    "description": "Toggle the floating capability console.",
+    "parameters": [],
+    "cliCommand": "run system.toggleCommandSurface",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "TOGGLE",
+      "CONSOLE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Toggle agent capability console",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.openTerminal",
+    "schemaVersion": 1,
+    "description": "Open the console on the Agent CLI tab.",
+    "parameters": [],
+    "cliCommand": "run system.openTerminal",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "OPEN",
+      "TERMINAL",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Agent CLI",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.openAiConsole",
+    "schemaVersion": 1,
+    "description": "Open the console on the experimental deterministic natural-language search tab.",
+    "parameters": [],
+    "cliCommand": "run system.openAiConsole",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "OPEN",
+      "AI",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open deterministic capability search",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.openInspector",
+    "schemaVersion": 1,
+    "description": "Open the console on the Inspector tab.",
+    "parameters": [],
+    "cliCommand": "run system.openInspector",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "OPEN",
+      "INSPECTOR",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open capability inspector",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.getApplicationInfo",
+    "schemaVersion": 1,
+    "description": "Describe the browser runtime and architecture.",
+    "parameters": [],
+    "cliCommand": "run system.getApplicationInfo",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "INFO",
+      "ENTER"
+    ],
+    "accessibleLabel": "Get application information",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.auditCapabilities",
+    "schemaVersion": 1,
+    "description": "Validate registered capability definitions and invocation mappings.",
+    "parameters": [],
+    "cliCommand": "run system.auditCapabilities",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "AUDIT",
+      "CAPABILITIES",
+      "ENTER"
+    ],
+    "accessibleLabel": "Audit registered capabilities",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "navigation.goHome",
+    "schemaVersion": 1,
+    "description": "Navigate to the home page.",
+    "parameters": [],
+    "cliCommand": "run navigation.goHome",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "HOME",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Home",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "navigation.goProjects",
+    "schemaVersion": 1,
+    "description": "Navigate to the projects page.",
+    "parameters": [],
+    "cliCommand": "run navigation.goProjects",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "PROJECTS",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Projects",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "navigation.goExperience",
+    "schemaVersion": 1,
+    "description": "Navigate to the experience page.",
+    "parameters": [],
+    "cliCommand": "run navigation.goExperience",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "EXPERIENCE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Experience",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "navigation.goBlog",
+    "schemaVersion": 1,
+    "description": "Navigate to the blog page.",
+    "parameters": [],
+    "cliCommand": "run navigation.goBlog",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "BLOG",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Blog",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "navigation.goCv",
+    "schemaVersion": 1,
+    "description": "Navigate to the cv page.",
+    "parameters": [],
+    "cliCommand": "run navigation.goCv",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "CV",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Cv",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "navigation.goCapabilities",
+    "schemaVersion": 1,
+    "description": "Navigate to the capabilities page.",
+    "parameters": [],
+    "cliCommand": "run navigation.goCapabilities",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "CAPABILITIES",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Capabilities",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "navigation.goBack",
+    "schemaVersion": 1,
+    "description": "Return to the previous browser history entry.",
+    "parameters": [],
+    "cliCommand": "run navigation.goBack",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "BACK",
+      "ENTER"
+    ],
+    "accessibleLabel": "Go back",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "project.list",
+    "schemaVersion": 1,
+    "description": "Return all portfolio projects.",
+    "parameters": [
+      {
+        "name": "featured",
+        "description": "Only featured projects.",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "cliCommand": "run project.list",
+    "actionKeyTemplate": [
+      "PROJECT",
+      "LIST",
+      "ENTER"
+    ],
+    "accessibleLabel": "List portfolio projects",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "project.search",
+    "schemaVersion": 1,
+    "description": "Search project names, summaries, and technologies.",
+    "parameters": [
+      {
+        "name": "query",
+        "description": "Words to search for.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run project.search --query <query>",
+    "actionKeyTemplate": [
+      "PROJECT",
+      "SEARCH",
+      "<query>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Search portfolio projects",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "project.view",
+    "schemaVersion": 1,
+    "description": "Open project details using a unique slug.",
+    "parameters": [
+      {
+        "name": "slug",
+        "description": "The unique project slug.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run project.view --slug <slug>",
+    "actionKeyTemplate": [
+      "PROJECT",
+      "VIEW",
+      "<slug>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open project details",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "project.filter",
+    "schemaVersion": 1,
+    "description": "Filter projects by technology or status.",
+    "parameters": [
+      {
+        "name": "value",
+        "description": "Technology or status.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run project.filter --value <value>",
+    "actionKeyTemplate": [
+      "PROJECT",
+      "FILTER",
+      "<value>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Filter portfolio projects",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "project.openExternal",
+    "schemaVersion": 1,
+    "description": "Open a project website or repository.",
+    "parameters": [
+      {
+        "name": "slug",
+        "description": "The project slug.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run project.openExternal --slug <slug>",
+    "actionKeyTemplate": [
+      "PROJECT",
+      "OPEN",
+      "EXTERNAL",
+      "<slug>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open project external link",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "experience.list",
+    "schemaVersion": 1,
+    "description": "Return professional roles.",
+    "parameters": [],
+    "cliCommand": "run experience.list",
+    "actionKeyTemplate": [
+      "EXPERIENCE",
+      "LIST",
+      "ENTER"
+    ],
+    "accessibleLabel": "List professional experience",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "experience.view",
+    "schemaVersion": 1,
+    "description": "Return an experience record by ID.",
+    "parameters": [
+      {
+        "name": "id",
+        "description": "Experience record ID.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run experience.view --id <id>",
+    "actionKeyTemplate": [
+      "EXPERIENCE",
+      "VIEW",
+      "<id>",
+      "ENTER"
+    ],
+    "accessibleLabel": "View experience details",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "experience.filter",
+    "schemaVersion": 1,
+    "description": "Filter experience by role or organisation.",
+    "parameters": [
+      {
+        "name": "query",
+        "description": "Filter text.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run experience.filter --query <query>",
+    "actionKeyTemplate": [
+      "EXPERIENCE",
+      "FILTER",
+      "<query>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Filter professional experience",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "article.list",
+    "schemaVersion": 1,
+    "description": "Return published writing.",
+    "parameters": [],
+    "cliCommand": "run article.list",
+    "actionKeyTemplate": [
+      "ARTICLE",
+      "LIST",
+      "ENTER"
+    ],
+    "accessibleLabel": "List published articles",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "article.search",
+    "schemaVersion": 1,
+    "description": "Search article titles, summaries, and tags.",
+    "parameters": [
+      {
+        "name": "query",
+        "description": "Words to search for.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run article.search --query <query>",
+    "actionKeyTemplate": [
+      "ARTICLE",
+      "SEARCH",
+      "<query>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Search published articles",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "article.view",
+    "schemaVersion": 1,
+    "description": "Open an article using its slug.",
+    "parameters": [
+      {
+        "name": "slug",
+        "description": "The article slug.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run article.view --slug <slug>",
+    "actionKeyTemplate": [
+      "ARTICLE",
+      "VIEW",
+      "<slug>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open article",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "article.filterByTag",
+    "schemaVersion": 1,
+    "description": "Return articles with a given tag.",
+    "parameters": [
+      {
+        "name": "tag",
+        "description": "Article tag.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run article.filterByTag --tag <tag>",
+    "actionKeyTemplate": [
+      "ARTICLE",
+      "FILTER",
+      "TAG",
+      "<tag>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Filter articles by tag",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "article.openExternal",
+    "schemaVersion": 1,
+    "description": "Open an article external URL.",
+    "parameters": [
+      {
+        "name": "slug",
+        "description": "Article slug.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run article.openExternal --slug <slug>",
+    "actionKeyTemplate": [
+      "ARTICLE",
+      "OPEN",
+      "EXTERNAL",
+      "<slug>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open external article",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "skill.list",
+    "schemaVersion": 1,
+    "description": "Return skills and categories.",
+    "parameters": [],
+    "cliCommand": "run skill.list",
+    "actionKeyTemplate": [
+      "SKILL",
+      "LIST",
+      "ENTER"
+    ],
+    "accessibleLabel": "List skills",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "skill.search",
+    "schemaVersion": 1,
+    "description": "Search skill names and descriptions.",
+    "parameters": [
+      {
+        "name": "query",
+        "description": "Words to search for.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run skill.search --query <query>",
+    "actionKeyTemplate": [
+      "SKILL",
+      "SEARCH",
+      "<query>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Search skills",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "skill.filterByCategory",
+    "schemaVersion": 1,
+    "description": "Return skills in a category.",
+    "parameters": [
+      {
+        "name": "category",
+        "description": "Skill category.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run skill.filterByCategory --category <category>",
+    "actionKeyTemplate": [
+      "SKILL",
+      "FILTER",
+      "CATEGORY",
+      "<category>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Filter skills by category",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "cv.view",
+    "schemaVersion": 1,
+    "description": "Open the curriculum vitae.",
+    "parameters": [],
+    "cliCommand": "run cv.view",
+    "actionKeyTemplate": [
+      "CV",
+      "VIEW",
+      "ENTER"
+    ],
+    "accessibleLabel": "View curriculum vitae",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "cv.navigateSection",
+    "schemaVersion": 1,
+    "description": "Open a named CV section.",
+    "parameters": [
+      {
+        "name": "section",
+        "description": "CV section ID.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run cv.navigateSection --section <section>",
+    "actionKeyTemplate": [
+      "CV",
+      "SECTION",
+      "<section>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Navigate CV section",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "cv.exportJson",
+    "schemaVersion": 1,
+    "description": "Download the CV as structured JSON.",
+    "parameters": [],
+    "cliCommand": "run cv.exportJson",
+    "actionKeyTemplate": [
+      "CV",
+      "EXPORT",
+      "JSON",
+      "ENTER"
+    ],
+    "accessibleLabel": "Export CV as JSON",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "cv.print",
+    "schemaVersion": 1,
+    "description": "Open the browser print dialog.",
+    "parameters": [],
+    "cliCommand": "run cv.print",
+    "actionKeyTemplate": [
+      "CV",
+      "PRINT",
+      "ENTER"
+    ],
+    "accessibleLabel": "Print curriculum vitae",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "inspector.getLastExecution",
+    "schemaVersion": 1,
+    "description": "Return the latest capability execution.",
+    "parameters": [],
+    "cliCommand": "run inspector.getLastExecution",
+    "actionKeyTemplate": [
+      "INSPECTOR",
+      "LATEST",
+      "ENTER"
+    ],
+    "accessibleLabel": "Get latest capability execution",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "inspector.listHistory",
+    "schemaVersion": 1,
+    "description": "Return local execution history.",
+    "parameters": [],
+    "cliCommand": "run inspector.listHistory",
+    "actionKeyTemplate": [
+      "INSPECTOR",
+      "HISTORY",
+      "ENTER"
+    ],
+    "accessibleLabel": "List capability history",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "inspector.filterHistory",
+    "schemaVersion": 1,
+    "description": "Filter history by capability, caller, or status.",
+    "parameters": [
+      {
+        "name": "query",
+        "description": "Filter text.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run inspector.filterHistory --query <query>",
+    "actionKeyTemplate": [
+      "INSPECTOR",
+      "FILTER",
+      "<query>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Filter capability history",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "accessibility.describeElement",
+    "schemaVersion": 1,
+    "description": "Return semantic metadata for the selected control.",
+    "parameters": [],
+    "cliCommand": "run accessibility.describeElement",
+    "actionKeyTemplate": [
+      "ACCESSIBILITY",
+      "DESCRIBE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Describe selected interface element",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "accessibility.listPageActions",
+    "schemaVersion": 1,
+    "description": "List visible capability-backed controls.",
+    "parameters": [],
+    "cliCommand": "run accessibility.listPageActions",
+    "actionKeyTemplate": [
+      "ACCESSIBILITY",
+      "LIST",
+      "ACTIONS",
+      "ENTER"
+    ],
+    "accessibleLabel": "List accessible page actions",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "accessibility.moveFocus",
+    "schemaVersion": 1,
+    "description": "Move focus between capability-backed controls.",
+    "parameters": [
+      {
+        "name": "direction",
+        "description": "Focus direction.",
+        "type": "enum",
+        "required": true,
+        "values": [
+          "next",
+          "previous"
+        ]
+      }
+    ],
+    "cliCommand": "run accessibility.moveFocus --direction <direction>",
+    "actionKeyTemplate": [
+      "ACCESSIBILITY",
+      "FOCUS",
+      "<direction>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Move focus between page actions",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "accessibility.activateFocused",
+    "schemaVersion": 1,
+    "description": "Activate the focused capability-backed control.",
+    "parameters": [],
+    "cliCommand": "run accessibility.activateFocused",
+    "actionKeyTemplate": [
+      "ACCESSIBILITY",
+      "ACTIVATE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Activate focused page action",
+    "risk": "read",
+    "navigatorEnabled": false
+  }
+]

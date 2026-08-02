@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { capabilities } from "./registry";
 import { normaliseExecutionHistory } from "./executor";
+import { auditCapabilities, generateCapabilityManifest } from "./governance";
 import { advanceGateway, AGENT_GATEWAY_CODES, parseProtocol, resolveCli, resolveTemplate } from "./protocol";
 
 describe("capability registry", () => {
@@ -24,5 +25,19 @@ describe("Action Key history compatibility", () => {
   it("keeps a current Action Key value when both fields exist", () => {
     const [event] = normaliseExecutionHistory([{ resolvedActionKeys: "CURRENT", resolvedProtocol: "LEGACY" }]);
     expect(event.resolvedActionKeys).toBe("CURRENT");
+  });
+});
+
+describe("capability governance", () => {
+  it("audits the live registry and generates its manifest", () => {
+    const audit = auditCapabilities(capabilities);
+    expect(audit).toMatchObject({ status: "pass", summary: { registered: capabilities.length, errors: 0, warnings: 0 }, issues: [] });
+    expect(generateCapabilityManifest(capabilities)).toHaveLength(capabilities.length);
+  });
+
+  it("detects duplicate Action Keys and unknown UI mappings", () => {
+    const duplicate = { ...capabilities[1], id: "test.duplicate" };
+    const audit = auditCapabilities([...capabilities, duplicate], ["missing.uiCapability"]);
+    expect(audit.issues.map(issue => issue.code)).toEqual(expect.arrayContaining(["DUPLICATE_ACTION_KEYS", "UNKNOWN_UI_CAPABILITY"]));
   });
 });
