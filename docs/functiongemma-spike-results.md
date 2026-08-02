@@ -45,7 +45,7 @@ HTTP 401
 Access to model google/functiongemma-270m-it is restricted. You must have access to it and be authenticated to access it
 ```
 
-This prevents using that URL as the required public, token-free browser installation source. Embedding a Hugging Face token in browser code is explicitly prohibited.
+The official Hugging Face distribution requires per-user licence acceptance and authenticated access. This prevents the application from directly fetching the official weights anonymously during first-run installation. A separately licensed and lawfully redistributed public artifact may still be possible, but it has not been established. Embedding a Hugging Face token in browser code remains explicitly prohibited.
 
 ### 3. MediaPipe browser inference
 
@@ -78,7 +78,7 @@ The only direct target-artifact network request made was the unauthenticated saf
 
 ## Errors encountered
 
-1. The exact model’s weights are gated and require authenticated license acceptance.
+1. The official exact-model distribution requires authenticated, per-user licence acceptance; a compliant redistribution path has not been established.
 2. The target repository has no exact-model web-compatible `.litertlm` artifact.
 3. LiteRT-LM’s documented Web API supports only two Gemma 4 web models and WebGPU.
 4. The required non-GPU fallback is not documented by the candidate web LLM runtime.
@@ -93,4 +93,4 @@ The spike is **BLOCKED**, not PASS. Per the recovery specification:
 - Do not add cloud inference.
 - Do not relabel deterministic search as Navi.
 
-The gate can be retried when a public, versioned, exact FunctionGemma browser artifact and a supported browser runtime/backend are available, or when the owner approves a materially different distribution or model strategy.
+The gate can be retried when a public, versioned, exact FunctionGemma browser artifact and a supported browser runtime/backend are available, or when the owner approves a materially different distribution or model strategy. Any converted artifact must remain unpublished until redistribution rights under the Gemma licence are confirmed.
