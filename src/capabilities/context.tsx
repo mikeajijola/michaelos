@@ -5,7 +5,7 @@ import { articles, experience, projects, skills } from "@/data/content";
 import { executeCapability, formatExecution, HISTORY_KEY, normaliseExecutionHistory, TRANSCRIPT_KEY } from "./executor";
 import { capabilities } from "./registry";
 import { advanceGateway, parseProtocol, PROTOCOL_TIMEOUT_MS } from "./protocol";
-import type { Caller, CapabilityContext, CapabilityExecution, SelectedControl, SurfaceController, SurfaceTab } from "./types";
+import type { Caller, CapabilityContext, CapabilityDatabase, CapabilityExecution, SelectedControl, SurfaceController, SurfaceTab } from "./types";
 import { DatabaseClient } from "@/database/client";
 
 export type Runtime = {
@@ -31,7 +31,7 @@ export function CapabilityProvider({ children }: { children: React.ReactNode }) 
   useEffect(() => { surfaceRef.current = surface; }, [surface]);
   useEffect(() => { selectedRef.current = selectedElement; }, [selectedElement]);
   useEffect(() => { let saved: CapabilityExecution[] = []; try { saved = normaliseExecutionHistory(JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]")); } catch {} setHistory(saved); historyRef.current = saved; try { setTranscript(JSON.parse(localStorage.getItem(TRANSCRIPT_KEY) ?? "[]")); } catch {} }, []);
-  useEffect(() => { const client = new DatabaseClient(); database.current = client; void client.initialise().then(() => client.exec("CREATE TABLE IF NOT EXISTS capability_history (id TEXT PRIMARY KEY, capability_id TEXT NOT NULL, caller TEXT NOT NULL, input TEXT, output TEXT, success INTEGER NOT NULL, duration_ms INTEGER NOT NULL, executed_at TEXT NOT NULL, confirmation_status TEXT)")).catch(error => console.warn("SQLite running in degraded mode", error)); return () => { database.current = null; }; }, []);
+  useEffect(() => { const client = new DatabaseClient(); database.current = client; void client.initialise().then(async () => { await client.exec("CREATE TABLE IF NOT EXISTS capability_history (id TEXT PRIMARY KEY, capability_id TEXT NOT NULL, caller TEXT NOT NULL, input TEXT, output TEXT, success INTEGER NOT NULL, duration_ms INTEGER NOT NULL, executed_at TEXT NOT NULL, confirmation_status TEXT)"); await client.exec("CREATE TABLE IF NOT EXISTS capability_reports (id TEXT PRIMARY KEY, capability_id TEXT, report_type TEXT NOT NULL, severity TEXT NOT NULL, details TEXT NOT NULL, caller TEXT NOT NULL, route TEXT, created_at TEXT NOT NULL)"); }).catch(error => console.warn("SQLite running in degraded mode", error)); return () => { database.current = null; }; }, []);
   const saveTranscript = useCallback((update: (current: string[]) => string[]) => setTranscript(current => { const next = update(current).slice(-200); localStorage.setItem(TRANSCRIPT_KEY, JSON.stringify(next)); return next; }), []);
 
   const surfaceController = useMemo<SurfaceController>(() => ({
@@ -40,7 +40,11 @@ export function CapabilityProvider({ children }: { children: React.ReactNode }) 
     minimise: () => setSurface(s => ({ ...s, minimised: true })), restore: () => setSurface(s => ({ ...s, open: true, minimised: false })),
     toggle: () => setSurface(s => ({ ...s, open: !s.open, minimised: false })), selectTab: tab => setSurface(s => ({ ...s, tab })),
   }), []);
-  const context = useMemo<CapabilityContext>(() => ({ caller: "ui", data: { projects, experience, articles, skills }, navigate: path => router.push(path), back: () => router.back(), surface: surfaceController, getHistory: () => historyRef.current, getSelectedControl: () => selectedRef.current }), [router, surfaceController]);
+  const capabilityDatabase = useMemo<CapabilityDatabase>(() => ({
+    exec: (sql, bind) => database.current ? database.current.exec(sql, bind) : Promise.reject(new Error("Local database is not ready.")),
+    query: <T,>(sql: string, bind?: unknown[]) => database.current ? database.current.query<T>(sql, bind) : Promise.reject(new Error("Local database is not ready.")),
+  }), []);
+  const context = useMemo<CapabilityContext>(() => ({ caller: "ui", data: { projects, experience, articles, skills }, navigate: path => router.push(path), back: () => router.back(), surface: surfaceController, database: capabilityDatabase, getHistory: () => historyRef.current, getSelectedControl: () => selectedRef.current }), [capabilityDatabase, router, surfaceController]);
   const execute = useCallback(async (id: string, params: Record<string, unknown> = {}, caller: Caller = "ui") => executeCapability(id, params, caller, { ...context, caller }), [context]);
 
   useEffect(() => {

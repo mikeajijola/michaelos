@@ -4,3 +4,4 @@ CREATE TABLE IF NOT EXISTS articles (id TEXT PRIMARY KEY, slug TEXT NOT NULL UNI
 CREATE TABLE IF NOT EXISTS skills (id TEXT PRIMARY KEY, name TEXT NOT NULL, category TEXT, description TEXT, proficiency TEXT, display_order INTEGER DEFAULT 0);
 CREATE TABLE IF NOT EXISTS timeline (id TEXT PRIMARY KEY, event_date TEXT NOT NULL, title TEXT NOT NULL, description TEXT, event_type TEXT, related_entity_type TEXT, related_entity_id TEXT);
 CREATE TABLE IF NOT EXISTS capability_history (id TEXT PRIMARY KEY, capability_id TEXT NOT NULL, caller TEXT NOT NULL, input TEXT, output TEXT, success INTEGER NOT NULL, duration_ms INTEGER NOT NULL, executed_at TEXT NOT NULL, confirmation_status TEXT);
+CREATE TABLE IF NOT EXISTS capability_reports (id TEXT PRIMARY KEY, capability_id TEXT, report_type TEXT NOT NULL, severity TEXT NOT NULL, details TEXT NOT NULL, caller TEXT NOT NULL, route TEXT, created_at TEXT NOT NULL);

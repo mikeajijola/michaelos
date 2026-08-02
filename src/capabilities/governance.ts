@@ -1,4 +1,4 @@
-import type { CapabilityDefinition, CapabilityManifestEntry, CapabilityParameter, Risk } from "./types";
+import type { CapabilityChange, CapabilityDefinition, CapabilityDelta, CapabilityManifestEntry, CapabilityParameter, Risk } from "./types";
 
 export type CapabilityAuditIssue = { code: string; severity: "error" | "warning"; capabilityId?: string; message: string };
 export type CapabilityAudit = { status: "pass" | "fail"; summary: { registered: number; errors: number; warnings: number }; issues: CapabilityAuditIssue[] };
@@ -23,6 +23,42 @@ export function capabilityToManifestEntry(capability: CapabilityDefinition): Cap
 
 export function generateCapabilityManifest(definitions: CapabilityDefinition[]) {
   return definitions.map(capabilityToManifestEntry);
+}
+
+const riskRank: Record<Risk, number> = { read: 0, navigation: 1, write: 2, destructive: 3 };
+const stable = (value: unknown) => JSON.stringify(value);
+
+export function getCapabilityDelta(current: CapabilityManifestEntry[], baseline: CapabilityManifestEntry[]): CapabilityDelta {
+  const currentById = new Map(current.map(entry => [entry.id, entry]));
+  const baselineById = new Map(baseline.map(entry => [entry.id, entry]));
+  const added = current.filter(entry => !baselineById.has(entry.id));
+  const removed = baseline.filter(entry => !currentById.has(entry.id));
+  const changed: CapabilityChange[] = [];
+  const unchanged: string[] = [];
+
+  for (const after of current) {
+    const before = baselineById.get(after.id);
+    if (!before) continue;
+    const fields = (Object.keys(after) as Array<keyof CapabilityManifestEntry>).filter(field => stable(after[field]) !== stable(before[field]));
+    if (!fields.length) { unchanged.push(after.id); continue; }
+    const breakingReasons: string[] = [];
+    const oldParameters = new Map(before.parameters.map(parameter => [parameter.name, parameter]));
+    const newParameters = new Map(after.parameters.map(parameter => [parameter.name, parameter]));
+    for (const parameter of after.parameters) {
+      const old = oldParameters.get(parameter.name);
+      if (!old && parameter.required) breakingReasons.push(`Required parameter ${parameter.name} added.`);
+      else if (old && old.type !== parameter.type) breakingReasons.push(`Parameter ${parameter.name} type changed from ${old.type} to ${parameter.type}.`);
+    }
+    for (const parameter of before.parameters) if (!newParameters.has(parameter.name)) breakingReasons.push(`Parameter ${parameter.name} removed.`);
+    if (riskRank[after.risk] >= riskRank.write && riskRank[after.risk] > riskRank[before.risk]) breakingReasons.push(`Risk increased from ${before.risk} to ${after.risk}.`);
+    if (before.cliCommand && !after.cliCommand) breakingReasons.push("CLI command removed.");
+    if (before.actionKeyTemplate && !after.actionKeyTemplate) breakingReasons.push("Action Key mapping removed.");
+    if (before.navigatorEnabled && !after.navigatorEnabled) breakingReasons.push("Navi exposure removed.");
+    changed.push({ id: after.id, fields, before, after, breakingReasons });
+  }
+
+  const removedChanges: CapabilityChange[] = removed.map(before => ({ id: before.id, fields: ["id"], before, after: before, breakingReasons: ["Capability removed."] }));
+  return { added, removed, changed, unchanged, breaking: [...removedChanges, ...changed.filter(change => change.breakingReasons.length)] };
 }
 
 export function auditCapabilities(definitions: CapabilityDefinition[], uiCapabilityReferences: string[] = []): CapabilityAudit {

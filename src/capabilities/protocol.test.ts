@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { capabilities } from "./registry";
 import { normaliseExecutionHistory } from "./executor";
-import { auditCapabilities, generateCapabilityManifest } from "./governance";
+import { auditCapabilities, generateCapabilityManifest, getCapabilityDelta } from "./governance";
 import { advanceGateway, AGENT_GATEWAY_CODES, parseProtocol, resolveCli, resolveTemplate } from "./protocol";
 
 describe("capability registry", () => {
@@ -39,5 +39,13 @@ describe("capability governance", () => {
     const duplicate = { ...capabilities[1], id: "test.duplicate" };
     const audit = auditCapabilities([...capabilities, duplicate], ["missing.uiCapability"]);
     expect(audit.issues.map(issue => issue.code)).toEqual(expect.arrayContaining(["DUPLICATE_ACTION_KEYS", "UNKNOWN_UI_CAPABILITY"]));
+  });
+
+  it("classifies required parameters, removals, and risk escalation as breaking", () => {
+    const [entry] = generateCapabilityManifest(capabilities);
+    const changed = { ...entry, risk: "write" as const, parameters: [{ name: "required", description: "Required value.", type: "string" as const, required: true }] };
+    const delta = getCapabilityDelta([changed], [entry, generateCapabilityManifest(capabilities)[1]]);
+    expect(delta.breaking.map(change => change.id)).toEqual(expect.arrayContaining([entry.id, capabilities[1].id]));
+    expect(delta.changed[0].breakingReasons).toEqual(expect.arrayContaining(["Required parameter required added.", `Risk increased from ${entry.risk} to write.`]));
   });
 });

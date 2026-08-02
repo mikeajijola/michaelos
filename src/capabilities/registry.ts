@@ -1,7 +1,8 @@
 import { articles, experience, projects, skills } from "@/data/content";
-import type { CapabilityContext, CapabilityDefinition, CapabilityParameter } from "./types";
+import type { CapabilityContext, CapabilityDefinition, CapabilityManifestEntry, CapabilityParameter } from "./types";
 import { CapabilityError } from "./types";
-import { auditCapabilities } from "./governance";
+import { auditCapabilities, generateCapabilityManifest, getCapabilityDelta } from "./governance";
+import baselineManifest from "../../capabilities/baseline-manifest.json";
 
 type Handler = (params: Record<string, unknown>, context: CapabilityContext) => Promise<unknown>;
 const text = (name: string, description: string): CapabilityParameter => ({ name, description, type: "string", required: true });
@@ -21,6 +22,19 @@ const handlers: Record<string, Handler> = {
   "system.openInspector": async (_, c) => { c.surface.open("inspector"); return { open: true, tab: "inspector" }; },
   "system.getApplicationInfo": async () => ({ runtime: "browser", architecture: "capability-first", persistence: "SQLite WASM + OPFS", backend: false, version: "2.0.0" }),
   "system.auditCapabilities": async () => auditCapabilities(capabilities),
+  "system.getCapabilityDelta": async () => getCapabilityDelta(generateCapabilityManifest(capabilities), baselineManifest as unknown as CapabilityManifestEntry[]),
+  "system.reportCapabilityIssue": async (p, c) => {
+    const report = { id: `report_${crypto.randomUUID()}`, capability_id: p.capabilityId ? String(p.capabilityId) : null, report_type: String(p.reportType), severity: String(p.severity), details: String(p.details), caller: c.caller, route: p.route ? String(p.route) : null, created_at: new Date().toISOString() };
+    await c.database.exec("INSERT INTO capability_reports VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Object.values(report));
+    return { report };
+  },
+  "system.exportCapabilityReports": async (_, c) => {
+    const reports = await c.database.query<Record<string, unknown>>("SELECT * FROM capability_reports ORDER BY created_at DESC");
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), reports }, null, 2)], { type: "application/json" }));
+    link.download = "michaelos-capability-reports.json"; link.click(); URL.revokeObjectURL(link.href);
+    return { reports, count: reports.length };
+  },
   "navigation.goHome": async (_, c) => { c.navigate("/"); return { path: "/" }; },
   "navigation.goProjects": async (_, c) => { c.navigate("/projects"); return { path: "/projects" }; },
   "navigation.goExperience": async (_, c) => { c.navigate("/experience"); return { path: "/experience" }; },
@@ -73,6 +87,15 @@ export const capabilities: CapabilityDefinition[] = [
   simple("system.openInspector", "Open capability inspector", "Open the console on the Inspector tab.", ["SYSTEM", "OPEN", "INSPECTOR"], "Open capability inspector"),
   simple("system.getApplicationInfo", "Get application info", "Describe the browser runtime and architecture.", ["SYSTEM", "INFO"], "Get application information"),
   simple("system.auditCapabilities", "Audit capabilities", "Validate registered capability definitions and invocation mappings.", ["SYSTEM", "AUDIT", "CAPABILITIES"], "Audit registered capabilities"),
+  simple("system.getCapabilityDelta", "Get capability delta", "Compare the current generated manifest with the accepted baseline.", ["SYSTEM", "CAPABILITY", "DELTA"], "Compare capabilities with the accepted baseline"),
+  define({ ...base("system.reportCapabilityIssue", "Report capability issue", "Store a capability issue locally in browser SQLite.", "run system.reportCapabilityIssue --reportType <reportType> --severity <severity> --details <details>", ["SYSTEM", "REPORT", "<reportType>", "<severity>", "<details>", "ENTER"], "Report a local capability issue", [
+    { name: "capabilityId", description: "Related capability ID, when known.", type: "string", required: false },
+    { name: "reportType", description: "Type of capability or QA issue.", type: "string", required: true },
+    { name: "severity", description: "Issue severity.", type: "enum", required: true, values: ["info", "warning", "error"] },
+    { name: "details", description: "Human-readable issue details.", type: "string", required: true },
+    { name: "route", description: "Route where the issue occurred.", type: "string", required: false },
+  ], { reportType: "qa", severity: "warning", details: "Describe the issue." }), risk: "write" }),
+  simple("system.exportCapabilityReports", "Export capability reports", "Download locally stored capability reports as JSON.", ["SYSTEM", "EXPORT", "CAPABILITY", "REPORTS"], "Export local capability reports"),
   ...[["Home","/","HOME"],["Projects","/projects","PROJECTS"],["Experience","/experience","EXPERIENCE"],["Blog","/blog","BLOG"],["Cv","/cv","CV"],["Capabilities","/capabilities","CAPABILITIES"]].map(([name,,token]) => simple(`navigation.go${name}`, `Go to ${name}`, `Navigate to the ${name.toLowerCase()} page.`, ["NAVIGATION", token], `Open ${name}`)),
   simple("navigation.goBack", "Go back", "Return to the previous browser history entry.", ["NAVIGATION", "BACK"], "Go back"),
   define(base("project.list", "List projects", "Return all portfolio projects.", "run project.list", ["PROJECT", "LIST", "ENTER"], "List portfolio projects", [{ name: "featured", description: "Only featured projects.", type: "boolean", required: false }])),
