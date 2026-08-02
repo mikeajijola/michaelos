@@ -1,0 +1,127 @@
+import { capabilities, registry } from "@/capabilities/registry";
+import { validateParams } from "@/capabilities/protocol";
+import type { CapabilityDefinition } from "@/capabilities/types";
+import type { LilyProposal, LilyResultReference } from "./types";
+
+export const LILY_CAPABILITY_IDS = new Set(capabilities.filter((item) => item.navigator.enabled && item.risk !== "write" && item.risk !== "destructive").map((item) => item.id));
+export function lilyCapabilityShortlist() {
+  return [...LILY_CAPABILITY_IDS]
+    .map((id) => registry.get(id))
+    .filter((item): item is CapabilityDefinition => Boolean(item))
+    .map((item) => ({
+      id: item.id,
+      description: item.description,
+      parameters: item.params.map((param) => ({
+        name: param.name,
+        type: param.type,
+        required: param.required,
+        values: param.values,
+      })),
+    }));
+}
+export function validateLilyProposal(
+  value: unknown,
+  references: LilyResultReference[],
+): LilyProposal {
+  if (!value || typeof value !== "object")
+    throw new Error("Lily returned no structured proposal.");
+  const proposal = value as LilyProposal;
+  if (
+    !["capability", "clarification", "final"].includes(proposal.kind) ||
+    typeof proposal.message !== "string"
+  )
+    throw new Error("Lily returned an invalid proposal shape.");
+  if (proposal.kind !== "capability") return proposal;
+  if (!proposal.capabilityId || !LILY_CAPABILITY_IDS.has(proposal.capabilityId))
+    throw new Error(
+      "Lily proposed a capability outside the permitted shortlist.",
+    );
+  const capability = registry.get(proposal.capabilityId);
+  if (
+    !capability ||
+    capability.risk === "write" ||
+    capability.risk === "destructive"
+  )
+    throw new Error(
+      "Lily proposed a capability that is not safe for navigation.",
+    );
+  const args = validateParams(capability, proposal.arguments ?? {});
+  if (
+    proposal.capabilityId === "project.view" ||
+    proposal.capabilityId === "article.view"
+  ) {
+    const slug = String(args.slug);
+    if (
+      !references.some(
+        (ref) => ref.id === slug && proposal.capabilityId!.startsWith(ref.kind),
+      )
+    )
+      throw new Error(
+        "Lily proposed an entity slug that was not returned by a browser capability.",
+      );
+  }
+  if (
+    proposal.capabilityId === "experience.view" &&
+    !references.some(
+      (ref) => ref.kind === "experience" && ref.id === String(args.id),
+    )
+  )
+    throw new Error(
+      "Lily proposed an experience ID that was not returned by a browser capability.",
+    );
+  return { ...proposal, arguments: args };
+}
+export const lilyProposalSchema = {
+  type: "object",
+  properties: {
+    kind: { type: "string", enum: ["capability", "clarification", "final"] },
+    capabilityId: { type: "string" },
+    arguments: { type: "object", additionalProperties: true },
+    message: { type: "string" },
+    options: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          id: { type: "string" },
+          label: { type: "string" },
+          request: { type: "string" },
+        },
+        required: ["id", "label", "request"],
+        additionalProperties: false,
+      },
+    },
+    needsAnotherTurn: { type: "boolean" },
+  },
+  required: ["kind", "message"],
+  additionalProperties: false,
+} as const;
+export function compactReferences(result: unknown): LilyResultReference[] {
+  if (!result || typeof result !== "object") return [];
+  const value = result as Record<string, unknown>;
+  const rows = (value.projects ?? value.articles ?? value.experience) as
+    Array<Record<string, unknown>> | undefined;
+  if (!Array.isArray(rows)) return [];
+  return rows.slice(0, 12).map((row) => {
+    if (row.slug && row.name)
+      return {
+        kind: "project" as const,
+        id: String(row.slug),
+        label: String(row.name),
+        summary: String(row.summary ?? ""),
+      };
+    if (row.slug && row.title)
+      return {
+        kind: "article" as const,
+        id: String(row.slug),
+        label: String(row.title),
+        summary: String(row.summary ?? ""),
+      };
+    return {
+      kind: "experience" as const,
+      id: String(row.id),
+      label: `${row.title} at ${row.organisation}`,
+      summary: `${row.period}: ${row.summary}`,
+    };
+  });
+}

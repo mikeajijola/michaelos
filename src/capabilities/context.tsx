@@ -15,6 +15,7 @@ export type Runtime = {
   surface: { open: boolean; minimised: boolean; tab: SurfaceTab }; transcript: string[]; unread: number;
   protocol: { active: boolean; buffer: string; gatewayStep: number };
   toast: { title: string; detail?: string; status: "success" | "failure" } | null;
+  inspectedExecutionId: string | null; inspect: (executionId: string) => void;
   clearTranscript: () => void; appendTranscript: (...lines: string[]) => void; markRead: () => void;
 };
 const RuntimeContext = createContext<Runtime | null>(null);
@@ -25,6 +26,7 @@ export function CapabilityProvider({ children }: { children: React.ReactNode }) 
   const [surface, setSurface] = useState<Runtime["surface"]>({ open: false, minimised: false, tab: "terminal" }); const surfaceRef = useRef(surface); const priorFocus = useRef<HTMLElement | null>(null);
   const [transcript, setTranscript] = useState<string[]>([]); const [unread, setUnread] = useState(0); const [toast, setToast] = useState<Runtime["toast"]>(null);
   const [protocol, setProtocol] = useState<Runtime["protocol"]>({ active: false, buffer: "", gatewayStep: 0 });
+  const [inspectedExecutionId, setInspectedExecutionId] = useState<string | null>(null);
   const database = useRef<DatabaseClient | null>(null);
   const step = useRef(0); const lastStepAt = useRef(0); const buffer = useRef(""); const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -73,7 +75,7 @@ export function CapabilityProvider({ children }: { children: React.ReactNode }) 
     window.addEventListener("keydown", onKey, true); return () => window.removeEventListener("keydown", onKey, true);
   }, [armTimeout, endCapture, execute, protocol.active]);
 
-  const value: Runtime = { last, history, execute, selectedElement, selectElement, surface, transcript, unread, protocol, toast, clearTranscript: () => saveTranscript(() => []), appendTranscript: (...lines) => saveTranscript(current => [...current, ...lines]), markRead: () => setUnread(0) };
+  const value: Runtime = { last, history, execute, selectedElement, selectElement, surface, transcript, unread, protocol, toast, inspectedExecutionId, inspect: executionId => { setInspectedExecutionId(executionId); surfaceController.open("inspector"); }, clearTranscript: () => saveTranscript(() => []), appendTranscript: (...lines) => saveTranscript(current => [...current, ...lines]), markRead: () => setUnread(0) };
   return <RuntimeContext.Provider value={value}>{children}</RuntimeContext.Provider>;
 }
 export const useCapabilities = () => { const value = useContext(RuntimeContext); if (!value) throw new Error("CapabilityProvider missing"); return value; };

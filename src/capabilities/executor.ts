@@ -1,5 +1,6 @@
 import { registry } from "./registry";
-import { resolveCli, resolveTemplate, validateParams } from "./protocol";
+import { validateParams } from "./protocol";
+import { resolveCanonicalInvocation } from "./invocation";
 import { CapabilityError, type Caller, type CapabilityContext, type CapabilityExecution } from "./types";
 
 export const HISTORY_KEY = "michaelos.capability-history.v2";
@@ -24,12 +25,13 @@ export async function executeCapability(id: string, input: Record<string, unknow
     const exception = cause as Error;
     error = cause instanceof CapabilityError ? { code: cause.code, message: cause.message, invalidValue: cause.invalidValue, suggestion: cause.suggestion } : { code: "EXECUTION_FAILED", message: exception.message };
   }
-  const resolvedActionKeys = capability ? resolveTemplate(capability.keyboard.template, params) : "UNRESOLVED";
+  const invocation = resolveCanonicalInvocation(id, params);
+  const resolvedActionKeys = invocation.actionKeys ?? "UNRESOLVED";
   const execution: CapabilityExecution = {
     executionId: `exec_${crypto.randomUUID()}`, capabilityId: id, caller, params,
     status: error ? "failure" : "success", result, error,
     durationMs: Math.max(1, Math.round(performance.now() - started)), timestamp,
-    resolvedCli: capability ? resolveCli(capability, params) : `run ${id}`,
+    resolvedCli: invocation.cliCommand ?? `run ${id}`,
     resolvedActionKeys,
     resolvedProtocol: resolvedActionKeys,
     accessibilityLabel: capability?.accessibility.label ?? "Unknown capability",
