@@ -1,0 +1,23 @@
+{
+  "capture": "Chrome NetLog plus Cache Storage inspection; credentials, signed query strings, cookies, and unrelated private headers omitted",
+  "modelRequests": [
+    {"url":"https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/config.json","bytes":678,"cache":"transformers-cache"},
+    {"url":"https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/generation_config.json","bytes":242,"cache":"transformers-cache"},
+    {"url":"https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/tokenizer.json","bytes":7031673,"cache":"transformers-cache","etag":"d24314ef7f0afd1b678c2e24c767e19f24f86b0e"},
+    {"url":"https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/tokenizer_config.json","bytes":7306,"cache":"transformers-cache"},
+    {"url":"https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/onnx/model_q4.onnx","bytes":786156820,"cache":"transformers-cache","xetObject":"77469a324cc36ace6ccd590c14405e3bbdb1c062009bc5c87a4f71486fad598f"}
+  ],
+  "runtimeRequests": [
+    {"url":"https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.asyncify.mjs","bytes":17958,"cache":"transformers-cache"},
+    {"url":"https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.asyncify.wasm","bytes":4732131,"cache":"transformers-cache"}
+  ],
+  "applicationExternalHosts": {
+    "huggingface.co": "model metadata and pinned artifacts",
+    "us.gcp.cdn.hf.co": "public Hugging Face/Xet model object delivery",
+    "cdn.jsdelivr.net": "onnxruntime-web browser runtime assets"
+  },
+  "inferenceEndpointRequests": [],
+  "promptOrGeneratedTextRequests": [],
+  "runtimeSecretRequired": false,
+  "note": "Chrome itself contacted Google update/variations services in the fresh profile; those browser-owned requests were unrelated to MichaelOS or inference."
+}

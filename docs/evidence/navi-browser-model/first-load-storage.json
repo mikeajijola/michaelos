@@ -1,0 +1,77 @@
+{
+  "storage": {
+    "quota": 11554281140,
+    "usage": 816862900,
+    "usageDetails": {
+      "caches": 816821760,
+      "fileSystem": 41140
+    }
+  },
+  "cacheNames": [
+    "transformers-cache"
+  ],
+  "cacheEntries": [
+    {
+      "cache": "transformers-cache",
+      "url": "https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/main/config.json",
+      "status": 200,
+      "contentLength": "678",
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "cache": "transformers-cache",
+      "url": "https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/config.json",
+      "status": 200,
+      "contentLength": "678",
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "cache": "transformers-cache",
+      "url": "https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/tokenizer_config.json",
+      "status": 200,
+      "contentLength": "7306",
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "cache": "transformers-cache",
+      "url": "https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/generation_config.json",
+      "status": 200,
+      "contentLength": "242",
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "cache": "transformers-cache",
+      "url": "https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/tokenizer.json",
+      "status": 200,
+      "contentLength": "7031673",
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "cache": "transformers-cache",
+      "url": "https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct/resolve/cc5cc01a65cc3ff17bdb73a7de33d879f62599b0/onnx/model_q4.onnx",
+      "status": 200,
+      "contentLength": "786156820",
+      "contentType": "application/octet-stream"
+    },
+    {
+      "cache": "transformers-cache",
+      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "status": 200,
+      "contentLength": "17958",
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "cache": "transformers-cache",
+      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "status": 200,
+      "contentLength": "4732131",
+      "contentType": "application/wasm"
+    }
+  ],
+  "opfs": [
+    {
+      "name": "michaelos.sqlite3",
+      "kind": "file"
+    }
+  ]
+}

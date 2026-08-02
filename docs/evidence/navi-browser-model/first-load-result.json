@@ -1,0 +1,20 @@
+{
+  "capturedAt": "2026-08-02T20:33:33.916Z",
+  "browser": "Chrome 151.0.7922.71 (headless desktop)",
+  "os": "Ubuntu 24.04.4 LTS, Linux x86_64, KVM",
+  "cpu": "Intel Xeon 2.20 GHz, 4 logical CPUs",
+  "availableMemoryGiB": 15,
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36",
+  "crossOriginIsolated": true,
+  "navigatorGpuPresent": true,
+  "adapterReturned": false,
+  "gpuDiagnostic": "ANGLE SwiftShader; Chrome feature status webgpu=unavailable_software",
+  "modelId": "onnx-community/Qwen2.5-0.5B-Instruct",
+  "revision": "cc5cc01a65cc3ff17bdb73a7de33d879f62599b0",
+  "dtype": "q4",
+  "requestedBackend": "webgpu",
+  "status": "BLOCKED",
+  "error": "Error: no available backend found. ERR: [webgpu] Error: Failed to get GPU adapter. You may need to enable flag --enable-unsafe-webgpu if you are using Chrome.",
+  "promptResults": [],
+  "note": "The worker downloaded the complete artifact set before backend initialization failed. No inference or decision occurred."
+}

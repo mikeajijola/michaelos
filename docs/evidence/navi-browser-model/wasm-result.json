@@ -1,0 +1,16 @@
+{
+  "browser": "Chrome 151.0.7922.71 (headless desktop)",
+  "profile": "isolated fresh WASM profile",
+  "modelId": "onnx-community/Qwen2.5-0.5B-Instruct",
+  "revision": "cc5cc01a65cc3ff17bdb73a7de33d879f62599b0",
+  "dtype": "q4",
+  "backend": "wasm",
+  "modelLoad": "failed in first session; hung in second session",
+  "firstSessionError": "Error: Can't create a session. ERROR_CODE: 6, ERROR_MESSAGE: std::bad_alloc",
+  "secondSessionObservationSeconds": 120,
+  "peakObservedRendererRssGiB": 4.48,
+  "firstDecisionCompleted": false,
+  "promptResults": [],
+  "status": "BLOCKED",
+  "reason": "The exact cached artifacts were available, but ONNX Runtime could not create a usable session. No first prompt decision completed and browser memory/responsiveness were impractical. It is not a supported fallback."
+}

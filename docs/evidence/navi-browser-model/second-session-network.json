@@ -1,0 +1,11 @@
+{
+  "profileReuse": "same /tmp Chrome profile after complete browser restart",
+  "cacheStorageBeforeRunBytes": 816821760,
+  "cacheName": "transformers-cache",
+  "pinnedModelEntryPresent": true,
+  "fullModelReuseProven": false,
+  "opfsMetadataRestored": false,
+  "observed": "The second NetLog again contained GET activity resolving model_q4.onnx. The diagnostic run did not complete and its truncated capture cannot establish whether Cache Storage or the network supplied all bytes.",
+  "status": "BLOCKED",
+  "reason": "No completed first inference meant installation metadata was never written; repeated model resolution and an incomplete second capture do not meet the reuse gate."
+}
