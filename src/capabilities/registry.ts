@@ -67,7 +67,7 @@ export const capabilities: CapabilityDefinition[] = [
   simple("system.restoreCommandSurface", "Restore command surface", "Restore the floating capability console.", ["SYSTEM", "RESTORE", "CONSOLE"], "Restore agent capability console"),
   simple("system.toggleCommandSurface", "Toggle command surface", "Toggle the floating capability console.", ["SYSTEM", "TOGGLE", "CONSOLE"], "Toggle agent capability console"),
   simple("system.openTerminal", "Open Agent CLI", "Open the console on the Agent CLI tab.", ["SYSTEM", "OPEN", "TERMINAL"], "Open Agent CLI"),
-  simple("system.openAiConsole", "Open AI Console", "Open the console on the AI Console tab.", ["SYSTEM", "OPEN", "AI"], "Open AI Console"),
+  simple("system.openAiConsole", "Open deterministic search", "Open the console on the experimental deterministic natural-language search tab.", ["SYSTEM", "OPEN", "AI"], "Open deterministic capability search"),
   simple("system.openInspector", "Open capability inspector", "Open the console on the Inspector tab.", ["SYSTEM", "OPEN", "INSPECTOR"], "Open capability inspector"),
   simple("system.getApplicationInfo", "Get application info", "Describe the browser runtime and architecture.", ["SYSTEM", "INFO"], "Get application information"),
   ...[["Home","/","HOME"],["Projects","/projects","PROJECTS"],["Experience","/experience","EXPERIENCE"],["Blog","/blog","BLOG"],["Cv","/cv","CV"],["Capabilities","/capabilities","CAPABILITIES"]].map(([name,,token]) => simple(`navigation.go${name}`, `Go to ${name}`, `Navigate to the ${name.toLowerCase()} page.`, ["NAVIGATION", token], `Open ${name}`)),

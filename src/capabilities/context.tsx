@@ -2,7 +2,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { articles, experience, projects, skills } from "@/data/content";
-import { executeCapability, formatExecution, HISTORY_KEY, TRANSCRIPT_KEY } from "./executor";
+import { executeCapability, formatExecution, HISTORY_KEY, normaliseExecutionHistory, TRANSCRIPT_KEY } from "./executor";
 import { capabilities } from "./registry";
 import { advanceGateway, parseProtocol, PROTOCOL_TIMEOUT_MS } from "./protocol";
 import type { Caller, CapabilityContext, CapabilityExecution, SelectedControl, SurfaceController, SurfaceTab } from "./types";
@@ -30,7 +30,7 @@ export function CapabilityProvider({ children }: { children: React.ReactNode }) 
 
   useEffect(() => { surfaceRef.current = surface; }, [surface]);
   useEffect(() => { selectedRef.current = selectedElement; }, [selectedElement]);
-  useEffect(() => { const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]") as CapabilityExecution[]; setHistory(saved); historyRef.current = saved; try { setTranscript(JSON.parse(localStorage.getItem(TRANSCRIPT_KEY) ?? "[]")); } catch {} }, []);
+  useEffect(() => { let saved: CapabilityExecution[] = []; try { saved = normaliseExecutionHistory(JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]")); } catch {} setHistory(saved); historyRef.current = saved; try { setTranscript(JSON.parse(localStorage.getItem(TRANSCRIPT_KEY) ?? "[]")); } catch {} }, []);
   useEffect(() => { const client = new DatabaseClient(); database.current = client; void client.initialise().then(() => client.exec("CREATE TABLE IF NOT EXISTS capability_history (id TEXT PRIMARY KEY, capability_id TEXT NOT NULL, caller TEXT NOT NULL, input TEXT, output TEXT, success INTEGER NOT NULL, duration_ms INTEGER NOT NULL, executed_at TEXT NOT NULL, confirmation_status TEXT)")).catch(error => console.warn("SQLite running in degraded mode", error)); return () => { database.current = null; }; }, []);
   const saveTranscript = useCallback((update: (current: string[]) => string[]) => setTranscript(current => { const next = update(current).slice(-200); localStorage.setItem(TRANSCRIPT_KEY, JSON.stringify(next)); return next; }), []);
 

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { capabilities } from "./registry";
+import { normaliseExecutionHistory } from "./executor";
 import { advanceGateway, AGENT_GATEWAY_CODES, parseProtocol, resolveCli, resolveTemplate } from "./protocol";
 
 describe("capability registry", () => {
@@ -11,4 +12,17 @@ describe("agent gateway", () => {
   const chord = (code: string, repeat = false) => ({ code, repeat, ctrlKey: true, altKey: true, shiftKey: true });
   it("activates only after the exact six chords", () => { let progress = { step: 0, lastAt: 0 }; let activated = false; AGENT_GATEWAY_CODES.forEach((code, index) => { const result = advanceGateway(progress, chord(code), 1000 + index * 100); progress = result.progress; activated = result.activated; expect(result.consume).toBe(true); if (index < 5) expect(activated).toBe(false); }); expect(activated).toBe(true); });
   it("resets on a wrong or timed-out step and ignores repeats", () => { let result = advanceGateway({ step: 0, lastAt: 0 }, chord("F9"), 1000); result = advanceGateway(result.progress, chord("F10", true), 1100); expect(result.progress.step).toBe(1); result = advanceGateway(result.progress, chord("F12"), 1200); expect(result.progress.step).toBe(0); result = advanceGateway({ step: 1, lastAt: 1000 }, chord("F10"), 5001); expect(result.activated).toBe(false); expect(result.progress.step).toBe(0); });
+});
+
+describe("Action Key history compatibility", () => {
+  it("aliases legacy resolvedProtocol values without crashing", () => {
+    const [event] = normaliseExecutionHistory([{ capabilityId: "project.view", resolvedProtocol: "PROJECT VIEW atlas-platform ENTER" }]);
+    expect(event.resolvedActionKeys).toBe("PROJECT VIEW atlas-platform ENTER");
+    expect(event.resolvedProtocol).toBe("PROJECT VIEW atlas-platform ENTER");
+  });
+
+  it("keeps a current Action Key value when both fields exist", () => {
+    const [event] = normaliseExecutionHistory([{ resolvedActionKeys: "CURRENT", resolvedProtocol: "LEGACY" }]);
+    expect(event.resolvedActionKeys).toBe("CURRENT");
+  });
 });

@@ -5,6 +5,14 @@ import { CapabilityError, type Caller, type CapabilityContext, type CapabilityEx
 export const HISTORY_KEY = "michaelos.capability-history.v2";
 export const TRANSCRIPT_KEY = "michaelos.terminal-transcript.v2";
 
+export function normaliseExecutionHistory(value: unknown): CapabilityExecution[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(item => item && typeof item === "object").map(item => {
+    const event = item as Partial<CapabilityExecution>;
+    return { ...event, resolvedActionKeys: event.resolvedActionKeys ?? event.resolvedProtocol ?? "UNRESOLVED" } as CapabilityExecution;
+  });
+}
+
 export async function executeCapability(id: string, input: Record<string, unknown>, caller: Caller, context: CapabilityContext): Promise<CapabilityExecution> {
   const capability = registry.get(id); const started = performance.now(); const timestamp = new Date().toISOString();
   let params = input; let result: unknown = null; let error: CapabilityExecution["error"] = null;
@@ -16,12 +24,14 @@ export async function executeCapability(id: string, input: Record<string, unknow
     const exception = cause as Error;
     error = cause instanceof CapabilityError ? { code: cause.code, message: cause.message, invalidValue: cause.invalidValue, suggestion: cause.suggestion } : { code: "EXECUTION_FAILED", message: exception.message };
   }
+  const resolvedActionKeys = capability ? resolveTemplate(capability.keyboard.template, params) : "UNRESOLVED";
   const execution: CapabilityExecution = {
     executionId: `exec_${crypto.randomUUID()}`, capabilityId: id, caller, params,
     status: error ? "failure" : "success", result, error,
     durationMs: Math.max(1, Math.round(performance.now() - started)), timestamp,
     resolvedCli: capability ? resolveCli(capability, params) : `run ${id}`,
-    resolvedProtocol: capability ? resolveTemplate(capability.keyboard.template, params) : "UNRESOLVED",
+    resolvedActionKeys,
+    resolvedProtocol: resolvedActionKeys,
     accessibilityLabel: capability?.accessibility.label ?? "Unknown capability",
     confirmationStatus: capability?.requiresConfirmation ? (params.confirm === true ? "confirmed" : "declined") : "not-required",
   };
@@ -30,7 +40,7 @@ export async function executeCapability(id: string, input: Record<string, unknow
   return execution;
 }
 
-export function readHistory(): CapabilityExecution[] { try { return JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]"); } catch { return []; } }
+export function readHistory(): CapabilityExecution[] { try { return normaliseExecutionHistory(JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]")); } catch { return []; } }
 export function formatExecution(event: CapabilityExecution) {
   const time = new Date(event.timestamp).toLocaleTimeString([], { hour12: false });
   const body = event.status === "success" ? `✓ Success\n${JSON.stringify(event.result, null, 2)}` : `✗ ${event.error?.code}\n${event.error?.message}${event.error?.suggestion ? `\nNext: ${event.error.suggestion}` : ""}`;
