@@ -24,7 +24,7 @@ The eve agent has no MichaelOS execution tools. It cannot access the DOM, client
 
 Lily's always-on definition is in `agent/instructions.md`; the public same-origin HTTP channel is in `agent/channels/eve.ts`. `withEve()` mounts the agent runtime beside Next.js. The browser uses `eve/client` with a per-turn JSON output schema and persists the framework continuation cursor.
 
-No provider secret is stored in the repository. eve owns model runtime configuration and deployment authentication. This integration requires a server runtime and therefore replaces the former pure static-export build.
+No provider secret is stored in the repository. `agent/agent.ts` configures the official Google AI SDK provider with the stable `gemini-3.6-flash` model; `GOOGLE_GENERATIVE_AI_API_KEY` is supplied by the deployment environment. This integration requires a server runtime and therefore replaces the former pure static-export build.
 
 ## Capability exposure
 
