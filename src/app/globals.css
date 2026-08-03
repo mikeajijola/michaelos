@@ -2939,16 +2939,11 @@ html[data-theme="dark"] .global-inspector pre {
 
 /* Navi's presence keeps a visible halo; navigation opens the panel directly. */
 .lily-bubble {
-  box-shadow:
-    0 0 0 3px var(--highlight),
-    0 0 0 6px color-mix(in srgb, var(--highlight) 62%, transparent),
-    0 0 26px var(--highlight);
+  border-color: transparent;
+  box-shadow: 0 12px 38px #10251b66;
 }
 .lily-composer-avatar {
-  box-shadow:
-    0 0 0 3px var(--highlight),
-    0 0 0 5px color-mix(in srgb, var(--highlight) 62%, transparent),
-    0 0 18px var(--highlight);
+  box-shadow: 0 8px 22px #11121726;
 }
 
 /* Navi's code-native face is shared by every public Navi surface. */
@@ -2962,20 +2957,20 @@ html[data-theme="dark"] .global-inspector pre {
   pointer-events: none;
 }
 .navi-face-small {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
 }
 .lily-composer-avatar .navi-face-small {
-  width: 26px;
-  height: 26px;
+  width: 29px;
+  height: 29px;
 }
 .navi-face-bubble {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
 }
 .navi-face-voice {
-  width: 68px;
-  height: 68px;
+  width: 74px;
+  height: 74px;
 }
 .navi-face > svg {
   width: 100%;
@@ -2989,6 +2984,27 @@ html[data-theme="dark"] .global-inspector pre {
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
+}
+.navi-face-ring {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: navi-ring-drift 16s linear infinite;
+}
+.navi-face-ring path {
+  stroke: var(--highlight) !important;
+  stroke-width: 1.65 !important;
+  filter:
+    drop-shadow(0 0 2px var(--highlight))
+    drop-shadow(0 0 5px color-mix(in srgb, var(--highlight) 72%, transparent));
+}
+.navi-face-lashes path {
+  stroke-width: 1.65 !important;
+}
+.navi-face-cheeks {
+  opacity: 0.48;
+}
+.navi-face-cheeks path {
+  stroke-width: 1.45 !important;
 }
 .navi-face-eyes {
   transform-box: fill-box;
@@ -3004,8 +3020,21 @@ html[data-theme="dark"] .global-inspector pre {
   transform: scaleY(var(--navi-mouth-energy, 1));
   animation: navi-face-listening-wave 0.72s ease-in-out infinite alternate;
 }
+.navi-face-listening .navi-face-ring {
+  animation: navi-ring-listening 1.35s ease-in-out infinite;
+}
 .navi-face-speaking .navi-face-mouth {
   animation: navi-face-speaking-wave 1.15s ease-in-out infinite;
+}
+.navi-face-speaking .navi-face-ring {
+  animation: navi-ring-speaking 2.4s ease-in-out infinite;
+}
+.navi-face-executing .navi-face-ring {
+  animation: none;
+}
+.navi-face-executing .navi-face-ring path {
+  stroke-dasharray: 18 6;
+  animation: navi-ring-progress 0.9s linear infinite;
 }
 .navi-face-executing .navi-face-mouth path {
   stroke-dasharray: 9 6;
@@ -3017,6 +3046,9 @@ html[data-theme="dark"] .global-inspector pre {
 }
 .navi-face-error .navi-face-mouth {
   transform: scaleY(0.18);
+}
+.navi-face-error .navi-face-ring {
+  animation: none;
 }
 .navi-face-mic {
   position: absolute;
@@ -3075,6 +3107,40 @@ html[data-theme="dark"] .global-inspector pre {
   }
   50% {
     transform: translateY(-0.5px) scaleY(1.04);
+  }
+}
+@keyframes navi-ring-drift {
+  0% {
+    transform: rotate(0deg) scale(0.99);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.015);
+  }
+  100% {
+    transform: rotate(360deg) scale(0.99);
+  }
+}
+@keyframes navi-ring-listening {
+  0%,
+  100% {
+    transform: rotate(-2deg) scale(0.98);
+  }
+  50% {
+    transform: rotate(2deg) scale(1.045);
+  }
+}
+@keyframes navi-ring-speaking {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(0.985);
+  }
+  50% {
+    transform: rotate(5deg) scale(1.03);
+  }
+}
+@keyframes navi-ring-progress {
+  to {
+    stroke-dashoffset: -48;
   }
 }
 @keyframes navi-face-blink {
@@ -3148,7 +3214,7 @@ html[data-theme="dark"] .global-inspector pre {
   height: 104px;
   display: grid;
   place-items: center;
-  border: 2px solid var(--highlight);
+  border: 2px solid transparent;
   border-radius: 50%;
   background: var(--dark-panel-soft);
   box-shadow:
@@ -3271,6 +3337,8 @@ html[data-theme="dark"] .global-inspector pre {
 }
 @media (prefers-reduced-motion: reduce) {
   .navi-face,
+  .navi-face-ring,
+  .navi-face-ring path,
   .navi-face-eyes,
   .navi-face-mouth,
   .navi-face-mouth path {
