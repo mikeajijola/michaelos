@@ -49,6 +49,12 @@ export function buildLilyClientContext(input: {
       "experience.list -> experience.view using a returned experience id",
       "a retrieval capability -> a grounded final response",
     ],
+    decisionPriority: [
+      "Prefer a permitted capability whenever the request maps to MichaelOS content or navigation.",
+      "For show, open, choose, strongest, latest, or take-me requests, continue from search/list to a grounded view capability.",
+      "Use clarification only for materially ambiguous content domains.",
+      "Use a text-only final response only when no capability is needed or after confirmed browser results support it.",
+    ],
     proposalContract: {
       oneProposalPerTurn: true,
       allowedKinds: ["capability", "clarification", "final"],

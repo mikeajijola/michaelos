@@ -20,6 +20,7 @@ import {
   compactReferences,
   lilyProposalSchema,
   normaliseLilyProposal,
+  preferCapabilityProposal,
   recoverLilyProposal,
   validateLilyProposal,
 } from "./proposals";
@@ -206,7 +207,12 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
           let proposal: LilyProposal;
           try {
             proposal = validateLilyProposal(
-              normaliseLilyProposal(recover(result.data), text),
+              preferCapabilityProposal(
+                normaliseLilyProposal(recover(result.data), text),
+                text,
+                references,
+                trace.map((entry) => entry.capabilityId),
+              ),
               references,
             );
           } catch (error) {
@@ -214,7 +220,12 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             remote.current = new Client({ host: "" }).session();
             result = await sendTurn();
             proposal = validateLilyProposal(
-              normaliseLilyProposal(recover(result.data), text),
+              preferCapabilityProposal(
+                normaliseLilyProposal(recover(result.data), text),
+                text,
+                references,
+                trace.map((entry) => entry.capabilityId),
+              ),
               references,
             );
           }
@@ -308,7 +319,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
         ),
       }));
       if (navigated)
-        window.setTimeout(() => setPresentation("bubble-open"), 520);
+        window.setTimeout(() => setPresentation("bubble-open"), 760);
     },
     [capabilities, setPresentation, update],
   );

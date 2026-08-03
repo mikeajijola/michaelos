@@ -76,6 +76,23 @@ export function normaliseLilyProposal(
   return { ...proposal, arguments: args };
 }
 
+export function preferCapabilityProposal(
+  value: unknown,
+  request: string,
+  references: LilyResultReference[],
+  completedCapabilityIds: string[],
+): unknown {
+  if (!value || typeof value !== "object") return value;
+  const proposal = value as LilyProposal;
+  if (proposal.kind !== "final") return value;
+  const grounded = recoverLilyProposal(
+    request,
+    references,
+    completedCapabilityIds,
+  );
+  return grounded?.kind === "capability" ? grounded : value;
+}
+
 export function validateLilyProposal(
   value: unknown,
   references: LilyResultReference[],
@@ -191,6 +208,93 @@ export function recoverLilyProposal(
       message: "I’ll look through Mike’s writing.",
       needsAnotherTurn: true,
     };
+  }
+
+  if (/\bcapabilit(?:y|ies)\b/.test(text)) {
+    if (completedCapabilityIds.includes("navigation.goCapabilities"))
+      return { kind: "final", message: "I opened the capabilities page." };
+    return {
+      kind: "capability",
+      capabilityId: "navigation.goCapabilities",
+      arguments: {},
+      message: "I’ll open the capabilities page.",
+      needsAnotherTurn: true,
+    };
+  }
+
+  const asksForProjects =
+    /\b(project|projects)\b/.test(text) ||
+    /\b(platform[-\s]+engineering|automation|agentic[-\s]+ai|ai[-\s]+work)\b/.test(
+      text,
+    );
+  if (asksForProjects) {
+    if (completedCapabilityIds.includes("project.view")) {
+      const project = references.find((item) => item.kind === "project");
+      return {
+        kind: "final",
+        message: project ? `I opened ${project.label}.` : "I opened the project.",
+      };
+    }
+    const project = references.find((item) => item.kind === "project");
+    const asksToOpen = /\b(open|take|show|choose|strongest|best|interesting)\b/.test(
+      text,
+    );
+    if (project && asksToOpen) {
+      return {
+        kind: "capability",
+        capabilityId: "project.view",
+        arguments: { slug: project.id },
+        message: `I’ll open ${project.label}.`,
+        needsAnotherTurn: true,
+      };
+    }
+    if (/\b(project|projects)\s+(page|section)\b/.test(text)) {
+      return {
+        kind: "capability",
+        capabilityId: "navigation.goProjects",
+        arguments: {},
+        message: "I’ll open Mike’s projects.",
+        needsAnotherTurn: true,
+      };
+    }
+    if (!completedCapabilityIds.includes("project.search")) {
+      return {
+        kind: "capability",
+        capabilityId: "project.search",
+        arguments: { query: searchQueryFromRequest(request) },
+        message: "I’ll search Mike’s projects.",
+        needsAnotherTurn: true,
+      };
+    }
+  }
+
+  if (/\b(experience|role|roles|job|career)\b/.test(text)) {
+    if (completedCapabilityIds.includes("experience.view")) {
+      const role = references.find((item) => item.kind === "experience");
+      return {
+        kind: "final",
+        message: role ? `I opened ${role.label}.` : "I opened the role.",
+      };
+    }
+    const role = references.find((item) => item.kind === "experience");
+    if (role && /\b(open|take|show|latest|recent|current)\b/.test(text)) {
+      return {
+        kind: "capability",
+        capabilityId: "experience.view",
+        arguments: { id: role.id },
+        message: `I’ll open ${role.label}.`,
+        needsAnotherTurn: true,
+      };
+    }
+    if (!completedCapabilityIds.includes("experience.list")) {
+      return {
+        kind: "capability",
+        capabilityId: "experience.list",
+        arguments: {},
+        message: "I’ll check Mike’s experience.",
+        needsAnotherTurn: true,
+      };
+    }
   }
 
   if (

@@ -67,7 +67,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
-      <main>{children}</main>
+      <main key={pathname} className="page-transition">
+        {children}
+      </main>
       <Footer />
     </>
   );

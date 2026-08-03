@@ -7,6 +7,7 @@ import {
   LILY_CAPABILITY_IDS,
   compactReferences,
   normaliseLilyProposal,
+  preferCapabilityProposal,
   recoverLilyProposal,
   validateLilyProposal,
 } from "./proposals";
@@ -140,6 +141,54 @@ describe("Lily proposal boundary", () => {
         "article.view",
       ]),
     ).toEqual({ kind: "final", message: "I opened Local-first systems." });
+  });
+  it("replaces a premature text response with grounded project navigation", () => {
+    const final = {
+      kind: "final" as const,
+      message: "Mike has worked on platform engineering.",
+    };
+    expect(
+      preferCapabilityProposal(
+        final,
+        "Show me his platform-engineering work",
+        [],
+        [],
+      ),
+    ).toMatchObject({
+      kind: "capability",
+      capabilityId: "project.search",
+    });
+
+    const references = compactReferences({
+      projects: [
+        { slug: "atlas-platform", name: "Atlas Platform", summary: "Platform" },
+      ],
+    });
+    expect(
+      preferCapabilityProposal(
+        final,
+        "Show me his platform-engineering work",
+        references,
+        ["project.search"],
+      ),
+    ).toMatchObject({
+      capabilityId: "project.view",
+      arguments: { slug: "atlas-platform" },
+    });
+  });
+  it("keeps genuine website-orientation answers as text responses", () => {
+    const final = {
+      kind: "final" as const,
+      message: "You can explore Mike’s work.",
+    };
+    expect(
+      preferCapabilityProposal(
+        final,
+        "What can I see on this website?",
+        [],
+        [],
+      ),
+    ).toEqual(final);
   });
   it.each([
     "What type of things can I see on this website?",
