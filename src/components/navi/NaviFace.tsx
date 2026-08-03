@@ -17,14 +17,17 @@ export function NaviFace({
       <svg viewBox="0 0 64 64" focusable="false">
         <g className="navi-face-ring">
           <path
+            className="navi-face-ring-base"
+            pathLength="100"
+            d="M32 5 C47.1 5 59 17 59 32 C59 47.1 47 59 32 59 C16.9 59 5 47 5 32 C5 16.9 17 5 32 5 Z"
+          />
+          <path
+            className="navi-face-ring-ripple"
             pathLength="100"
             d="M32 5 C47.1 5 59 17 59 32 C59 47.1 47 59 32 59 C16.9 59 5 47 5 32 C5 16.9 17 5 32 5 Z"
           />
         </g>
         <g className="navi-face-portrait">
-          <g className="navi-face-hair">
-            <path d="M22 19.5 C27 13.5 36.5 13 42 18 C37 16.8 32 18 28.5 21" />
-          </g>
           <g className="navi-face-eyes">
             <ellipse cx="22" cy="26" rx="2.65" ry="3.2" />
             <ellipse cx="42" cy="26" rx="2.65" ry="3.2" />

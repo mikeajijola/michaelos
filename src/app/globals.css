@@ -2957,7 +2957,6 @@ html[data-theme="dark"]
 /* Navi's code-native face is shared by every public Navi surface. */
 .navi-face {
   --navi-accent: #efc66d;
-  --navi-hair: #c99943;
   --navi-cheek: #e9a996;
   position: relative;
   display: inline-grid;
@@ -3008,16 +3007,16 @@ html[data-theme="dark"]
     drop-shadow(0 0 2px var(--navi-accent))
     drop-shadow(0 0 5px color-mix(in srgb, var(--navi-accent) 72%, transparent));
 }
+.navi-face-ring .navi-face-ring-ripple {
+  stroke-width: 2.35 !important;
+  stroke-dasharray: 2 14;
+  opacity: 0.9;
+  animation: navi-ring-ripple 3.2s linear infinite;
+}
 .navi-face-portrait {
   transform-box: view-box;
   transform-origin: center;
   animation: navi-face-personality 8s ease-in-out infinite;
-}
-.navi-face-hair path {
-  stroke: var(--navi-hair) !important;
-  stroke-width: 2 !important;
-  opacity: 0.92;
-  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--navi-hair) 48%, transparent));
 }
 .navi-face-eyes ellipse {
   fill: currentColor;
@@ -3201,6 +3200,11 @@ html[data-theme="dark"]
 @keyframes navi-ring-progress {
   to {
     stroke-dashoffset: -48;
+  }
+}
+@keyframes navi-ring-ripple {
+  to {
+    stroke-dashoffset: -100;
   }
 }
 @keyframes navi-face-blink {
