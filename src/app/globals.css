@@ -1355,6 +1355,7 @@ time,
     animation-iteration-count: 1 !important;
   }
 }
+
 .ai-client {
   height: 100%;
   display: grid;
@@ -2779,4 +2780,18 @@ html[data-theme="dark"] .global-inspector pre {
   .lily-companion.confirm .lily-bubble {
     animation: none !important;
   }
+}
+
+/* Lily's presence keeps a visible halo; navigation opens the panel directly. */
+.lily-bubble {
+  box-shadow:
+    0 0 0 3px var(--surface),
+    0 0 0 6px color-mix(in srgb, var(--text) 24%, transparent),
+    0 0 26px color-mix(in srgb, var(--text) 24%, transparent);
+}
+.lily-composer-avatar {
+  box-shadow:
+    0 0 0 3px var(--surface),
+    0 0 0 5px color-mix(in srgb, var(--text) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--text) 18%, transparent);
 }

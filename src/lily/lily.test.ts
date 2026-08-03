@@ -15,6 +15,7 @@ import type { CapabilityExecution } from "@/capabilities/types";
 import {
   completedLilyPresentation,
   restoredLilyPresentation,
+  shouldOpenLilyPanel,
   shouldShowLilyCompanion,
 } from "./presentation";
 
@@ -281,6 +282,23 @@ describe("Lily homepage surface continuity", () => {
   it("morphs to the companion only after homepage navigation", () => {
     expect(completedLilyPresentation(true, true)).toBe("morphing-to-bubble");
     expect(shouldShowLilyCompanion("/projects")).toBe(true);
+  });
+
+  it("opens the panel immediately on the destination without flashing the bubble", () => {
+    expect(
+      shouldOpenLilyPanel(
+        "/projects",
+        "landing-navigating",
+        "active-request",
+      ),
+    ).toBe(true);
+    expect(
+      shouldOpenLilyPanel("/projects", "morphing-to-bubble"),
+    ).toBe(true);
+    expect(shouldOpenLilyPanel("/projects", "bubble-collapsed")).toBe(false);
+    expect(
+      shouldOpenLilyPanel("/", "landing-navigating", "active-request"),
+    ).toBe(false);
   });
 });
 

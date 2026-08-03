@@ -7,7 +7,10 @@ import { useCapabilities } from "@/capabilities/context";
 import { LilyConversation } from "./LilyConversation";
 import type { LilyBubblePosition } from "@/lily/types";
 import { clampBubblePosition, didDrag } from "@/lily/bubble-position";
-import { shouldShowLilyCompanion } from "@/lily/presentation";
+import {
+  shouldOpenLilyPanel,
+  shouldShowLilyCompanion,
+} from "@/lily/presentation";
 const KEY = "michaelos:lily:bubble-position:v1",
   EDGE = 16,
   SIZE = 58;
@@ -39,7 +42,11 @@ export function LilyCompanion() {
     y: number;
   } | null>(null);
   const visible = shouldShowLilyCompanion(pathname);
-  const panelOpen = lily.session.presentation === "bubble-open";
+  const panelOpen = shouldOpenLilyPanel(
+    pathname,
+    lily.session.presentation,
+    lily.session.activeRequestId,
+  );
   const save = (next: LilyBubblePosition) => {
     const value = clampBubblePosition(next);
     setPosition(value);

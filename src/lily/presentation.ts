@@ -19,3 +19,18 @@ export function completedLilyPresentation(
 export function shouldShowLilyCompanion(route: string) {
   return route !== "/";
 }
+
+export function shouldOpenLilyPanel(
+  route: string,
+  presentation: LilyPresentationState,
+  activeRequestId?: string,
+) {
+  if (presentation === "bubble-open") return true;
+  if (route === "/") return false;
+  return (
+    presentation === "morphing-to-bubble" ||
+    (Boolean(activeRequestId) &&
+      (presentation === "landing-resolving" ||
+        presentation === "landing-navigating"))
+  );
+}
