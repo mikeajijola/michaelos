@@ -45,6 +45,58 @@ describe("real portfolio content", () => {
     expect(articles.every((article) => article.sections.length >= 4)).toBe(true);
   });
 
+  it("keeps editorial instructions out of canonical public content", () => {
+    const publicData = JSON.stringify({
+      profile,
+      projects,
+      experience,
+      articles,
+      recognition,
+    });
+    for (const draftingTerm of [
+      "TODO",
+      "TBC",
+      "TBD",
+      "pending verified",
+      "approved account",
+      "Mike to confirm",
+      "Michael to confirm",
+      "insert detail",
+      "add source",
+    ])
+      expect(publicData.toLowerCase()).not.toContain(draftingTerm.toLowerCase());
+  });
+
+  it("gives every article a visible evidence basis", () => {
+    expect(
+      articles.every(
+        (article) => article.sources.length > 0 || Boolean(article.evidenceNote),
+      ),
+    ).toBe(true);
+    const nexus = articles.find(
+      (article) =>
+        article.slug === "backstage-platform-engineering-as-a-product",
+    );
+    expect(nexus?.sources).toContainEqual(
+      expect.objectContaining({
+        publisher: "Spotify Backstage",
+        relationship: "primary-evidence",
+      }),
+    );
+  });
+
+  it("labels all five Company as Code schemas as illustrative", () => {
+    const company = articles.find(
+      (article) => article.slug === "company-as-code",
+    );
+    const examples = company?.sections.flatMap(
+      (section) => section.examples ?? [],
+    );
+    expect(examples).toHaveLength(5);
+    expect(examples?.every((example) => example.label === "Illustrative example"))
+      .toBe(true);
+  });
+
   it.each([
     ["Open the LawNeeds project", "lawneeds"],
     ["Show me Mike’s work with Aeroknite", "aeroknite"],

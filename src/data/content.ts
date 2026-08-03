@@ -48,6 +48,24 @@ export type Experience = {
 export type ArticleSection = {
   heading: string;
   paragraphs: string[];
+  examples?: ArticleExample[];
+};
+
+export type ArticleExample = {
+  label: "Illustrative example";
+  title: string;
+  value: Record<string, unknown>;
+};
+
+export type ArticleSource = {
+  title: string;
+  publisher?: string;
+  url: string;
+  relationship:
+    | "primary-evidence"
+    | "project-site"
+    | "background"
+    | "related-work";
 };
 
 export type Article = {
@@ -67,7 +85,8 @@ export type Article = {
   relatedArticleIds?: string[];
   continuesWith?: string[];
   originArticle?: string;
-  externalSources?: ExternalSource[];
+  sources: ArticleSource[];
+  evidenceNote?: string;
 };
 
 export type Skill = {
@@ -161,7 +180,7 @@ export const projects: Project[] = [
     summary:
       "Advisory work on an AI-supported legal product that subsequently secured a UK innovation endorsement.",
     description:
-      "Mike advised LawNeeds on its proposition, product architecture, technical roadmap and innovation narrative. The work focused on helping people understand a legal need before they know its formal category, while keeping a clear boundary between useful guidance and professional legal judgement.",
+      "Mike advised LawNeeds and Aeroknite on product architecture, technical strategy and innovation positioning. Both ventures subsequently received UK innovation endorsements. For LawNeeds, the work focused on helping people understand a legal need before they know its formal category, while keeping a clear boundary between useful guidance and professional legal judgement.",
     role: "Advisor · Product architecture · Innovation strategy",
     technologies: ["Legal technology", "AI", "Product architecture"],
     themes: ["Startup advisory", "Innovation strategy", "UK innovation"],
@@ -180,7 +199,7 @@ export const projects: Project[] = [
     summary:
       "Product and innovation strategy for an autonomous UAV venture that subsequently secured a UK innovation endorsement.",
     description:
-      "Mike advised Aeroknite as it connected autonomous aircraft, sensing, wildfire intelligence and operational response into one credible product story. The work helped turn ambitious engineering into an understandable roadmap and innovation case.",
+      "Mike advised LawNeeds and Aeroknite on product architecture, technical strategy and innovation positioning. Both ventures subsequently received UK innovation endorsements. For Aeroknite, the work connected autonomous aircraft, sensing, wildfire intelligence and operational response into a coherent product roadmap.",
     role: "Strategic and product advisor",
     technologies: ["Autonomous systems", "UAVs", "AI"],
     themes: ["Wildfire response", "Product architecture", "UK innovation"],
@@ -283,7 +302,7 @@ export const experience: Experience[] = [
     period: "May 2022–Present",
     location: "United Kingdom",
     summary:
-      "Enterprise architecture, platform engineering and strategic technology leadership across a large, acquisition-led software group.",
+      "At The Access Group, Mike works across enterprise architecture, platform engineering, AI adoption and technology integration in an acquisition-led software group. His work includes Nexus, the organisation’s Backstage-based developer platform, documented in a Spotify Backstage case study.",
     achievements: [
       "Helped shape Nexus, the Group’s Backstage developer platform, as a product rather than a central mandate.",
       "Worked across diverse businesses and technology estates on shared platforms, cloud architecture, automation and integration patterns.",
@@ -365,7 +384,16 @@ export const articles: Article[] = [
     readTime: "8 min",
     tags: ["Legal technology", "AI", "Startup advisory", "Product strategy", "Innovation"],
     relatedProjectIds: ["lawneeds"],
-    externalSources: [{ label: "Visit LawNeeds", url: links.lawneeds }],
+    sources: [
+      {
+        title: "LawNeeds",
+        publisher: "LawNeeds",
+        url: links.lawneeds,
+        relationship: "project-site",
+      },
+    ],
+    evidenceNote:
+      "This article is based on Mike’s direct account of his advisory work, supported by the venture’s public website.",
     sections: [
       {
         heading: "The problem was not simply legal search",
@@ -376,8 +404,7 @@ export const articles: Article[] = [
       {
         heading: "Designing around the need",
         paragraphs: [
-          "My advisory work focused on connecting the user problem, product proposition and technical architecture. The important design question was not how much AI could be added, but how the system could make a high-trust journey clearer and more explainable.",
-          "TODO: add Mike’s approved account of the precise product and technical decisions he shaped with the founding team.",
+          "My advisory work focused on connecting the user problem, product proposition and technical architecture. The important design question was how the system could make a high-trust journey clearer and more explainable.",
         ],
       },
       {
@@ -390,7 +417,7 @@ export const articles: Article[] = [
         heading: "What I learned about high-trust AI",
         paragraphs: [
           "High-trust products must be unusually clear about what the system knows, what it is helping with and where professional judgement begins. LawNeeds reinforced my view that adoption depends as much on understandable boundaries as it does on model capability.",
-          "The venture subsequently received a UK innovation endorsement. The endorsement body, dates and private application material are intentionally not published here pending an approved public record.",
+          "The venture subsequently received a UK innovation endorsement.",
         ],
       },
     ],
@@ -410,7 +437,16 @@ export const articles: Article[] = [
     readTime: "8 min",
     tags: ["Autonomous systems", "Drones", "Wildfire technology", "AI", "Product architecture", "Innovation"],
     relatedProjectIds: ["aeroknite"],
-    externalSources: [{ label: "Visit Aeroknite", url: links.aeroknite }],
+    sources: [
+      {
+        title: "Aeroknite",
+        publisher: "Aeroknite",
+        url: links.aeroknite,
+        relationship: "project-site",
+      },
+    ],
+    evidenceNote:
+      "This article is based on Mike’s direct account of his advisory work and Aeroknite’s public description of its products.",
     sections: [
       {
         heading: "Starting with the operational problem",
@@ -428,13 +464,12 @@ export const articles: Article[] = [
         heading: "Turning ambition into a roadmap",
         paragraphs: [
           "My role as a strategic and product advisor was to help make ambitious engineering legible: identify the sequence of capabilities, connect technical decisions to user outcomes and build an innovation narrative that could withstand scrutiny.",
-          "TODO: add Mike’s approved account of the specific technical and commercial decisions he personally shaped.",
         ],
       },
       {
         heading: "What this taught me",
         paragraphs: [
-          "Deep-tech strategy is an exercise in disciplined translation. The vision must remain ambitious, but each part needs a reason to exist in the wider system and a plausible route to delivery. Aeroknite subsequently secured a UK innovation endorsement; private endorsement material is not reproduced here.",
+          "Deep-tech strategy is an exercise in disciplined translation. The vision must remain ambitious, but each part needs a reason to exist in the wider system and a plausible route to delivery. Aeroknite subsequently secured a UK innovation endorsement.",
         ],
       },
     ],
@@ -453,10 +488,13 @@ export const articles: Article[] = [
     readTime: "10 min",
     tags: ["Platform engineering", "Backstage", "Developer experience", "M&A", "Organisational change"],
     relatedProjectIds: ["nexus-backstage"],
-    externalSources: [
+    sources: [
       {
-        label: "Read the original Spotify Backstage case study",
+        title:
+          "How The Access Group continually evolves their Backstage IDP with help from Spotify’s Insights plugin",
+        publisher: "Spotify Backstage",
         url: links.spotifyBackstage,
+        relationship: "primary-evidence",
       },
     ],
     sections: [
@@ -504,12 +542,14 @@ export const articles: Article[] = [
     relatedProjectIds: ["omnicede-ui", "michaelos"],
     relatedArticleIds: ["company-as-code"],
     continuesWith: ["company-as-code"],
+    sources: [],
+    evidenceNote:
+      "This article is based on Mike’s direct account. A public event source will be added when one is available.",
     sections: [
       {
         heading: "The CEOclaw starting point",
         paragraphs: [
-          "I was a national-track winner at CEOclaw at Imperial College London. I treat that as a starting point rather than a finished product: it gave a collection of ideas about agents, organisational memory and work a sharper direction.",
-          "TODO: add the verified competition year and formal track wording when an approved source is available.",
+          "I was a winner at CEOclaw, hosted at Imperial College London. I treat that as a starting point rather than a finished product: it gave a collection of ideas about agents, organisational memory and work a sharper direction.",
         ],
       },
       {
@@ -565,6 +605,26 @@ export const articles: Article[] = [
     relatedProjectIds: ["omnicede-ui", "michaelos"],
     relatedArticleIds: ["from-ceoclaw-to-omnicede-ui"],
     originArticle: "from-ceoclaw-to-omnicede-ui",
+    sources: [
+      {
+        title: "I won CEOclaw. Here’s what I built next.",
+        publisher: "MichaelOS",
+        url: "/blog?article=from-ceoclaw-to-omnicede-ui",
+        relationship: "related-work",
+      },
+      {
+        title: "Omnicede UI",
+        publisher: "MichaelOS",
+        url: "/projects?project=omnicede-ui",
+        relationship: "related-work",
+      },
+      {
+        title: "MichaelOS",
+        publisher: "MichaelOS",
+        url: "/projects?project=michaelos",
+        relationship: "related-work",
+      },
+    ],
     sections: [
       {
         heading: "What would Company as Code look like?",
@@ -588,6 +648,49 @@ export const articles: Article[] = [
           "Organisational charts describe reporting lines. They do not necessarily describe what the organisation can do. A capability-led model asks what outcome the organisation can produce, which inputs and permissions it requires, which work product it creates, who or what may execute it, and how success is measured.",
           "Capabilities might assess customer credit risk, approve a supplier, launch a product, respond to an incident, integrate an acquired company or prepare a regulatory submission.",
           "A person may use a normal application to access a capability. An agent may invoke a structured tool. A specialist may use a command interface. An accessibility client may expose the same action differently. The interface changes; the organisational capability remains the same.",
+          "This schema does not encode every step a credit analyst must take. It describes the capability, its inputs, the work product it must produce, its controls and the signals used to judge whether it is working.",
+        ],
+        examples: [
+          {
+            label: "Illustrative example",
+            title: "Organisational capability",
+            value: {
+              id: "customer.assessCreditRisk",
+              name: "Assess customer credit risk",
+              owner: "risk",
+              purpose:
+                "Determine whether a proposed credit arrangement is within the organisation's risk appetite",
+              inputs: [
+                "customer_profile",
+                "credit_history",
+                "requested_terms",
+                "current_exposure",
+              ],
+              workProduct: {
+                type: "credit_risk_assessment",
+                requiredFields: [
+                  "risk_rating",
+                  "recommended_limit",
+                  "evidence",
+                  "review_date",
+                ],
+              },
+              permissions: {
+                invoke: ["credit_analyst", "risk_agent"],
+                approve: ["senior_credit_manager"],
+              },
+              controls: [
+                "customer_consent_verified",
+                "source_data_freshness_under_24h",
+                "manual_review_above_threshold",
+              ],
+              successSignals: [
+                "decision_turnaround_time",
+                "default_rate",
+                "manual_override_rate",
+              ],
+            },
+          },
         ],
       },
       {
@@ -596,6 +699,40 @@ export const articles: Article[] = [
           "Organisations often automate existing workflows step by step. That can preserve a process without asking whether it still makes sense. I prefer to begin with the work product: what must exist when the work is complete?",
           "The answer might be an approved architecture, a customer risk assessment, a forecast, a deployment, a signed agreement, an integration plan or a product decision. People and agents can develop different working practices around producing it, provided they respect the controls and achieve the expected outcome.",
           "This lets the organisation evolve without encoding every historical habit as permanent logic.",
+        ],
+        examples: [
+          {
+            label: "Illustrative example",
+            title: "Acquisition integration work product",
+            value: {
+              id: "work-product.integration-plan",
+              name: "Acquisition integration plan",
+              status: "in_review",
+              objective:
+                "Integrate the acquired company without disrupting customer delivery",
+              sourceCapabilities: [
+                "technology.assessEstate",
+                "identity.mapAccess",
+                "data.classifySystems",
+                "finance.validateControls",
+              ],
+              requiredEvidence: [
+                "application_inventory",
+                "identity_dependencies",
+                "data_residency_assessment",
+                "migration_risks",
+              ],
+              approvals: [
+                { role: "enterprise_architecture", status: "approved" },
+                { role: "security", status: "pending" },
+              ],
+              metrics: [
+                "integration_lead_time",
+                "service_disruption",
+                "duplicated_platform_cost",
+              ],
+            },
+          },
         ],
       },
       {
@@ -610,6 +747,41 @@ export const articles: Article[] = [
         paragraphs: [
           "In software, two valid changes can conflict because they modify the same part of a system in incompatible ways. Companies experience the same problem when teams pursue legitimate goals that compete for resources or produce incompatible outcomes.",
           "Company as Code would make the conflict visible in the operating model. It should show the affected capability, work products and measures, then route the decision to the appropriate person or governance process. The system should not resolve every conflict autonomously.",
+          "Both branches may be locally rational. The conflict exists because they attempt to change the same organisational capability in incompatible ways. Company as Code should make that collision explicit before the organisation discovers it through poor outcomes.",
+        ],
+        examples: [
+          {
+            label: "Illustrative example",
+            title: "Conflicting KPIs as a merge conflict",
+            value: {
+              conflictId: "conflict.customer-growth-vs-credit-risk",
+              affectedCapability: "customer.approveCredit",
+              proposals: [
+                {
+                  branch: "sales-growth",
+                  change: { maximum_auto_approval_limit: 50000 },
+                  optimises: "new_revenue",
+                },
+                {
+                  branch: "risk-control",
+                  change: { maximum_auto_approval_limit: 20000 },
+                  optimises: "expected_credit_loss",
+                },
+              ],
+              conflict: {
+                field: "maximum_auto_approval_limit",
+                resolutionRequiredFrom: [
+                  "chief_financial_officer",
+                  "chief_risk_officer",
+                ],
+              },
+              evidenceRequired: [
+                "default_probability",
+                "cash_position",
+                "growth_forecast",
+              ],
+            },
+          },
         ],
       },
       {
@@ -617,6 +789,47 @@ export const articles: Article[] = [
         paragraphs: [
           "Code can be branched before it is merged. Organisational change could work similarly. A company could test a pricing model, onboarding process, operating structure, AI-assisted practice or risk policy as a bounded branch.",
           "The branch would state its objective, affected capabilities, expected work products, permitted data, success measures and review point. Evidence would determine whether it should be merged, revised or abandoned.",
+          "The branch analogy makes an experiment bounded and reviewable. It does not imply that the whole company is literally a Git repository.",
+        ],
+        examples: [
+          {
+            label: "Illustrative example",
+            title: "Organisational branch",
+            value: {
+              branch: "experiment.ai-assisted-onboarding",
+              basedOn: "company/main",
+              objective:
+                "Reduce onboarding time without increasing compliance failures",
+              scope: {
+                capabilities: [
+                  "customer.collectInformation",
+                  "customer.verifyIdentity",
+                  "customer.prepareAccount",
+                ],
+                regions: ["UK"],
+                customerSegment: "small-business",
+              },
+              agents: [
+                {
+                  id: "onboarding-agent",
+                  permissions: [
+                    "read_customer_submission",
+                    "request_missing_information",
+                    "prepare_onboarding_work_product",
+                  ],
+                  prohibited: [
+                    "approve_customer",
+                    "override_compliance_failure",
+                  ],
+                },
+              ],
+              successCriteria: {
+                median_onboarding_time_hours: { target: 4 },
+                compliance_failure_rate: { maximum: 0.01 },
+              },
+              reviewAt: "2026-10-01",
+            },
+          },
         ],
       },
       {
@@ -638,6 +851,28 @@ export const articles: Article[] = [
         paragraphs: [
           "MichaelOS applies parts of this idea at a personal scale. The normal interface, Navi, Agent CLI, Action Keys and accessibility tools are clients of one capability registry. A Navi action is registered, inspectable and available through other interfaces.",
           "MichaelOS is not the full Company as Code system. It makes the architectural pattern tangible in a browser.",
+          "The capability is defined once. The interfaces are clients.",
+        ],
+        examples: [
+          {
+            label: "Illustrative example",
+            title: "Human and agent interfaces",
+            value: {
+              capability: "finance.prepareCashForecast",
+              interfaces: [
+                { client: "finance_workspace", type: "graphical" },
+                { client: "navi", type: "conversational" },
+                { client: "agent_tool", type: "structured" },
+                { client: "command_line", type: "cli" },
+              ],
+              executionContract: {
+                inputSchema: "cash_forecast_request.v1",
+                outputSchema: "cash_forecast.v2",
+                requiresApproval: true,
+                auditRequired: true,
+              },
+            },
+          },
         ],
       },
       {
@@ -680,7 +915,7 @@ export const recognition: Recognition[] = [
     id: "innovation-endorsements",
     title: "UK innovation endorsements",
     detail:
-      "LawNeeds and Aeroknite achieved UK innovation endorsements with Mike’s advisory support. The endorsement issuers and private application materials are not published.",
+      "Mike advised LawNeeds and Aeroknite on product architecture, technical strategy and innovation positioning. Both ventures subsequently received UK innovation endorsements.",
   },
   {
     id: "spotify-case-study",
@@ -694,9 +929,8 @@ export const recognition: Recognition[] = [
   },
   {
     id: "ceoclaw",
-    title: "CEOclaw national-track winner",
-    detail:
-      "National-track winner at CEOclaw at Imperial College London. Date and formal track wording remain pending verified public evidence.",
+    title: "CEOclaw winner",
+    detail: "Winner at CEOclaw, hosted at Imperial College London.",
   },
 ];
 

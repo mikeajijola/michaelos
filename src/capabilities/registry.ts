@@ -368,7 +368,9 @@ const handlers: Record<string, Handler> = {
   }),
   "article.openExternal": async (p) => {
     const article = findArticle(p.slug);
-    const url = article.externalSources?.[0]?.url;
+    const url = article.sources.find((source) =>
+      /^https?:\/\//.test(source.url),
+    )?.url;
     if (!url)
       throw new CapabilityError(
         "ARTICLE_URL_NOT_FOUND",

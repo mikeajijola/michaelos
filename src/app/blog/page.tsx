@@ -28,22 +28,35 @@ export default function Blog() {
             <p className="professional-headline">{selected.alternativeTitle}</p>
           )}
           <p className="lead">{selected.excerpt}</p>
-          {selected.externalSources?.map((source) => (
-            <a
-              className="text-link"
-              href={source.url}
-              key={source.url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {source.label} ↗
-            </a>
-          ))}
+          {selected.sources
+            .filter((source) => source.relationship === "primary-evidence")
+            .map((source) => (
+              <a
+                className="primary-evidence-link"
+                href={source.url}
+                key={source.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Read the Spotify Backstage case study ↗
+              </a>
+            ))}
           {selected.sections.map((section) => (
             <section key={section.heading}>
               <h3>{section.heading}</h3>
               {section.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
+              ))}
+              {section.examples?.map((example) => (
+                <figure className="article-schema" key={example.title}>
+                  <figcaption>
+                    <span>{example.label}</span>
+                    <strong>{example.title}</strong>
+                  </figcaption>
+                  <pre>
+                    <code>{JSON.stringify(example.value, null, 2)}</code>
+                  </pre>
+                </figure>
               ))}
             </section>
           ))}
@@ -68,6 +81,39 @@ export default function Blog() {
               </div>
             </section>
           ) : null}
+          <section className="article-evidence">
+            <h3>Evidence and references</h3>
+            {selected.evidenceNote && <p>{selected.evidenceNote}</p>}
+            {selected.sources.length ? (
+              <ul>
+                {selected.sources.map((source) => {
+                  const external = /^https?:\/\//.test(source.url);
+                  return (
+                    <li key={`${source.relationship}:${source.url}`}>
+                      <span>
+                        {source.relationship === "primary-evidence"
+                          ? "Primary evidence"
+                          : source.relationship === "project-site"
+                            ? "Project site"
+                            : source.relationship === "background"
+                              ? "Background"
+                              : "Related work"}
+                      </span>
+                      <a
+                        href={source.url}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noreferrer" : undefined}
+                      >
+                        {source.title}
+                        {source.publisher ? ` — ${source.publisher}` : ""}
+                        {external ? " ↗" : " →"}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+          </section>
         </article>
       )}
       <section className="editorial-section">
