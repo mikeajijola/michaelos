@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { usePathname } from "next/navigation";
 import { useLily } from "@/lily/context";
@@ -69,13 +69,14 @@ export function LilyCompanion() {
     window.addEventListener("lily-control", control);
     return () => window.removeEventListener("lily-control", control);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useLayoutEffect(() => {
+    if (!panelOpen) return;
+    document
+      .querySelector<HTMLInputElement>("#lily-panel-input")
+      ?.focus({ preventScroll: true });
+  }, [panelOpen, pathname]);
   useEffect(() => {
-    if (lily.session.presentation !== "bubble-open") return;
-    const timer = window.setTimeout(
-      () =>
-        document.querySelector<HTMLInputElement>("#lily-panel-input")?.focus(),
-      30,
-    );
+    if (!panelOpen) return;
     const escape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         lily.close();
@@ -83,11 +84,8 @@ export function LilyCompanion() {
       }
     };
     window.addEventListener("keydown", escape);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("keydown", escape);
-    };
-  }, [lily]);
+    return () => window.removeEventListener("keydown", escape);
+  }, [lily.close, panelOpen]);
   const style: CSSProperties = dragPreview
     ? {
         left: Math.max(

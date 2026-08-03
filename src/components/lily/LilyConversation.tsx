@@ -77,6 +77,7 @@ export function LilyConversation({ compact = false }: { compact?: boolean }) {
             onChange={(event) => setInput(event.target.value)}
             placeholder="Ask Navi to navigate…"
             autoComplete="off"
+            autoFocus={compact}
           />
           <button
             disabled={!input.trim() || Boolean(session.activeRequestId)}
