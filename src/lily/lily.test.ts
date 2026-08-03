@@ -14,6 +14,7 @@ import {
 import type { CapabilityExecution } from "@/capabilities/types";
 import {
   completedLilyPresentation,
+  isNaviNavigationCapability,
   restoredLilyPresentation,
   shouldOpenLilyPanel,
   shouldShowLilyCompanion,
@@ -286,6 +287,19 @@ describe("Lily Gemini client context", () => {
 });
 
 describe("Lily homepage surface continuity", () => {
+  it("treats every capability-backed route change as terminal navigation", () => {
+    for (const capabilityId of [
+      "navigation.goProjects",
+      "cv.view",
+      "project.view",
+      "article.view",
+      "experience.view",
+    ])
+      expect(isNaviNavigationCapability(capabilityId)).toBe(true);
+    expect(isNaviNavigationCapability("project.search")).toBe(false);
+    expect(isNaviNavigationCapability("article.list")).toBe(false);
+  });
+
   it("never stacks the floating companion over the homepage prompt", () => {
     expect(shouldShowLilyCompanion("/")).toBe(true);
     expect(restoredLilyPresentation("/", "bubble-open")).toBe("landing-idle");

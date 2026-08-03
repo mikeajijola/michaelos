@@ -2959,22 +2959,23 @@ html[data-theme="dark"] .global-inspector pre {
   place-items: center;
   color: inherit;
   line-height: 0;
+  pointer-events: none;
 }
 .navi-face-small {
   width: 28px;
   height: 28px;
 }
 .lily-composer-avatar .navi-face-small {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
 }
 .navi-face-bubble {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
 }
 .navi-face-voice {
-  width: 76px;
-  height: 76px;
+  width: 68px;
+  height: 68px;
 }
 .navi-face > svg {
   width: 100%;
@@ -2984,7 +2985,7 @@ html[data-theme="dark"] .global-inspector pre {
 .navi-face > svg path {
   fill: none;
   stroke: currentColor;
-  stroke-width: 3.5;
+  stroke-width: 2.25;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
@@ -3070,10 +3071,10 @@ html[data-theme="dark"] .global-inspector pre {
 @keyframes navi-face-idle-wave {
   0%,
   100% {
-    transform: translateY(0) scaleY(0.92);
+    transform: translateY(0) scaleY(0.96);
   }
   50% {
-    transform: translateY(-1px) scaleY(1.08);
+    transform: translateY(-0.5px) scaleY(1.04);
   }
 }
 @keyframes navi-face-blink {

@@ -16,11 +16,11 @@ export function NaviFace({
     >
       <svg viewBox="0 0 64 64" focusable="false">
         <g className="navi-face-eyes">
-          <path d="M20 25.5h3" />
-          <path d="M41 25.5h3" />
+          <path d="M21 25.5h2.5" />
+          <path d="M40.5 25.5H43" />
         </g>
         <g className="navi-face-mouth">
-          <path d="M13 40c4-9 8 9 12 0s8-9 12 0 8 9 14 0" />
+          <path d="M16 40c4-3.5 7 3.5 11 0s7-3.5 11 0 7 3.5 11 0" />
         </g>
       </svg>
       {voiceActive && (

@@ -27,6 +27,7 @@ import {
 import { loadLilySession, saveLilySession } from "./conversation-storage";
 import {
   completedLilyPresentation,
+  isNaviNavigationCapability,
   restoredLilyPresentation,
 } from "./presentation";
 import type {
@@ -304,7 +305,14 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             finalText = `I couldn’t complete ${execution.capabilityId}. ${execution.error?.message ?? "The browser capability failed."}`;
             break;
           }
-          if (!proposal.needsAnotherTurn) {
+          // A confirmed navigation is terminal for the current request. Search
+          // and list results remain eligible for one grounded follow-up so a
+          // search-then-open plan cannot stop before the destination opens.
+          if (isNaviNavigationCapability(execution.capabilityId)) {
+            finalText = proposal.message;
+            break;
+          }
+          if (!proposal.needsAnotherTurn && !found.length) {
             finalText = proposal.message;
             break;
           }
@@ -320,9 +328,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
       const navigated = trace.some(
         (entry) =>
           entry.status === "success" &&
-          /^(navigation\.|project\.view|article\.view|experience\.view)/.test(
-            entry.capabilityId,
-          ),
+          isNaviNavigationCapability(entry.capabilityId),
       );
       update((current) => ({
         ...current,

@@ -1,5 +1,11 @@
 import type { LilyPresentationState } from "./types";
 
+export function isNaviNavigationCapability(capabilityId: string) {
+  return /^(navigation\.|cv\.view$|project\.view$|article\.view$|experience\.view$)/.test(
+    capabilityId,
+  );
+}
+
 export function restoredLilyPresentation(
   route: string,
   saved: LilyPresentationState,
