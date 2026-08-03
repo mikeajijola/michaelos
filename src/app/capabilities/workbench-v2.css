@@ -131,3 +131,139 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Capability Explorer dark mode keeps every workbench layer distinguishable. */
+html[data-theme="dark"] .capability-page .runtime {
+  border-color: #465148;
+  background: #1c2620;
+  color: #f3f4f6;
+}
+html[data-theme="dark"] .capability-page .runtime span {
+  color: #bdc5bf;
+}
+html[data-theme="dark"] .capability-page .cap-grid,
+html[data-theme="dark"] .capability-page .tools-grid {
+  border-color: #424751;
+  background: #15171c;
+  color: #f3f4f6;
+}
+html[data-theme="dark"] .capability-page .cap-list {
+  border-color: #424751;
+  background: #101217;
+}
+html[data-theme="dark"] .capability-page .panel-title {
+  border-color: #424751;
+  color: #f3f4f6;
+}
+html[data-theme="dark"] .capability-page .panel-title span,
+html[data-theme="dark"] .capability-page .cap-list button small {
+  color: #b5bac4;
+}
+html[data-theme="dark"] .capability-page .cap-search,
+html[data-theme="dark"] .capability-page .try input,
+html[data-theme="dark"] .capability-page .governance-workbench input {
+  border-color: #515762;
+  background: #1c1f25;
+  color: #f3f4f6;
+}
+html[data-theme="dark"] .capability-page .cap-search::placeholder,
+html[data-theme="dark"] .capability-page .governance-workbench input::placeholder {
+  color: #aeb3bd;
+  opacity: 1;
+}
+html[data-theme="dark"] .capability-page .cap-search:focus,
+html[data-theme="dark"] .capability-page .try input:focus,
+html[data-theme="dark"] .capability-page .governance-workbench input:focus {
+  border-color: #fff3bf;
+  outline: 3px solid rgb(255 243 191 / 24%);
+  outline-offset: 1px;
+}
+html[data-theme="dark"] .capability-page .cap-list button {
+  color: #d8dbe1;
+}
+html[data-theme="dark"] .capability-page .cap-list button:hover,
+html[data-theme="dark"] .capability-page .cap-list button.selected {
+  border-color: #4c515c;
+  background: #24272e;
+  color: #ffffff;
+}
+html[data-theme="dark"] .capability-page .cap-list button.selected {
+  box-shadow: inset 3px 0 0 #fff3bf;
+}
+html[data-theme="dark"] .capability-page .cap-detail > p,
+html[data-theme="dark"] .capability-page .param span,
+html[data-theme="dark"] .capability-page .param small,
+html[data-theme="dark"] .capability-page .protocol span,
+html[data-theme="dark"] .capability-page .empty,
+html[data-theme="dark"] .capability-page .evidence dt,
+html[data-theme="dark"] .capability-page .throughline {
+  color: #b8bdc7;
+}
+html[data-theme="dark"] .capability-page .param,
+html[data-theme="dark"] .capability-page .protocol,
+html[data-theme="dark"] .capability-page .inspector {
+  border-color: #424751;
+}
+html[data-theme="dark"] .capability-page .risk {
+  background: #28332d;
+  color: #bce8cc;
+}
+html[data-theme="dark"] .capability-page .risk.destructive {
+  background: #442623;
+  color: #ffb4a8;
+}
+html[data-theme="dark"] .capability-page .cap-detail pre,
+html[data-theme="dark"] .capability-page .evidence pre,
+html[data-theme="dark"] .capability-page .try {
+  border: 1px solid #424751;
+  background: #1c1f25;
+  color: #edf0f4;
+}
+html[data-theme="dark"] .capability-page .try button,
+html[data-theme="dark"] .capability-page .governance-workbench button {
+  border: 1px solid #f3f4f6;
+  background: #f3f4f6;
+  color: #111217;
+}
+html[data-theme="dark"] .capability-page .governance-workbench {
+  border-color: #424751;
+  background: #424751;
+}
+html[data-theme="dark"] .capability-page .governance-workbench > div {
+  background: #15171c;
+}
+html[data-theme="dark"] .capability-page .governance-workbench p {
+  color: #b8bdc7;
+}
+html[data-theme="dark"] .capability-page .governance-workbench > pre {
+  background: #08090b;
+  color: #edf0f4;
+}
+html[data-theme="dark"] .capability-page .evidence,
+html[data-theme="dark"] .capability-page .global-inspector {
+  background: #15171c;
+  color: #f3f4f6;
+}
+html[data-theme="dark"] .capability-page .global-inspector pre {
+  border-color: #424751;
+  background: #1c1f25;
+  color: #edf0f4;
+}
+html[data-theme="dark"] .capability-page .global-inspector .success,
+html[data-theme="dark"] .capability-page .success {
+  color: #72dca8;
+}
+html[data-theme="dark"] .capability-page .global-inspector .failure,
+html[data-theme="dark"] .capability-page .failure {
+  color: #ff9f94;
+}
+html[data-theme="dark"] .capability-page .caller {
+  background: #243750;
+  color: #c6dcff;
+}
+html[data-theme="dark"] .capability-page .manifesto {
+  color: #f3f4f6;
+}
+html[data-theme="dark"] .capability-page .manifesto span {
+  color: #b8bdc7;
+}
