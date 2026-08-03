@@ -24,6 +24,10 @@ import {
   validateLilyProposal,
 } from "./proposals";
 import { loadLilySession, saveLilySession } from "./conversation-storage";
+import {
+  completedLilyPresentation,
+  restoredLilyPresentation,
+} from "./presentation";
 import type {
   CapabilityTraceEntry,
   LilyMessage,
@@ -89,12 +93,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
       setSession({
         ...saved,
         currentRoute: pathname,
-        presentation:
-          pathname === "/" && !saved.messages.length
-            ? "landing-idle"
-            : saved.presentation === "landing-idle"
-              ? "bubble-collapsed"
-              : saved.presentation,
+        presentation: restoredLilyPresentation(pathname, saved.presentation),
       });
       remote.current = new Client({ host: "" }).session(saved.eveSession);
     } else remote.current = new Client({ host: "" }).session();
@@ -142,9 +141,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
         })),
         { role: "user" as const, text, status: "complete" as const },
       ];
-      const landing =
-        sessionRef.current.currentRoute === "/" &&
-        !sessionRef.current.messages.length;
+      const landing = sessionRef.current.currentRoute === "/";
       update((current) => ({
         ...current,
         activeRequestId: requestId,
@@ -298,8 +295,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
         ...current,
         activeRequestId: undefined,
         previousResults: references,
-        presentation:
-          navigated && landing ? "morphing-to-bubble" : "bubble-open",
+        presentation: completedLilyPresentation(landing, navigated),
         messages: current.messages.map((item) =>
           item.id === requestId
             ? {

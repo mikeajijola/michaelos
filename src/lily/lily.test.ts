@@ -11,6 +11,11 @@ import {
   validateLilyProposal,
 } from "./proposals";
 import type { CapabilityExecution } from "@/capabilities/types";
+import {
+  completedLilyPresentation,
+  restoredLilyPresentation,
+  shouldShowLilyCompanion,
+} from "./presentation";
 
 describe("Lily proposal boundary", () => {
   it("derives the shortlist from navigator-enabled, non-mutating registry entries", () => {
@@ -211,6 +216,22 @@ describe("Lily Gemini client context", () => {
       capabilityId: "project.search",
       status: "success",
     });
+  });
+});
+
+describe("Lily homepage surface continuity", () => {
+  it("never stacks the floating companion over the homepage prompt", () => {
+    expect(shouldShowLilyCompanion("/")).toBe(false);
+    expect(restoredLilyPresentation("/", "bubble-open")).toBe("landing-idle");
+  });
+
+  it("keeps non-navigation responses on the landing surface", () => {
+    expect(completedLilyPresentation(true, false)).toBe("landing-idle");
+  });
+
+  it("morphs to the companion only after homepage navigation", () => {
+    expect(completedLilyPresentation(true, true)).toBe("morphing-to-bubble");
+    expect(shouldShowLilyCompanion("/projects")).toBe(true);
   });
 });
 

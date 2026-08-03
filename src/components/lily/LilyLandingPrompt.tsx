@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useLily } from "@/lily/context";
+import { CapabilityTrace } from "./CapabilityTrace";
 const examples = [
   "Show me his AI work",
   "Open his CV",
@@ -11,6 +12,9 @@ export function LilyLandingPrompt() {
   const { session, submit } = useLily();
   const [value, setValue] = useState("");
   const active = session.presentation !== "landing-idle";
+  const latestResponse = [...session.messages]
+    .reverse()
+    .find((message) => message.role === "lily" && message.status !== "pending");
   const send = (text = value) => {
     if (!text.trim()) return;
     setValue("");
@@ -61,6 +65,24 @@ export function LilyLandingPrompt() {
             </button>
           ))}
         </div>
+        {latestResponse && (
+          <div className="lily-landing-response" aria-live="polite">
+            <span>Lily</span>
+            <p>{latestResponse.text}</p>
+            {latestResponse.clarificationOptions && (
+              <div className="lily-options">
+                {latestResponse.clarificationOptions.map((option) => (
+                  <button key={option.id} onClick={() => send(option.request)}>
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
+            {latestResponse.capabilityTrace && (
+              <CapabilityTrace entries={latestResponse.capabilityTrace} />
+            )}
+          </div>
+        )}
         {session.activeRequestId && (
           <p className="lily-status" role="status">
             Lily is resolving your request through registered capabilities…

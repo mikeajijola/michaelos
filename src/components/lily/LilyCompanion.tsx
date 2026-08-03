@@ -7,6 +7,7 @@ import { useCapabilities } from "@/capabilities/context";
 import { LilyConversation } from "./LilyConversation";
 import type { LilyBubblePosition } from "@/lily/types";
 import { clampBubblePosition, didDrag } from "@/lily/bubble-position";
+import { shouldShowLilyCompanion } from "@/lily/presentation";
 const KEY = "michaelos:lily:bubble-position:v1",
   EDGE = 16,
   SIZE = 58;
@@ -33,11 +34,11 @@ export function LilyCompanion() {
     yRatio: 0.72,
   });
   const [menu, setMenu] = useState(false);
-  const [dragPreview, setDragPreview] = useState<{ x: number; y: number } | null>(
-    null,
-  );
-  const visible =
-    pathname !== "/" || lily.session.presentation !== "landing-idle";
+  const [dragPreview, setDragPreview] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+  const visible = shouldShowLilyCompanion(pathname);
   const panelOpen = lily.session.presentation === "bubble-open";
   const save = (next: LilyBubblePosition) => {
     const value = clampBubblePosition(next);
@@ -118,17 +119,17 @@ export function LilyCompanion() {
               drag.current &&
               didDrag(
                 event.clientX - drag.current.x,
-              event.clientY - drag.current.y,
-            )
-          ) {
-            drag.current.moved = true;
-            setDragPreview({ x: event.clientX, y: event.clientY });
-          }
-        }}
+                event.clientY - drag.current.y,
+              )
+            ) {
+              drag.current.moved = true;
+              setDragPreview({ x: event.clientX, y: event.clientY });
+            }
+          }}
           onPointerUp={(event) => {
-          const state = drag.current;
-          drag.current = null;
-          setDragPreview(null);
+            const state = drag.current;
+            drag.current = null;
+            setDragPreview(null);
             if (state?.moved) {
               save({
                 edge: event.clientX < window.innerWidth / 2 ? "left" : "right",
@@ -136,12 +137,12 @@ export function LilyCompanion() {
               });
               return;
             }
-          void runtime.execute("lily.open");
-        }}
-        onPointerCancel={() => {
-          drag.current = null;
-          setDragPreview(null);
-        }}
+            void runtime.execute("lily.open");
+          }}
+          onPointerCancel={() => {
+            drag.current = null;
+            setDragPreview(null);
+          }}
         >
           Lily
         </button>
