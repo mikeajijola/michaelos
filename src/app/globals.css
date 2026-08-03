@@ -702,7 +702,42 @@ input:focus-visible {
 }
 .xterm-host {
   height: 100%;
+  min-height: 0;
+  overflow: hidden;
   padding: 12px;
+}
+.terminal-client {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: #15201b;
+}
+.terminal-guide {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #ffffff18;
+  background: #1b2922;
+  color: #aab9b1;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.terminal-guide b {
+  flex: 0 0 auto;
+  color: var(--lime);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.terminal-guide code {
+  color: #eef4f0;
+}
+@media (max-width: 700px) {
+  .terminal-guide {
+    display: grid;
+    gap: 3px;
+  }
 }
 .ai-client {
   height: 100%;

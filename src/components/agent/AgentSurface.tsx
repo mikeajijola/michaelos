@@ -90,7 +90,10 @@ function TerminalClient() {
         });
         const resize = () => fit.fit();
         window.addEventListener("resize", resize);
-        instance.write("› ");
+        const saved = runtimeRef.current.transcript;
+        if (saved.length) instance.writeln(saved.join("\r\n\r\n"));
+        instance.write(saved.length ? "\r\n› " : "› ");
+        instance.scrollToBottom();
       },
     );
     return () => {
@@ -107,6 +110,7 @@ function TerminalClient() {
     if (runtime.transcript.length)
       instance.writeln(runtime.transcript.join("\r\n\r\n"));
     instance.write("\r\n› ");
+    instance.scrollToBottom();
   }, [runtime.transcript]);
   useEffect(() => {
     if (
@@ -119,7 +123,17 @@ function TerminalClient() {
     }
   }, [runtime.surface.open, runtime.surface.minimised, runtime.surface.tab]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <div className="xterm-host" ref={host} aria-label="MichaelOS Agent CLI" />
+    <div className="terminal-client">
+      <aside className="terminal-guide" aria-label="Agent CLI instructions">
+        <b>Agent CLI</b>
+        <span>
+          Start with <code>help</code> or <code>capabilities</code>. Inspect
+          with <code>describe &lt;capability-id&gt;</code>, then execute with{" "}
+          <code>run &lt;capability-id&gt; --name value</code>.
+        </span>
+      </aside>
+      <div className="xterm-host" ref={host} aria-label="MichaelOS Agent CLI" />
+    </div>
   );
 }
 

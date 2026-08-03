@@ -1,10 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLily } from "@/lily/context";
 import { CapabilityTrace } from "./CapabilityTrace";
 export function LilyConversation({ compact = false }: { compact?: boolean }) {
   const { session, submit } = useLily();
   const [input, setInput] = useState("");
+  const messages = useRef<HTMLDivElement>(null);
+  const latestMessage = session.messages.at(-1);
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const viewport = messages.current;
+      if (viewport) viewport.scrollTop = viewport.scrollHeight;
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [session.messages.length, latestMessage?.text, latestMessage?.status]);
   const send = () => {
     if (!input.trim()) return;
     const value = input;
@@ -13,7 +22,7 @@ export function LilyConversation({ compact = false }: { compact?: boolean }) {
   };
   return (
     <div className={`lily-conversation ${compact ? "compact" : ""}`}>
-      <div className="lily-messages" aria-live="polite">
+      <div ref={messages} className="lily-messages" aria-live="polite">
         {session.messages.length ? (
           session.messages.map((item) => (
             <article
