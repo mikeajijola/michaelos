@@ -22,6 +22,9 @@ export function ProfilePortrait({
         src={PROFILE_IMAGE_PATH}
         alt=""
         aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
         className={loaded ? "is-loaded" : undefined}
         onLoad={() => setLoaded(true)}
       />
