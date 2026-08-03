@@ -9,6 +9,7 @@ const harness = vi.hoisted(() => ({
     | undefined,
   session: {
     sendRealtimeInput: vi.fn(),
+    sendClientContent: vi.fn(),
     sendToolResponse: vi.fn(),
     close: vi.fn(),
   },
@@ -95,6 +96,7 @@ describe("Gemini Live Navi adapter", () => {
         Response.json({
           token: "ephemeral-token",
           model: "gemini-live-test",
+          voice: "Kore",
           expiresAt: new Date(Date.now() + 180_000).toISOString(),
         }),
       ),
@@ -139,10 +141,11 @@ describe("Gemini Live Navi adapter", () => {
     const adapter = new GeminiLiveNaviAdapter();
     await adapter.start(events);
     expect(events.onState).toHaveBeenCalledWith("connecting");
-    expect(events.onTranscript).toHaveBeenCalledWith(
-      "What do you need?",
-      true,
+    expect(events.onTranscript).toHaveBeenCalledWith("How can I help?", true);
+    expect(harness.session.sendClientContent).toHaveBeenCalledWith(
+      expect.objectContaining({ turnComplete: true }),
     );
+    harness.callbacks?.onmessage({ serverContent: { turnComplete: true } });
     expect(events.onState).toHaveBeenLastCalledWith("listening");
     adapter.setMuted(true);
     expect(media.track.enabled).toBe(false);

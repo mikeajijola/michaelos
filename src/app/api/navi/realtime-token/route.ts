@@ -1,6 +1,7 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 import {
   DEFAULT_NAVI_REALTIME_MODEL,
+  DEFAULT_NAVI_REALTIME_VOICE,
   NAVI_REALTIME_SYSTEM_INSTRUCTION,
   NAVI_REALTIME_TOOL,
 } from "@/navi/voice/config";
@@ -36,9 +37,14 @@ export async function POST() {
 
   const model =
     process.env.NAVI_REALTIME_MODEL ?? DEFAULT_NAVI_REALTIME_MODEL;
+  const voice =
+    process.env.NAVI_REALTIME_VOICE ?? DEFAULT_NAVI_REALTIME_VOICE;
   const now = Date.now();
   const config = {
     responseModalities: [Modality.AUDIO],
+    speechConfig: {
+      voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } },
+    },
     inputAudioTranscription: {},
     outputAudioTranscription: {},
     systemInstruction: NAVI_REALTIME_SYSTEM_INSTRUCTION,
@@ -63,6 +69,7 @@ export async function POST() {
       {
         token: token.name,
         model,
+        voice,
         expiresAt: new Date(now + NAVI_VOICE_MAX_SESSION_MS).toISOString(),
       },
       { headers: { "Cache-Control": "no-store" } },

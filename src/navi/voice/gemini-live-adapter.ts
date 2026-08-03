@@ -1,5 +1,6 @@
 import type { LiveServerMessage, Session } from "@google/genai";
 import {
+  DEFAULT_NAVI_REALTIME_VOICE,
   NAVI_REALTIME_SYSTEM_INSTRUCTION,
   NAVI_REALTIME_TOOL,
 } from "./config";
@@ -14,7 +15,12 @@ import {
 
 let activeAdapter: GeminiLiveNaviAdapter | null = null;
 
-type TokenResponse = { token: string; model: string; expiresAt: string };
+type TokenResponse = {
+  token: string;
+  model: string;
+  voice?: string;
+  expiresAt: string;
+};
 
 function floatToBase64(input: Float32Array) {
   const bytes = new Uint8Array(input.length * 2);
@@ -62,6 +68,9 @@ export class GeminiLiveNaviAdapter implements NaviRealtimeAdapter {
   private inactivityTimer?: number;
   private state: NaviVoiceState = "inactive";
   private playbackTime = 0;
+  private awaitingOpening = false;
+  private openingTurnComplete = false;
+  private openingTimer?: number;
 
   private setState(state: NaviVoiceState) {
     this.state = state;
@@ -105,6 +114,13 @@ export class GeminiLiveNaviAdapter implements NaviRealtimeAdapter {
         model: payload.model,
         config: {
           responseModalities: [Modality.AUDIO],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: {
+                voiceName: payload.voice ?? DEFAULT_NAVI_REALTIME_VOICE,
+              },
+            },
+          },
           inputAudioTranscription: {},
           outputAudioTranscription: {},
           systemInstruction: NAVI_REALTIME_SYSTEM_INSTRUCTION,
@@ -125,33 +141,43 @@ export class GeminiLiveNaviAdapter implements NaviRealtimeAdapter {
         () => this.stop("timeout"),
         NAVI_VOICE_MAX_SESSION_MS,
       );
-      await this.sayOpening();
-      if (!this.stopped) this.startCapture();
+      this.requestOpening();
     } catch (error) {
       this.fail(error);
     }
   }
 
-  private async sayOpening() {
+  private requestOpening() {
+    if (!this.session) return;
+    this.awaitingOpening = true;
+    this.openingTurnComplete = false;
     this.setState("speaking");
-    this.callbacks?.onTranscript("What do you need?", true);
-    if (!("speechSynthesis" in window)) return;
-    await new Promise<void>((resolve) => {
-      const utterance = new SpeechSynthesisUtterance("What do you need?");
-      let settled = false;
-      const finish = () => {
-        if (settled) return;
-        settled = true;
-        window.clearTimeout(fallback);
-        resolve();
-      };
-      const fallback = window.setTimeout(finish, 2_500);
-      utterance.rate = 1.02;
-      utterance.onend = finish;
-      utterance.onerror = finish;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(utterance);
+    this.callbacks?.onTranscript("How can I help?", true);
+    this.session.sendClientContent({
+      turns: [
+        {
+          role: "user",
+          parts: [{ text: 'Say exactly: "How can I help?"' }],
+        },
+      ],
+      turnComplete: true,
     });
+    this.openingTimer = window.setTimeout(() => {
+      this.awaitingOpening = false;
+      if (!this.stopped) this.startCapture();
+    }, 8_000);
+  }
+
+  private finishOpening() {
+    if (
+      !this.awaitingOpening ||
+      !this.openingTurnComplete ||
+      this.playing.size
+    )
+      return;
+    this.awaitingOpening = false;
+    if (this.openingTimer) clearTimeout(this.openingTimer);
+    if (!this.stopped) this.startCapture();
   }
 
   private startCapture() {
@@ -236,8 +262,12 @@ export class GeminiLiveNaviAdapter implements NaviRealtimeAdapter {
       if (audio?.data && audio.mimeType?.startsWith("audio/"))
         this.playAudio(audio.data, audio.mimeType);
     }
-    if (content?.turnComplete && !this.playing.size)
+    if (content?.turnComplete && this.awaitingOpening) {
+      this.openingTurnComplete = true;
+      this.finishOpening();
+    } else if (content?.turnComplete && !this.playing.size) {
       this.setState("listening");
+    }
     for (const call of message.toolCall?.functionCalls ?? [])
       void this.handleToolCall(call.id, call.name, call.args);
   }
@@ -301,7 +331,8 @@ export class GeminiLiveNaviAdapter implements NaviRealtimeAdapter {
     this.playing.add(source);
     source.onended = () => {
       this.playing.delete(source);
-      if (!this.playing.size && !this.stopped) this.setState("listening");
+      if (this.awaitingOpening) this.finishOpening();
+      else if (!this.playing.size && !this.stopped) this.setState("listening");
     };
     const startAt = Math.max(this.outputContext.currentTime, this.playbackTime);
     source.start(startAt);
@@ -344,6 +375,7 @@ export class GeminiLiveNaviAdapter implements NaviRealtimeAdapter {
     this.stopped = true;
     if (this.sessionTimer) clearTimeout(this.sessionTimer);
     if (this.inactivityTimer) clearTimeout(this.inactivityTimer);
+    if (this.openingTimer) clearTimeout(this.openingTimer);
     this.stopCapture();
     this.stopPlayback();
     for (const track of this.stream?.getTracks() ?? []) track.stop();

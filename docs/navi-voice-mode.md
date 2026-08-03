@@ -23,6 +23,7 @@ Official references:
 ## Configuration and controls
 
 - `NAVI_REALTIME_MODEL` selects the server-constrained model and defaults to `gemini-3.1-flash-live-preview`.
+- `NAVI_REALTIME_VOICE` pins the Gemini Live voice and defaults to `Kore`, so the opening prompt and subsequent responses use one consistent voice.
 - `NAVI_VOICE_ENABLED=false` disables token minting.
 - `NAVI_VOICE_KILL_SWITCH=true` disables token minting immediately.
 - `NEXT_PUBLIC_NAVI_VOICE_ENABLED=false` hides the browser control.

@@ -35,7 +35,7 @@ export function NaviVoiceSurface({ voice }: { voice: NaviVoiceViewModel }) {
         {voiceStatusText(voice.state, voice.muted)}
       </p>
       <p className="navi-voice-transcript">
-        {voice.error ?? (voice.transcript || "What do you need?")}
+        {voice.error ?? (voice.transcript || "How can I help?")}
       </p>
       {voice.capabilitySequence && (
         <div className="navi-voice-capability" role="status">
