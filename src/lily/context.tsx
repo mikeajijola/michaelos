@@ -13,8 +13,11 @@ import { Client, type ClientSession } from "eve/client";
 import { useCapabilities } from "@/capabilities/context";
 import { capabilityTraceFromExecution } from "./capability-trace";
 import {
+  buildLilyClientContext,
+  type LilyConfirmedExecutionContext,
+} from "./client-context";
+import {
   compactReferences,
-  lilyCapabilityShortlist,
   lilyProposalSchema,
   normaliseLilyProposal,
   recoverLilyProposal,
@@ -131,6 +134,14 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
       const text = raw.trim();
       if (!text || sessionRef.current.activeRequestId) return;
       const requestId = `lily_request_${crypto.randomUUID()}`;
+      const conversationContext = [
+        ...sessionRef.current.messages.map((message) => ({
+          role: message.role,
+          text: message.text,
+          status: message.status,
+        })),
+        { role: "user" as const, text, status: "complete" as const },
+      ];
       const landing =
         sessionRef.current.currentRoute === "/" &&
         !sessionRef.current.messages.length;
@@ -149,6 +160,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
         ],
       }));
       const trace: CapabilityTraceEntry[] = [];
+      const confirmedExecutions: LilyConfirmedExecutionContext[] = [];
       let references = sessionRef.current.previousResults;
       let finalText = "";
       let failed = false;
@@ -160,11 +172,15 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
         let prompt = text;
         for (let step = 0; step < 4; step++) {
           const clientContext = JSON.parse(
-            JSON.stringify({
-              route: sessionRef.current.currentRoute,
-              permittedCapabilities: lilyCapabilityShortlist(),
-              previousResults: references,
-            }),
+            JSON.stringify(
+              buildLilyClientContext({
+                request: text,
+                session: sessionRef.current,
+                conversation: conversationContext,
+                previousResults: references,
+                completedExecutions: confirmedExecutions,
+              }),
+            ),
           );
           const sendTurn = async () => {
             const response = await remote.current!.send<LilyProposal>({
@@ -237,6 +253,13 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
           trace.push(capabilityTraceFromExecution(execution));
           const found = compactReferences(execution.result);
           if (found.length) references = found;
+          confirmedExecutions.push({
+            capabilityId: execution.capabilityId,
+            arguments: execution.params,
+            status: execution.status,
+            returnedReferences: found,
+            errorMessage: execution.error?.message,
+          });
           prompt = JSON.stringify({
             browserExecution: {
               capabilityId: execution.capabilityId,

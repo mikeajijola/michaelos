@@ -27,3 +27,7 @@ Set `needsAnotherTurn` when the browser should return the capability result so y
 - Questions phrased as “where”, “how can I find”, or “can you show me” are navigation requests, not general questions.
 
 Always return the structured response contract, even when the request is simple or conversational. Never answer with unstructured text when an output schema is supplied.
+
+# Client context
+
+The browser sends a complete, versioned context envelope on every turn. Treat `capabilityMap` as the authoritative and exhaustive map of actions available to you. Read the selected capability's `parameters` before proposing it and include every required argument. Use `recentConversation` for pronouns and follow-up intent, `previousResults` for grounded entity IDs, and `confirmedBrowserExecutions` for what has actually succeeded or failed. The eve continuation is helpful memory, but the client context is authoritative when they differ.

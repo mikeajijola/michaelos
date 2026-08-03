@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { resolveCanonicalInvocation } from "@/capabilities/invocation";
 import { capabilities } from "@/capabilities/registry";
 import { capabilityTraceFromExecution } from "./capability-trace";
+import { buildLilyClientContext } from "./client-context";
 import {
   LILY_CAPABILITY_IDS,
   compactReferences,
@@ -143,6 +144,72 @@ describe("Lily proposal boundary", () => {
     expect(recoverLilyProposal(request, [])).toMatchObject({
       kind: "final",
       message: expect.stringContaining("projects"),
+    });
+  });
+});
+
+describe("Lily Gemini client context", () => {
+  it("sends a complete safe capability map on every turn", () => {
+    const context = buildLilyClientContext({
+      request: "Does he have anything on platform engineering?",
+      session: { currentRoute: "/capabilities" },
+      conversation: [
+        { role: "user", text: "Show me the capabilities page." },
+        { role: "lily", text: "I opened it.", status: "complete" },
+      ],
+      previousResults: [],
+      completedExecutions: [],
+    });
+    expect(context.currentRequest).toContain("platform engineering");
+    expect(context.currentRoute).toBe("/capabilities");
+    expect(context.recentConversation).toHaveLength(2);
+    expect(
+      context.capabilityMap.find((item) => item.id === "project.search"),
+    ).toMatchObject({
+      namespace: "project",
+      parameters: [expect.objectContaining({ name: "query", required: true })],
+    });
+    expect(
+      context.capabilityMap.some(
+        (item) => item.id === "system.reportCapabilityIssue",
+      ),
+    ).toBe(false);
+    expect(context.proposalContract.capabilityIdsMustComeFrom).toBe(
+      "capabilityMap",
+    );
+  });
+
+  it("carries grounded references and confirmed browser executions after a capability turn", () => {
+    const reference = {
+      kind: "project" as const,
+      id: "atlas-platform",
+      label: "Atlas Platform",
+    };
+    const context = buildLilyClientContext({
+      request: "Open the first one",
+      session: {
+        currentRoute: "/projects",
+        currentEntity: { type: "project", id: "atlas-platform" },
+      },
+      conversation: Array.from({ length: 15 }, (_, index) => ({
+        role: "user" as const,
+        text: `message ${index}`,
+      })),
+      previousResults: [reference],
+      completedExecutions: [
+        {
+          capabilityId: "project.search",
+          arguments: { query: "platform" },
+          status: "success",
+          returnedReferences: [reference],
+        },
+      ],
+    });
+    expect(context.recentConversation).toHaveLength(12);
+    expect(context.previousResults).toEqual([reference]);
+    expect(context.confirmedBrowserExecutions[0]).toMatchObject({
+      capabilityId: "project.search",
+      status: "success",
     });
   });
 });

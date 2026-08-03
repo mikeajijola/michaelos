@@ -19,13 +19,21 @@ export function lilyCapabilityShortlist() {
     .filter((item): item is CapabilityDefinition => Boolean(item))
     .map((item) => ({
       id: item.id,
+      namespace: item.id.split(".")[0],
+      title: item.title,
       description: item.description,
+      aliases: item.aliases ?? [],
       parameters: item.params.map((param) => ({
         name: param.name,
+        description: param.description,
         type: param.type,
         required: param.required,
         values: param.values,
+        default: param.default,
       })),
+      exampleArguments: item.examples
+        .slice(0, 2)
+        .map((example) => example.params),
     }));
 }
 function searchQueryFromRequest(request: string) {
