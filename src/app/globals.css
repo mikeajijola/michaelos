@@ -3008,10 +3008,10 @@ html[data-theme="dark"]
     drop-shadow(0 0 5px color-mix(in srgb, var(--navi-accent) 72%, transparent));
 }
 .navi-face-ring .navi-face-ring-ripple {
-  stroke-width: 2.15 !important;
+  stroke-width: 1.95 !important;
   stroke-dasharray: 0.8 3.2;
-  opacity: 0.82;
-  animation: navi-ring-ripple 4s linear infinite;
+  opacity: 0.72;
+  animation: navi-ring-ripple 7.5s linear infinite;
 }
 .navi-face-portrait {
   transform-box: view-box;
