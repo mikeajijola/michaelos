@@ -13,9 +13,9 @@ export default function Home() {
           <div className="eyebrow">Your MichaelOS guide</div>
           <h1>Chat with Navi.</h1>
           <p>
-            Ask about Mike’s projects, experience, writing or CV. Navi can
-            answer, take you to the right place and show the capability she
-            used.
+            Type a message, or turn on Voice Mode and speak naturally. Ask
+            about Mike’s projects, experience, writing or CV; Navi can answer,
+            take you to the right place and show the capability she used.
           </p>
         </div>
         <LilyLandingPrompt />

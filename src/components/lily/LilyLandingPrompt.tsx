@@ -42,7 +42,9 @@ export function LilyLandingPrompt() {
           }}
         >
           <div className="lily-composer-heading">
-            <label htmlFor="lily-landing-input">Message Navi</label>
+            <label htmlFor="lily-landing-input">
+              Message Navi or use Voice Mode to dictate
+            </label>
             <button
               type="button"
               className="lily-home-voice-toggle"
