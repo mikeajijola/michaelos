@@ -5,6 +5,7 @@ import { capabilityTraceFromExecution } from "./capability-trace";
 import {
   LILY_CAPABILITY_IDS,
   compactReferences,
+  normaliseLilyProposal,
   recoverLilyProposal,
   validateLilyProposal,
 } from "./proposals";
@@ -64,6 +65,36 @@ describe("Lily proposal boundary", () => {
       capabilityId: "project.view",
       arguments: { slug: "atlas-platform" },
     });
+  });
+  it("repairs a missing required search query from natural wording", () => {
+    const raw = {
+      kind: "capability",
+      capabilityId: "project.search",
+      arguments: {},
+      message: "I’ll look.",
+    };
+    const repaired = normaliseLilyProposal(
+      raw,
+      "Does he have anything on platform engineering?",
+    );
+    expect(validateLilyProposal(repaired, [])).toMatchObject({
+      capabilityId: "project.search",
+      arguments: { query: "platform engineering" },
+    });
+  });
+  it("normalises whitespace in model-generated argument names", () => {
+    const raw = {
+      kind: "capability",
+      capabilityId: "article.search",
+      arguments: { " query ": "local-first" },
+      message: "I’ll look.",
+    };
+    expect(
+      validateLilyProposal(
+        normaliseLilyProposal(raw, "Find local-first writing"),
+        [],
+      ),
+    ).toMatchObject({ arguments: { query: "local-first" } });
   });
   it.each([
     "Where I get Michael's cv",

@@ -28,6 +28,46 @@ export function lilyCapabilityShortlist() {
       })),
     }));
 }
+function searchQueryFromRequest(request: string) {
+  const reduced = request
+    .trim()
+    .replace(
+      /^(?:does\s+(?:he|mike|michael)\s+have\s+(?:anything|something)\s+(?:on|about|for)|(?:please\s+)?(?:show|find)\s+me\s+(?:anything|something)?\s*(?:on|about|for)?|(?:can|could)\s+you\s+(?:show|find)\s+me\s+(?:anything|something)?\s*(?:on|about|for)?)/i,
+      "",
+    )
+    .replace(/[?.!]+$/g, "")
+    .trim();
+  return reduced || request.trim();
+}
+
+export function normaliseLilyProposal(
+  value: unknown,
+  request: string,
+): unknown {
+  if (!value || typeof value !== "object") return value;
+  const proposal = value as LilyProposal;
+  if (proposal.kind !== "capability") return value;
+  const rawArguments =
+    proposal.arguments && typeof proposal.arguments === "object"
+      ? proposal.arguments
+      : {};
+  const args = Object.fromEntries(
+    Object.entries(rawArguments).map(([key, argument]) => [
+      key.trim(),
+      argument,
+    ]),
+  );
+  const capability = proposal.capabilityId
+    ? registry.get(proposal.capabilityId)
+    : undefined;
+  const needsQuery = capability?.params.some(
+    (parameter) => parameter.name === "query" && parameter.required,
+  );
+  if (needsQuery && !String(args.query ?? "").trim())
+    args.query = searchQueryFromRequest(request);
+  return { ...proposal, arguments: args };
+}
+
 export function validateLilyProposal(
   value: unknown,
   references: LilyResultReference[],

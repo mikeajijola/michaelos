@@ -16,6 +16,7 @@ import {
   compactReferences,
   lilyCapabilityShortlist,
   lilyProposalSchema,
+  normaliseLilyProposal,
   recoverLilyProposal,
   validateLilyProposal,
 } from "./proposals";
@@ -174,24 +175,40 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             return response.result();
           };
           let result = await sendTurn();
+          let retriedWithFreshSession = false;
           if (!result.data) {
             // Persisted eve continuations can outlive an agent deployment. Retry
             // the same grounded browser turn once in a fresh remote session.
             remote.current = new Client({ host: "" }).session();
             result = await sendTurn();
+            retriedWithFreshSession = true;
           }
-          update((current) => ({
-            ...current,
-            eveSession: remote.current?.state,
-          }));
-          const recovered =
-            result.data ??
+          const recover = (data: unknown) =>
+            data ??
             recoverLilyProposal(
               text,
               references,
               trace.map((entry) => entry.capabilityId),
             );
-          const proposal = validateLilyProposal(recovered, references);
+          let proposal: LilyProposal;
+          try {
+            proposal = validateLilyProposal(
+              normaliseLilyProposal(recover(result.data), text),
+              references,
+            );
+          } catch (error) {
+            if (retriedWithFreshSession) throw error;
+            remote.current = new Client({ host: "" }).session();
+            result = await sendTurn();
+            proposal = validateLilyProposal(
+              normaliseLilyProposal(recover(result.data), text),
+              references,
+            );
+          }
+          update((current) => ({
+            ...current,
+            eveSession: remote.current?.state,
+          }));
           if (proposal.kind === "clarification") {
             finalText = proposal.message;
             update((current) => ({
