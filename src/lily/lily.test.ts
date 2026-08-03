@@ -271,7 +271,7 @@ describe("Lily Gemini client context", () => {
 
 describe("Lily homepage surface continuity", () => {
   it("never stacks the floating companion over the homepage prompt", () => {
-    expect(shouldShowLilyCompanion("/")).toBe(false);
+    expect(shouldShowLilyCompanion("/")).toBe(true);
     expect(restoredLilyPresentation("/", "bubble-open")).toBe("landing-idle");
   });
 

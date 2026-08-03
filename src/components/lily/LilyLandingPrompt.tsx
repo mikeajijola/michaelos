@@ -1,12 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useLily } from "@/lily/context";
 import { useCapabilities } from "@/capabilities/context";
 import { CapabilityTrace } from "./CapabilityTrace";
+import {
+  getNaviVoiceState,
+  getServerNaviVoiceState,
+  subscribeNaviVoiceState,
+} from "@/navi/voice/state-store";
 export function LilyLandingPrompt() {
   const { session, submit } = useLily();
   const runtime = useCapabilities();
   const [value, setValue] = useState("");
+  const voiceState = useSyncExternalStore(
+    subscribeNaviVoiceState,
+    getNaviVoiceState,
+    getServerNaviVoiceState,
+  );
+  const voiceActive = voiceState !== "inactive" && voiceState !== "error";
+  const toggleVoice = () =>
+    void runtime.execute(voiceActive ? "navi.endVoice" : "navi.startVoice");
   const active = session.presentation !== "landing-idle";
   const latestResponse = [...session.messages]
     .reverse()
@@ -28,16 +41,29 @@ export function LilyLandingPrompt() {
             send();
           }}
         >
-          <label htmlFor="lily-landing-input">Message Navi</label>
+          <div className="lily-composer-heading">
+            <label htmlFor="lily-landing-input">Message Navi</label>
+            <button
+              type="button"
+              className="lily-home-voice-toggle"
+              aria-pressed={voiceActive}
+              onClick={toggleVoice}
+            >
+              {voiceActive ? "End voice" : "Voice mode"}
+            </button>
+          </div>
           <div className="lily-composer-field">
             <button
               type="button"
               className="lily-composer-avatar"
-              aria-label="Start Navi Voice Mode"
-              title="Start Navi Voice Mode"
-              onClick={() => void runtime.execute("navi.startVoice")}
+              aria-label={
+                voiceActive ? "End Navi Voice Mode" : "Start Navi Voice Mode"
+              }
+              aria-pressed={voiceActive}
+              title={voiceActive ? "End Navi Voice Mode" : "Start Navi Voice Mode"}
+              onClick={toggleVoice}
             >
-              <span aria-hidden="true">🎙</span>
+              <span aria-hidden="true">{voiceActive ? "🎙" : "N"}</span>
             </button>
             <textarea
               id="lily-landing-input"

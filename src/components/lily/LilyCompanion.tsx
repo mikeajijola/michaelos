@@ -175,7 +175,7 @@ export function LilyCompanion() {
             setDragPreview(null);
           }}
         >
-          <span aria-hidden="true">🎙</span>
+          <span aria-hidden="true">{voiceMode ? "🎙" : "N"}</span>
         </button>
       )}
       {panelOpen && (

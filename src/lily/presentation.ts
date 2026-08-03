@@ -17,7 +17,7 @@ export function completedLilyPresentation(
 }
 
 export function shouldShowLilyCompanion(route: string) {
-  return route !== "/";
+  return Boolean(route);
 }
 
 export function shouldOpenLilyPanel(

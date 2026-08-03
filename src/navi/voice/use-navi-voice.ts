@@ -8,6 +8,7 @@ import {
   type NaviVoiceRequestResult,
   type NaviVoiceState,
 } from "./types";
+import { publishNaviVoiceState } from "./state-store";
 
 export function useNaviVoice(
   handleRequest: (request: string) => Promise<NaviVoiceRequestResult>,
@@ -78,6 +79,7 @@ export function useNaviVoice(
 
   const interrupt = useCallback(() => adapter.current?.interrupt(), []);
 
+  useEffect(() => publishNaviVoiceState(state), [state]);
   useEffect(() => () => stop("panel-close"), [stop]);
 
   return useMemo(
