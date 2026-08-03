@@ -18,14 +18,12 @@ export function NaviFace({
         <g className="navi-face-ring">
           <path
             pathLength="100"
-            d="M27 6 Q32 4 37 6 Q42 8 46.9 10.1 Q51.8 12.2 53.9 17.1 Q56 22 58 27 Q60 32 58 37 Q56 42 53.9 46.9 Q51.8 51.8 46.9 53.9 Q42 56 37 58 Q32 60 27 58 Q22 56 17.1 53.9 Q12.2 51.8 10.1 46.9 Q8 42 6 37 Q4 32 6 27 Q8 22 10.1 17.1 Q12.2 12.2 17.1 10.1 Q22 8 27 6 Z"
+            d="M32 5 C47.1 5 59 17 59 32 C59 47.1 47 59 32 59 C16.9 59 5 47 5 32 C5 16.9 17 5 32 5 Z"
           />
         </g>
         <g className="navi-face-portrait">
           <g className="navi-face-hair">
-            <path d="M15.5 29.5c-1-9.5 6-16 16-16s15.5 5.5 17 14.5" />
-            <path d="M31.5 14c-4 3-6.5 7-7 11.5" />
-            <path d="M38.5 16c-4 2-7 5-9 8" />
+            <path d="M22 19.5 C27 13.5 36.5 13 42 18 C37 16.8 32 18 28.5 21" />
           </g>
           <g className="navi-face-eyes">
             <ellipse cx="22" cy="26" rx="2.65" ry="3.2" />
