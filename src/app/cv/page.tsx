@@ -1,4 +1,141 @@
 "use client";
-import { experience,projects,skills } from "@/data/content";
+
+import { experience, projects, skills } from "@/data/content";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
-export default function CV(){return <div className="shell"><div className="page-head cv-head"><div><div className="eyebrow">Curriculum vitae</div><h1 className="page-title">Mike Ajijola</h1><p>Platform engineer and technical leader.<br/>London, United Kingdom.</p></div><div className="actions"><CapabilityButton capabilityId="cv.exportJson" label="Export CV as JSON" buttonClassName="secondary">Export JSON</CapabilityButton><CapabilityButton capabilityId="cv.print" label="Print curriculum vitae" buttonClassName="primary">Print CV</CapabilityButton></div></div><div className="cv-sheet"><section className="cv-section" id="profile"><h3>Profile</h3><p className="lead" style={{margin:0}}>I build the foundations that help engineering teams move with confidence: capable platforms, observable systems and clear technical direction.</p></section><section className="cv-section" id="experience"><h3>Experience</h3><div>{experience.map(x=><div key={x.id} style={{marginBottom:30}}><b>{x.title} · {x.organisation}</b><div className="muted">{x.period}</div><p>{x.summary}</p></div>)}</div></section><section className="cv-section" id="projects"><h3>Selected work</h3><div>{projects.slice(0,3).map(p=><p key={p.id}><b>{p.name}</b><br/><span className="muted">{p.summary}</span></p>)}</div></section><section className="cv-section" id="skills"><h3>Capabilities</h3><div className="tags">{skills.map(s=><span className="tag" key={s.id}>{s.name}</span>)}</div></section></div></div>}
+import { useHighlight } from "@/highlight/context";
+
+export default function CV() {
+  const { view, matches } = useHighlight();
+  return (
+    <div className="page-shell">
+      <header className="page-head cv-head">
+        <div>
+          <div className="eyebrow">Curriculum vitae</div>
+          <h1 className="page-title">Mike Ajijola</h1>
+          <p className="professional-headline">
+            Enterprise Architecture · Platform Engineering · Agentic AI
+          </p>
+          <div className="profile-meta">
+            <span>London, United Kingdom</span>
+            <a
+              href="https://github.com/mikeajijola"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+        <div className="actions">
+          <CapabilityButton
+            capabilityId="cv.exportJson"
+            label="Export CV as JSON"
+            buttonClassName="secondary"
+          >
+            Export JSON
+          </CapabilityButton>
+          <CapabilityButton
+            capabilityId="cv.print"
+            label="Print curriculum vitae"
+            buttonClassName="primary"
+          >
+            Print CV
+          </CapabilityButton>
+        </div>
+      </header>
+      <article className="cv-sheet">
+        <section
+          className="cv-section"
+          id="profile"
+          data-highlight-item
+          data-highlight-match={
+            view === "all"
+              ? undefined
+              : matches([
+                  "enterprise architecture",
+                  "platform engineering",
+                  "agentic ai",
+                  "technical strategy",
+                ])
+          }
+        >
+          <h2 className="section-title">Profile</h2>
+          <p className="lead">
+            I build the foundations that help engineering teams move with
+            confidence: capable platforms, observable systems and clear
+            technical direction.
+          </p>
+        </section>
+        <section className="cv-section" id="experience">
+          <h2 className="section-title">Experience</h2>
+          <div>
+            {experience.map((item) => (
+              <article
+                className="cv-entry"
+                key={item.id}
+                data-highlight-item
+                data-highlight-match={
+                  view === "all"
+                    ? undefined
+                    : matches([
+                        item.title,
+                        item.organisation,
+                        item.summary,
+                        ...item.achievements,
+                      ])
+                }
+              >
+                <div className="meta">
+                  <time>{item.period}</time>
+                  <span>{item.location}</span>
+                </div>
+                <h3>{item.title}</h3>
+                <b>{item.organisation}</b>
+                <p>{item.summary}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="cv-section" id="projects">
+          <h2 className="section-title">Selected work</h2>
+          <div>
+            {projects.slice(0, 3).map((project) => (
+              <article
+                className="cv-entry"
+                key={project.id}
+                data-highlight-item
+                data-highlight-match={
+                  view === "all"
+                    ? undefined
+                    : matches([
+                        project.name,
+                        project.summary,
+                        project.role,
+                        ...project.technologies,
+                      ])
+                }
+              >
+                <div className="meta">
+                  <span>{project.status}</span>
+                  <time>{project.year}</time>
+                </div>
+                <h3>{project.name}</h3>
+                <p>{project.summary}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="cv-section" id="skills">
+          <h2 className="section-title">Capabilities</h2>
+          <div className="tags">
+            {skills.map((skill) => (
+              <span className="tag" key={skill.id}>
+                {skill.name}
+              </span>
+            ))}
+          </div>
+        </section>
+      </article>
+    </div>
+  );
+}

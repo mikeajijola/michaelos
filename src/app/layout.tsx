@@ -1,10 +1,44 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import { CapabilityProvider } from "@/capabilities/context";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { AgentSurface } from "@/components/agent/AgentSurface";
 import { LilyProvider } from "@/lily/context";
+import { HighlightProvider } from "@/highlight/context";
 import "@xterm/xterm/css/xterm.css";
-export const metadata: Metadata = { title: "Mike Ajijola — Platform engineer & systems thinker", description: "A portfolio and browser-native capability application." };
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body><Suspense><CapabilityProvider><LilyProvider><SiteShell>{children}</SiteShell><AgentSurface/></LilyProvider></CapabilityProvider></Suspense></body></html>}
+
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Mike Ajijola — Platform engineer & systems thinker",
+  description: "A portfolio and browser-native capability application.",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
+        <Suspense>
+          <CapabilityProvider>
+            <LilyProvider>
+              <HighlightProvider>
+                <SiteShell>{children}</SiteShell>
+                <AgentSurface />
+              </HighlightProvider>
+            </LilyProvider>
+          </CapabilityProvider>
+        </Suspense>
+      </body>
+    </html>
+  );
+}

@@ -3,7 +3,9 @@ import { articles, experience, projects, skills } from "@/data/content";
 import { ProjectCard } from "@/components/common/ProjectCard";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
 import { LilyLandingPrompt } from "@/components/lily/LilyLandingPrompt";
+import { useHighlight } from "@/highlight/context";
 export default function Home() {
+  const { view, matches } = useHighlight();
   return (
     <>
       <div className="shell home-lily-stage">
@@ -19,15 +21,15 @@ export default function Home() {
       </div>
       <div className="shell hero hero-supporting">
         <div>
-          <div className="eyebrow">Platform engineer · Systems thinker</div>
+          <div className="eyebrow">Mike Ajijola</div>
           <h1>
-            I make complex systems feel <em>obvious.</em>
+            Enterprise architecture. Platform engineering. <em>Agentic AI.</em>
           </h1>
         </div>
         <div className="hero-aside">
           <p className="lead">
-            I’m Mike, an engineer and technical leader building durable
-            platforms, thoughtful products and better ways for teams to work.
+            I help complex organisations turn architecture, platforms and AI
+            into systems people can understand, adopt and build upon.
           </p>
           <div className="actions">
             <CapabilityButton
@@ -52,7 +54,7 @@ export default function Home() {
           <div className="section-head">
             <div>
               <div className="eyebrow">Selected work</div>
-              <h2>Platforms with a point of view.</h2>
+              <h2 className="section-title">Selected work</h2>
             </div>
             <CapabilityButton
               capabilityId="navigation.goProjects"
@@ -76,7 +78,7 @@ export default function Home() {
           <div className="section-head">
             <div>
               <div className="eyebrow">Experience</div>
-              <h2>Engineering at organisational scale.</h2>
+              <h2 className="section-title">Experience</h2>
             </div>
             <p className="section-kicker">
               I work where systems, teams and product strategy meet—turning
@@ -84,7 +86,21 @@ export default function Home() {
             </p>
           </div>
           {experience.slice(0, 2).map((x) => (
-            <div className="exp-row" key={x.id}>
+            <div
+              className="exp-row"
+              key={x.id}
+              data-highlight-item
+              data-highlight-match={
+                view === "all"
+                  ? undefined
+                  : matches([
+                      x.title,
+                      x.organisation,
+                      x.summary,
+                      ...x.achievements,
+                    ])
+              }
+            >
               <span className="muted">{x.period}</span>
               <div>
                 <h3>{x.title}</h3>
@@ -100,7 +116,7 @@ export default function Home() {
           <div className="section-head">
             <div>
               <div className="eyebrow">Recent writing</div>
-              <h2>Notes on building well.</h2>
+              <h2 className="section-title">Recent writing</h2>
             </div>
             <CapabilityButton
               capabilityId="navigation.goBlog"
@@ -122,12 +138,21 @@ export default function Home() {
           <div className="section-head">
             <div>
               <div className="eyebrow">Practice</div>
-              <h2>Broad systems, sharp edges.</h2>
+              <h2 className="section-title">Capabilities</h2>
             </div>
           </div>
           <div className="skills-grid">
             {skills.map((s) => (
-              <div className="skill" key={s.id}>
+              <div
+                className="skill"
+                key={s.id}
+                data-highlight-item
+                data-highlight-match={
+                  view === "all"
+                    ? undefined
+                    : matches([s.name, s.category, s.description])
+                }
+              >
                 <b>{s.name}</b>
                 <span className="muted">{s.description}</span>
               </div>
@@ -143,22 +168,30 @@ function ArticleControl({
 }: {
   article: (typeof articles)[number];
 }) {
+  const { view, matches } = useHighlight();
   return (
-    <CapabilityButton
-      className="article-control"
-      buttonClassName="article"
-      capabilityId="article.view"
-      params={{ slug: a.slug }}
-      label={`Open ${a.title}`}
+    <div
+      data-highlight-item
+      data-highlight-match={
+        view === "all" ? undefined : matches([a.title, a.summary, ...a.tags])
+      }
     >
-      <>
-        <div className="meta">
-          <span>{a.tags[0]}</span>
-          <span>{a.readTime}</span>
-        </div>
-        <h3>{a.title}</h3>
-        <p>{a.summary}</p>
-      </>
-    </CapabilityButton>
+      <CapabilityButton
+        className="article-control"
+        buttonClassName="article"
+        capabilityId="article.view"
+        params={{ slug: a.slug }}
+        label={`Open ${a.title}`}
+      >
+        <>
+          <div className="meta">
+            <span>{a.tags[0]}</span>
+            <span>{a.readTime}</span>
+          </div>
+          <h3>{a.title}</h3>
+          <p>{a.summary}</p>
+        </>
+      </CapabilityButton>
+    </div>
   );
 }

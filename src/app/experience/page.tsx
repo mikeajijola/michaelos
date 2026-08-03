@@ -1,2 +1,56 @@
+"use client";
+
 import { experience } from "@/data/content";
-export default function Experience(){return <div className="shell"><div className="page-head"><div className="eyebrow">Experience</div><h1 className="page-title">Building leverage,<br/>not just software.</h1><p>I help engineering organisations turn shared problems into well-designed platforms, practices and products.</p></div><div className="timeline" style={{paddingBottom:90}}>{experience.map(x=><article className="exp-row" key={x.id}><div><b>{x.period}</b><div className="muted" style={{marginTop:8}}>{x.location}</div></div><div><h2 style={{fontFamily:"Georgia",fontWeight:400,fontSize:30,margin:"0 0 4px"}}>{x.title}</h2><b style={{color:"var(--green)"}}>{x.organisation}</b><p className="muted" style={{lineHeight:1.7}}>{x.summary}</p><ul className="bullet-list">{x.achievements.map(a=><li key={a}>{a}</li>)}</ul></div></article>)}</div></div>}
+import { useHighlight } from "@/highlight/context";
+
+export default function Experience() {
+  const { view, matches } = useHighlight();
+  return (
+    <div className="page-shell">
+      <div className="page-head">
+        <div className="eyebrow">Experience</div>
+        <h1 className="page-title">Building leverage, not just software.</h1>
+        <p>
+          Technical leadership where architecture, platforms, product strategy
+          and organisational change meet.
+        </p>
+      </div>
+      <section className="editorial-section">
+        <h2 className="section-title">Professional experience</h2>
+        <div className="experience-index">
+          {experience.map((item) => {
+            const highlighted = matches([
+              item.title,
+              item.organisation,
+              item.summary,
+              ...item.achievements,
+            ]);
+            return (
+              <article
+                className="experience-entry"
+                key={item.id}
+                data-highlight-item
+                data-highlight-match={view === "all" ? undefined : highlighted}
+              >
+                <div className="experience-meta">
+                  <time>{item.period}</time>
+                  <span>{item.location}</span>
+                </div>
+                <div>
+                  <h2>{item.title}</h2>
+                  <p className="experience-org">{item.organisation}</p>
+                  <p>{item.summary}</p>
+                  <ul className="bullet-list">
+                    {item.achievements.map((achievement) => (
+                      <li key={achievement}>{achievement}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </div>
+  );
+}

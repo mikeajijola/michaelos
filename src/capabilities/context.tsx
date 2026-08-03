@@ -57,7 +57,7 @@ export type Runtime = {
   toast: {
     title: string;
     detail?: string;
-    status: "success" | "failure";
+    status: "loading" | "success" | "failure";
   } | null;
   inspectedExecutionId: string | null;
   inspect: (executionId: string) => void;
@@ -209,7 +209,14 @@ export function CapabilityProvider({
       id: string,
       params: Record<string, unknown> = {},
       caller: Caller = "ui",
-    ) => executeCapability(id, params, caller, { ...context, caller }),
+    ) => {
+      setToast({
+        title: `Running ${id}…`,
+        detail: "Validating capability and parameters",
+        status: "loading",
+      });
+      return executeCapability(id, params, caller, { ...context, caller });
+    },
     [context],
   );
 

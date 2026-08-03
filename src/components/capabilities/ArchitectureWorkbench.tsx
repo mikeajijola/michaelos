@@ -136,7 +136,7 @@ export function ArchitectureWorkbench() {
             </button>
           </div>
           <div className="protocol-example">
-              <b>Action Key Mode</b>
+            <b>Action Key Mode</b>
             <code>PROJECT VIEW atlas-platform ENTER</code>
             <span>
               Both CLI and Action Key clients resolve to{" "}
