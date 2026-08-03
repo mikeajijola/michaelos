@@ -1,6 +1,8 @@
 "use client";
 
 import { voiceStatusText, type NaviVoiceState } from "@/navi/voice/types";
+import { NaviFace } from "./NaviFace";
+import { naviFaceState } from "@/navi/voice/face-state";
 
 export type NaviVoiceViewModel = {
   state: NaviVoiceState;
@@ -24,12 +26,17 @@ export function NaviVoiceSurface({ voice }: { voice: NaviVoiceViewModel }) {
           "--navi-glow": `${Math.round(4 + glow * 7)}px`,
           "--navi-blur": `${Math.round(20 + glow * 16)}px`,
           "--navi-scale": 0.96 + glow * 0.04,
+          "--navi-mouth-energy": 1 + voice.inputLevel * 0.7,
         } as React.CSSProperties
       }
       aria-live="polite"
     >
       <div className="navi-voice-orb" aria-hidden="true">
-        <span>🎙</span>
+        <NaviFace
+          size="voice"
+          state={naviFaceState(voice.state)}
+          voiceActive
+        />
       </div>
       <p className="navi-voice-status">
         {voiceStatusText(voice.state, voice.muted)}

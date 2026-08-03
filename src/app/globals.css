@@ -2951,6 +2951,168 @@ html[data-theme="dark"] .global-inspector pre {
     0 0 18px var(--highlight);
 }
 
+/* Navi's code-native face is shared by every public Navi surface. */
+.navi-face {
+  position: relative;
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: inherit;
+  line-height: 0;
+}
+.navi-face-small {
+  width: 28px;
+  height: 28px;
+}
+.lily-composer-avatar .navi-face-small {
+  width: 30px;
+  height: 30px;
+}
+.navi-face-bubble {
+  width: 46px;
+  height: 46px;
+}
+.navi-face-voice {
+  width: 76px;
+  height: 76px;
+}
+.navi-face > svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.navi-face > svg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.navi-face-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: navi-face-blink 6.2s ease-in-out infinite;
+}
+.navi-face-mouth {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: navi-face-idle-wave 3.8s ease-in-out infinite;
+}
+.navi-face-listening .navi-face-mouth {
+  transform: scaleY(var(--navi-mouth-energy, 1));
+  animation: navi-face-listening-wave 0.72s ease-in-out infinite alternate;
+}
+.navi-face-speaking .navi-face-mouth {
+  animation: navi-face-speaking-wave 1.15s ease-in-out infinite;
+}
+.navi-face-executing .navi-face-mouth path {
+  stroke-dasharray: 9 6;
+  animation: navi-face-progress 0.8s linear infinite;
+}
+.navi-face-error .navi-face-eyes,
+.navi-face-error .navi-face-mouth {
+  animation: none;
+}
+.navi-face-error .navi-face-mouth {
+  transform: scaleY(0.18);
+}
+.navi-face-mic {
+  position: absolute;
+  right: -1px;
+  bottom: 0;
+  width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--dark-panel);
+  border-radius: 50%;
+  background: var(--highlight);
+  color: #111217;
+  line-height: 0;
+}
+.navi-face-small .navi-face-mic {
+  right: -3px;
+  bottom: -2px;
+  width: 14px;
+  height: 14px;
+  border-width: 1px;
+}
+.navi-face-voice .navi-face-mic {
+  width: 23px;
+  height: 23px;
+}
+.navi-face-mic svg {
+  width: 70%;
+  height: 70%;
+}
+.navi-face-mic rect,
+.navi-face-mic path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.lily-panel > header > b {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.lily-panel > header > b .navi-face {
+  color: #f4f5f7;
+}
+.lily-bubble:hover .navi-face,
+.lily-bubble:focus-visible .navi-face,
+.lily-composer-avatar:hover .navi-face,
+.lily-composer-avatar:focus-visible .navi-face {
+  transform: translateY(-1px) scale(1.04);
+}
+@keyframes navi-face-idle-wave {
+  0%,
+  100% {
+    transform: translateY(0) scaleY(0.92);
+  }
+  50% {
+    transform: translateY(-1px) scaleY(1.08);
+  }
+}
+@keyframes navi-face-blink {
+  0%,
+  44%,
+  48%,
+  100% {
+    transform: scaleY(1);
+  }
+  46% {
+    transform: scaleY(0.08);
+  }
+}
+@keyframes navi-face-listening-wave {
+  from {
+    transform: translateY(1px) scaleY(0.78);
+  }
+  to {
+    transform: translateY(-1px) scaleY(var(--navi-mouth-energy, 1));
+  }
+}
+@keyframes navi-face-speaking-wave {
+  0%,
+  100% {
+    transform: scaleY(0.72);
+  }
+  45% {
+    transform: translateY(-1px) scaleY(1.28);
+  }
+  70% {
+    transform: translateY(1px) scaleY(0.9);
+  }
+}
+@keyframes navi-face-progress {
+  to {
+    stroke-dashoffset: -30;
+  }
+}
+
 /* Navi Voice Mode */
 .lily-panel > header button.navi-microphone {
   width: auto;
@@ -2996,10 +3158,6 @@ html[data-theme="dark"] .global-inspector pre {
   transition:
     transform 90ms linear,
     box-shadow 90ms linear;
-}
-.navi-voice-orb span {
-  font-size: 28px;
-  font-weight: 750;
 }
 .navi-voice-listening .navi-voice-orb,
 .navi-voice-host-listening .lily-bubble {
@@ -3111,6 +3269,14 @@ html[data-theme="dark"] .global-inspector pre {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .navi-face,
+  .navi-face-eyes,
+  .navi-face-mouth,
+  .navi-face-mouth path {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
   .navi-voice-orb,
   .navi-voice-host-listening .lily-bubble,
   .navi-voice-host-speaking .lily-bubble {

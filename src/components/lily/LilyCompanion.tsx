@@ -6,6 +6,8 @@ import { useLily } from "@/lily/context";
 import { useCapabilities } from "@/capabilities/context";
 import { LilyConversation } from "./LilyConversation";
 import { NaviVoiceSurface } from "@/components/navi/NaviVoiceSurface";
+import { NaviFace } from "@/components/navi/NaviFace";
+import { naviFaceState } from "@/navi/voice/face-state";
 import { useNaviVoice } from "@/navi/voice/use-navi-voice";
 import type { LilyBubblePosition } from "@/lily/types";
 import { clampBubblePosition, didDrag } from "@/lily/bubble-position";
@@ -180,14 +182,22 @@ export function LilyCompanion() {
             setDragPreview(null);
           }}
         >
-          <span aria-hidden="true">{voiceMode ? "🎙" : "N"}</span>
+          <NaviFace
+            state={naviFaceState(voice.state)}
+            voiceActive={voice.active}
+          />
         </button>
       )}
       {panelOpen && (
         <section className="lily-panel" aria-label="Navi Panel">
           <header>
             <b>
-              <i /> Navi
+              <NaviFace
+                size="small"
+                state={naviFaceState(voice.state)}
+                voiceActive={voice.active}
+              />
+              Navi
             </b>
             <div>
               {voice.enabled && (

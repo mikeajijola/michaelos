@@ -11,6 +11,7 @@ import {
   DEFAULT_NAVI_REALTIME_MODEL,
   NAVI_REALTIME_TOOL,
 } from "./config";
+import { naviFaceState } from "./face-state";
 
 describe("Navi Voice Mode contract", () => {
   it("defines textual status for every explicit voice state", () => {
@@ -28,6 +29,18 @@ describe("Navi Voice Mode contract", () => {
     for (const state of states) expect(voiceStatusText(state)).toBeTruthy();
     expect(voiceStatusText("listening")).toContain("Microphone active");
     expect(voiceStatusText("listening", true)).toBe("Microphone muted");
+  });
+
+  it("maps every realtime state to a stable visual face state", () => {
+    expect(naviFaceState("inactive")).toBe("idle");
+    expect(naviFaceState("requesting-permission")).toBe("idle");
+    expect(naviFaceState("connecting")).toBe("idle");
+    expect(naviFaceState("listening")).toBe("listening");
+    expect(naviFaceState("interrupted")).toBe("listening");
+    expect(naviFaceState("interpreting")).toBe("executing");
+    expect(naviFaceState("executing")).toBe("executing");
+    expect(naviFaceState("speaking")).toBe("speaking");
+    expect(naviFaceState("error")).toBe("error");
   });
 
   it("uses human recovery copy for denied microphone permission", () => {

@@ -8,6 +8,8 @@ import {
   getServerNaviVoiceState,
   subscribeNaviVoiceState,
 } from "@/navi/voice/state-store";
+import { NaviFace } from "@/components/navi/NaviFace";
+import { naviFaceState } from "@/navi/voice/face-state";
 export function LilyLandingPrompt() {
   const { session, submit } = useLily();
   const runtime = useCapabilities();
@@ -65,7 +67,11 @@ export function LilyLandingPrompt() {
               title={voiceActive ? "End Navi Voice Mode" : "Start Navi Voice Mode"}
               onClick={toggleVoice}
             >
-              <span aria-hidden="true">{voiceActive ? "🎙" : "N"}</span>
+              <NaviFace
+                size="small"
+                state={naviFaceState(voiceState)}
+                voiceActive={voiceActive}
+              />
             </button>
             <textarea
               id="lily-landing-input"
