@@ -10,6 +10,9 @@ export default function Home() {
   return (
     <>
       <div className="shell home-lily-stage">
+        <div className="home-profile-portrait">
+          <ProfilePortrait />
+        </div>
         <div className="home-lily-intro">
           <div className="eyebrow">Your MichaelOS guide</div>
           <h1>Chat with Navi.</h1>
@@ -22,9 +25,6 @@ export default function Home() {
         <LilyLandingPrompt />
       </div>
       <div className="shell hero hero-supporting">
-        <div className="home-profile-portrait">
-          <ProfilePortrait />
-        </div>
         <div>
           <div className="eyebrow">
             Enterprise architecture · AI strategy · Platform engineering
