@@ -2,6 +2,7 @@
 import { articles, experience, profile, projects, skills } from "@/data/content";
 import { ProjectCard } from "@/components/common/ProjectCard";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
+import { ProfilePortrait } from "@/components/common/ProfilePortrait";
 import { LilyLandingPrompt } from "@/components/lily/LilyLandingPrompt";
 import { useHighlight } from "@/highlight/context";
 export default function Home() {
@@ -21,6 +22,9 @@ export default function Home() {
         <LilyLandingPrompt />
       </div>
       <div className="shell hero hero-supporting">
+        <div className="home-profile-portrait">
+          <ProfilePortrait />
+        </div>
         <div>
           <div className="eyebrow">
             Enterprise architecture · AI strategy · Platform engineering
@@ -30,7 +34,7 @@ export default function Home() {
         <div className="hero-aside">
           <p className="lead">
             I’m {profile.name}, an enterprise solutions architect and strategic
-            adviser. I work across AI, platforms, product development and
+            advisor. I work across AI, platforms, product development and
             organisational integration, turning complex change into systems
             people can understand and adopt.
           </p>

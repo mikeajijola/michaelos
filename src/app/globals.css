@@ -78,6 +78,43 @@ a {
   color: white;
   font-size: 12px;
 }
+.profile-portrait {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: var(--text);
+  color: var(--surface);
+  font-family: var(--font-geist-mono), monospace;
+  font-weight: 700;
+}
+.profile-portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+}
+.profile-portrait img.is-loaded {
+  opacity: 1;
+}
+.profile-portrait-header {
+  width: 34px;
+  height: 34px;
+  font-size: 10px;
+}
+.profile-portrait-page {
+  width: clamp(112px, 11vw, 144px);
+  height: clamp(112px, 11vw, 144px);
+  border-width: 3px;
+  box-shadow: 0 12px 34px #1112171c;
+  font-size: 24px;
+}
 .site-header .brand {
   min-height: 44px;
   border: 0;
@@ -1038,6 +1075,12 @@ time,
   gap: 56px;
   padding: 62px 0 76px;
   border-top-color: var(--border);
+}
+.home-profile-portrait {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin-bottom: -10px;
 }
 .hero-supporting h1 {
   font-size: clamp(38px, 5vw, 62px);

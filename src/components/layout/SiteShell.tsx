@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
+import { ProfilePortrait } from "@/components/common/ProfilePortrait";
 import { nextThemeMode } from "@/theme/mode";
 import { useTheme } from "@/theme/context";
 
@@ -25,7 +26,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               label="Go to homepage"
               buttonClassName="brand"
             >
-              <span className="brand-mark">MA</span>
+              <ProfilePortrait size="header" />
               <span>MichaelOS</span>
             </CapabilityButton>
             <CapabilityButton

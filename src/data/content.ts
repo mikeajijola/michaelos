@@ -109,7 +109,7 @@ export const profile: Profile = {
   headline: "Enterprise Solutions Architect · AI Strategy · Platform Engineering",
   compactHeadline: "Enterprise architect · Product strategist · Systems thinker",
   summary:
-    "Mike Ajijola is an enterprise solutions architect and strategic technical adviser working across platform engineering, AI adoption, M&A integration and product innovation. He helps large organisations and early-stage ventures turn ambiguous business goals into adoptable systems, operating models and technical roadmaps.",
+    "Mike Ajijola is an enterprise solutions architect and strategic technical advisor working across platform engineering, AI adoption, M&A integration and product innovation. He helps large organisations and early-stage ventures turn ambiguous business goals into adoptable systems, operating models and technical roadmaps.",
   longSummary:
     "Mike designs enterprise platforms, integration approaches and AI adoption programmes. His experience includes cloud infrastructure, automation, acquisition integration and startup product design. He has led initiatives inside one of the UK’s largest privately held software companies and advised ventures that went on to receive UK innovation endorsements.",
 };
@@ -162,7 +162,7 @@ export const projects: Project[] = [
       "Advisory work on an AI-supported legal product that subsequently secured a UK innovation endorsement.",
     description:
       "Mike advised LawNeeds on its proposition, product architecture, technical roadmap and innovation narrative. The work focused on helping people understand a legal need before they know its formal category, while keeping a clear boundary between useful guidance and professional legal judgement.",
-    role: "Adviser · Product architecture · Innovation strategy",
+    role: "Advisor · Product architecture · Innovation strategy",
     technologies: ["Legal technology", "AI", "Product architecture"],
     themes: ["Startup advisory", "Innovation strategy", "UK innovation"],
     status: "Advisory · UK innovation endorsement",
@@ -181,7 +181,7 @@ export const projects: Project[] = [
       "Product and innovation strategy for an autonomous UAV venture that subsequently secured a UK innovation endorsement.",
     description:
       "Mike advised Aeroknite as it connected autonomous aircraft, sensing, wildfire intelligence and operational response into one credible product story. The work helped turn ambitious engineering into an understandable roadmap and innovation case.",
-    role: "Strategic and product adviser",
+    role: "Strategic and product advisor",
     technologies: ["Autonomous systems", "UAVs", "AI"],
     themes: ["Wildfire response", "Product architecture", "UK innovation"],
     status: "Advisory · UK innovation endorsement",
@@ -300,7 +300,7 @@ export const experience: Experience[] = [
   {
     id: "solo-levelling",
     organisation: "Solo-Levelling Ltd",
-    title: "Founder · Startup and AI Adviser",
+    title: "Founder · Startup and AI Advisor",
     period: "2024–Present",
     location: "United Kingdom",
     summary:
@@ -314,7 +314,7 @@ export const experience: Experience[] = [
   {
     id: "wso-consulting",
     organisation: "WSO Consulting",
-    title: "Founder · Strategic AI Adviser",
+    title: "Founder · Strategic AI Advisor",
     period: "August 2023–February 2024",
     location: "United Kingdom",
     summary:
@@ -427,7 +427,7 @@ export const articles: Article[] = [
       {
         heading: "Turning ambition into a roadmap",
         paragraphs: [
-          "My role as a strategic and product adviser was to help make ambitious engineering legible: identify the sequence of capabilities, connect technical decisions to user outcomes and build an innovation narrative that could withstand scrutiny.",
+          "My role as a strategic and product advisor was to help make ambitious engineering legible: identify the sequence of capabilities, connect technical decisions to user outcomes and build an innovation narrative that could withstand scrutiny.",
           "TODO: add Mike’s approved account of the specific technical and commercial decisions he personally shaped.",
         ],
       },
