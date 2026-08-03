@@ -50,11 +50,11 @@ export default function Home() {
               Ask Navi
             </CapabilityButton>
             <CapabilityButton
-              capabilityId="navigation.goCv"
-              label="Open Mike’s CV"
+              capabilityId="navigation.goExperience"
+              label="Open Mike’s experience"
               buttonClassName="secondary"
             >
-              View CV
+              View experience
             </CapabilityButton>
           </div>
         </div>

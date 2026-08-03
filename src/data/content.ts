@@ -90,6 +90,7 @@ export type Education = {
 
 export const links = {
   github: "https://github.com/mikeajijola",
+  linkedin: "https://www.linkedin.com/in/mike-ajijola",
   michaelosRepository: "https://github.com/mikeajijola/michaelos",
   michaelosLive: "https://michaelos-nine.vercel.app/",
   lawneeds: "https://lawneeds.co.uk/",

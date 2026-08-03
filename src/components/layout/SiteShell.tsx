@@ -9,7 +9,6 @@ const nav = [
   ["Projects", "navigation.goProjects"],
   ["Experience", "navigation.goExperience"],
   ["Writing", "navigation.goBlog"],
-  ["CV", "navigation.goCv"],
 ] as const;
 
 export function SiteShell({ children }: { children: React.ReactNode }) {

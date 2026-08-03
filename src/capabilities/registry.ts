@@ -256,8 +256,8 @@ const handlers: Record<string, Handler> = {
     return { path: "/blog" };
   },
   "navigation.goCv": async (_, c) => {
-    c.navigate("/cv");
-    return { path: "/cv" };
+    c.navigate("/experience");
+    return { path: "/experience" };
   },
   "navigation.goCapabilities": async (_, c) => {
     c.navigate("/capabilities");
@@ -391,11 +391,11 @@ const handlers: Record<string, Handler> = {
     category: p.category,
   }),
   "cv.view": async (_, c) => {
-    c.navigate("/cv");
-    return { path: "/cv" };
+    c.navigate("/experience");
+    return { path: "/experience" };
   },
   "cv.navigateSection": async (p, c) => {
-    const path = `/cv#${p.section}`;
+    const path = `/experience#${p.section}`;
     c.navigate(path);
     return { path, section: p.section };
   },
