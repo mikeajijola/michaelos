@@ -130,14 +130,21 @@ const handlers: Record<string, Handler> = {
     c.surface.open("lily");
     return { open: true, tab: "lily" };
   },
-  "navi.startVoice": async () => ({
-    requested: true,
-    message: "Navi Voice Mode requested.",
-  }),
-  "navi.endVoice": async () => ({
-    ended: true,
-    message: "Navi Voice Mode ended.",
-  }),
+  "navi.startVoice": async () => {
+    window.dispatchEvent(
+      new CustomEvent("lily-control", { detail: { action: "open" } }),
+    );
+    window.dispatchEvent(
+      new CustomEvent("navi-voice-control", { detail: { action: "start" } }),
+    );
+    return { requested: true, message: "Navi Voice Mode requested." };
+  },
+  "navi.endVoice": async () => {
+    window.dispatchEvent(
+      new CustomEvent("navi-voice-control", { detail: { action: "stop" } }),
+    );
+    return { ended: true, message: "Navi Voice Mode ended." };
+  },
   "system.getApplicationInfo": async () => ({
     runtime: "browser",
     architecture: "capability-first",

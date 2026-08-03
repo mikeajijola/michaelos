@@ -2656,6 +2656,18 @@ html[data-theme="dark"] .global-inspector pre {
   font-family: var(--font-geist-sans), Arial, sans-serif;
   font-size: 15px;
   font-weight: 750;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.home-lily-stage .lily-chat-composer form button.lily-composer-avatar {
+  width: 38px;
+  height: 38px;
+  font-size: 15px;
+}
+.lily-composer-avatar:focus-visible {
+  outline: 3px solid var(--highlight);
+  outline-offset: 3px;
 }
 .home-lily-stage .lily-chat-composer textarea {
   width: 100%;
@@ -2719,6 +2731,10 @@ html[data-theme="dark"] .global-inspector pre {
     border-radius: 19px;
   }
   .lily-composer-avatar {
+    width: 34px;
+    height: 34px;
+  }
+  .home-lily-stage .lily-chat-composer form button.lily-composer-avatar {
     width: 34px;
     height: 34px;
   }

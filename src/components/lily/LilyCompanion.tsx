@@ -102,6 +102,16 @@ export function LilyCompanion() {
   useEffect(() => {
     if (!panelOpen && voice.active) voice.stop("panel-close");
   }, [panelOpen, voice.active, voice.stop]);
+  useEffect(() => {
+    const control = (raw: Event) => {
+      const action = (raw as CustomEvent<{ action: "start" | "stop" }>).detail
+        .action;
+      if (action === "start") void voice.start();
+      if (action === "stop") voice.stop();
+    };
+    window.addEventListener("navi-voice-control", control);
+    return () => window.removeEventListener("navi-voice-control", control);
+  }, [voice.start, voice.stop]);
   const style: CSSProperties = dragPreview
     ? {
         left: Math.max(
@@ -182,13 +192,9 @@ export function LilyCompanion() {
                   aria-pressed={voiceMode}
                   title="Voice mode"
                   onClick={async () => {
-                    if (voiceMode) {
-                      await runtime.execute("navi.endVoice");
-                      voice.stop();
-                    } else {
-                      await runtime.execute("navi.startVoice");
-                      await voice.start();
-                    }
+                    await runtime.execute(
+                      voiceMode ? "navi.endVoice" : "navi.startVoice",
+                    );
                   }}
                 >
                   {voiceMode ? "End voice" : "Voice mode"}

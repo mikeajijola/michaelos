@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
 import { useLily } from "@/lily/context";
+import { useCapabilities } from "@/capabilities/context";
 import { CapabilityTrace } from "./CapabilityTrace";
 export function LilyLandingPrompt() {
   const { session, submit } = useLily();
+  const runtime = useCapabilities();
   const [value, setValue] = useState("");
   const active = session.presentation !== "landing-idle";
   const latestResponse = [...session.messages]
@@ -28,9 +30,15 @@ export function LilyLandingPrompt() {
         >
           <label htmlFor="lily-landing-input">Message Navi</label>
           <div className="lily-composer-field">
-            <span className="lily-composer-avatar" aria-hidden="true">
-              🎙
-            </span>
+            <button
+              type="button"
+              className="lily-composer-avatar"
+              aria-label="Start Navi Voice Mode"
+              title="Start Navi Voice Mode"
+              onClick={() => void runtime.execute("navi.startVoice")}
+            >
+              <span aria-hidden="true">🎙</span>
+            </button>
             <textarea
               id="lily-landing-input"
               value={value}
