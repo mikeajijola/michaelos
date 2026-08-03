@@ -123,6 +123,93 @@ function TerminalClient() {
   );
 }
 
+function ActionKeyMode() {
+  const runtime = useCapabilities();
+  const input = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (runtime.protocol.active)
+      window.setTimeout(() => input.current?.focus(), 20);
+  }, [runtime.protocol.active]);
+  if (!runtime.protocol.active) return null;
+  return (
+    <div className="action-key-backdrop" role="presentation">
+      <section
+        className="action-key-mode"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="action-key-title"
+      >
+        <div className="eyebrow">Registry command</div>
+        <h2 id="action-key-title">Action Key Mode</h2>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            void runtime.submitActionKey();
+          }}
+        >
+          <label htmlFor="action-key-input">Action Key</label>
+          <input
+            ref={input}
+            id="action-key-input"
+            value={runtime.protocol.buffer}
+            onChange={(event) => runtime.setActionKeyInput(event.target.value)}
+            placeholder="PROJECT VIEW atlas-platform"
+            autoComplete="off"
+            spellCheck={false}
+            aria-describedby="action-key-help action-key-error"
+          />
+          <div>
+            <small id="action-key-help">Enter to execute · Esc to cancel</small>
+            <button type="submit" disabled={!runtime.protocol.buffer.trim()}>
+              Execute
+            </button>
+          </div>
+          {runtime.protocol.error && (
+            <p id="action-key-error" className="error" role="alert">
+              {runtime.protocol.error}
+            </p>
+          )}
+        </form>
+        <button
+          className="action-key-close"
+          aria-label="Close Action Key Mode"
+          onClick={() => runtime.execute("system.closeActionKeyMode")}
+        >
+          ×
+        </button>
+      </section>
+    </div>
+  );
+}
+
+function ExecutionHistory() {
+  const runtime = useCapabilities();
+  if (!runtime.history.length)
+    return (
+      <div className="global-inspector empty">
+        No capability executions recorded in this browser.
+      </div>
+    );
+  return (
+    <div className="execution-history">
+      {runtime.history.map((item) => (
+        <button
+          key={item.executionId}
+          onClick={() => runtime.inspect(item.executionId)}
+        >
+          <span>
+            <code>{item.capabilityId}</code>
+            <small>
+              {item.caller} · {new Date(item.timestamp).toLocaleString()}
+            </small>
+          </span>
+          <b className={item.status}>{item.status}</b>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export function ExecutionInspector({ compact = false }: { compact?: boolean }) {
   const runtime = useCapabilities();
   const last =
@@ -191,20 +278,20 @@ export function AgentSurface() {
           ? "system.openTerminal"
           : next === "lily"
             ? "lily.openConsole"
-            : "system.openInspector",
+            : next === "history"
+              ? "system.openHistory"
+              : "system.openInspector",
       )
       .then(() => undefined);
   return (
     <>
-      <div
-        className={`protocol-hud ${runtime.protocol.active ? "active" : ""}`}
-        role="status"
-        aria-live="assertive"
-      >
-        <b>ACTION KEYS ACTIVE</b>
-        <span>{runtime.protocol.buffer || "Enter an Action Key…"}</span>
-        <small>Enter to execute · Escape to cancel</small>
-      </div>
+      <ActionKeyMode />
+      {runtime.protocol.secretUnlocked && (
+        <div className="secret-gateway-status" role="status">
+          <b>Secret Gateway unlocked</b>
+          <span>Advanced architecture mode is available for five minutes.</span>
+        </div>
+      )}
       {runtime.toast && (
         <div className={`cap-toast ${runtime.toast.status}`} role="status">
           <b>{runtime.toast.title}</b>
@@ -259,9 +346,20 @@ export function AgentSurface() {
                   Inspector
                 </button>
                 <button
+                  className={tab === "history" ? "active" : ""}
+                  onClick={() => select("history")}
+                >
+                  History
+                </button>
+                <button
+                  onClick={() => runtime.execute("system.openActionKeyMode")}
+                >
+                  Action Keys
+                </button>
+                <button
                   onClick={() => runtime.execute("navigation.goCapabilities")}
                 >
-                  History &amp; Full Registry ↗
+                  Capability Registry ↗
                 </button>
               </nav>
               <div className="surface-content">
@@ -269,6 +367,8 @@ export function AgentSurface() {
                   <LilyConversation />
                 ) : tab === "terminal" ? (
                   <TerminalClient />
+                ) : tab === "history" ? (
+                  <ExecutionHistory />
                 ) : (
                   <ExecutionInspector />
                 )}

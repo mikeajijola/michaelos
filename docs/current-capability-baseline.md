@@ -64,7 +64,7 @@ Agent CLI commands are:
 
 Every capability has a CLI command and keyboard sequence. The exact sequence for every capability is recorded in `actionKeyTemplate` in the generated manifest. Parameter placeholders use `<name>` and sequences end in `ENTER`.
 
-The Gateway implementation is in `src/capabilities/protocol.ts`. It requires these ordered chords, each with Control+Alt+Shift: `F9`, `F10`, `F11`, `F12`, `Home`, `End`. Each step has a 3-second timeout; Action Key capture has a 10-second timeout. Repeats do not advance the Gateway. Unit tests cover the pure Gateway state machine, not trusted browser function-key delivery.
+Normal Action Key Mode opens with `Ctrl+Alt+K` on Windows/Linux or `Command+Option+K` on macOS. It is also available from Lily and the Agent Console. A labelled input accepts the full registry Action Key; Enter validates and executes it through the shared executor, while Escape cancels and restores focus. The former ordered six-chord sequence remains only as an optional Secret Gateway: `F9`, `F10`, `F11`, `F12`, `Home`, `End`, each with Control+Alt+Shift. It temporarily unlocks advanced demonstration state and is not required for ordinary Action Keys.
 
 ## Routes and surfaces
 

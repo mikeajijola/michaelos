@@ -205,6 +205,56 @@
     "navigatorEnabled": false
   },
   {
+    "id": "system.openHistory",
+    "schemaVersion": 1,
+    "description": "Open the Agent Console on the shared History tab.",
+    "parameters": [],
+    "cliCommand": "run system.openHistory",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "OPEN",
+      "HISTORY",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open capability execution history",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.openActionKeyMode",
+    "schemaVersion": 1,
+    "description": "Open the accessible Action Key command input.",
+    "parameters": [],
+    "cliCommand": "run system.openActionKeyMode",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "OPEN",
+      "ACTION",
+      "KEYS",
+      "ENTER"
+    ],
+    "accessibleLabel": "Open Action Key Mode",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "system.closeActionKeyMode",
+    "schemaVersion": 1,
+    "description": "Close the Action Key command input and restore focus.",
+    "parameters": [],
+    "cliCommand": "run system.closeActionKeyMode",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "CLOSE",
+      "ACTION",
+      "KEYS",
+      "ENTER"
+    ],
+    "accessibleLabel": "Close Action Key Mode",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
     "id": "system.getApplicationInfo",
     "schemaVersion": 1,
     "description": "Describe the browser runtime and architecture.",
