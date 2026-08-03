@@ -104,6 +104,16 @@ describe("Lily proposal boundary", () => {
       ]),
     ).toEqual({ kind: "final", message: "I opened Local-first systems." });
   });
+  it.each([
+    "What type of things can I see on this website?",
+    "What can I explore on this site?",
+    "Show me around",
+  ])("recovers a website discovery question: %s", (request) => {
+    expect(recoverLilyProposal(request, [])).toMatchObject({
+      kind: "final",
+      message: expect.stringContaining("projects"),
+    });
+  });
 });
 
 describe("Lily Capability Trace", () => {

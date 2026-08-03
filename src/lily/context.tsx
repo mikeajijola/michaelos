@@ -165,12 +165,21 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
               previousResults: references,
             }),
           );
-          const response = await remote.current.send<LilyProposal>({
-            message: prompt,
-            clientContext,
-            outputSchema: lilyProposalSchema,
-          });
-          const result = await response.result();
+          const sendTurn = async () => {
+            const response = await remote.current!.send<LilyProposal>({
+              message: prompt,
+              clientContext,
+              outputSchema: lilyProposalSchema,
+            });
+            return response.result();
+          };
+          let result = await sendTurn();
+          if (!result.data) {
+            // Persisted eve continuations can outlive an agent deployment. Retry
+            // the same grounded browser turn once in a fresh remote session.
+            remote.current = new Client({ host: "" }).session();
+            result = await sendTurn();
+          }
           update((current) => ({
             ...current,
             eveSession: remote.current?.state,

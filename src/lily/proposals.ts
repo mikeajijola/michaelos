@@ -145,6 +145,17 @@ export function recoverLilyProposal(
     };
   }
 
+  if (
+    /\b(what|which)\b.*\b(website|site)\b/.test(text) ||
+    /\b(what can i|show me around|explore this site)\b/.test(text)
+  ) {
+    return {
+      kind: "final",
+      message:
+        "You can explore Mike’s projects, experience, writing, skills and CV. Ask me to open a section or find something specific.",
+    };
+  }
+
   return null;
 }
 export const lilyProposalSchema = {
