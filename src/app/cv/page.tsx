@@ -1,6 +1,14 @@
 "use client";
 
-import { experience, projects, skills } from "@/data/content";
+import {
+  education,
+  experience,
+  links,
+  profile,
+  projects,
+  recognition,
+  skills,
+} from "@/data/content";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
 import { useHighlight } from "@/highlight/context";
 import { HighlightControl } from "@/highlight/HighlightControl";
@@ -17,9 +25,9 @@ export default function CV() {
             Enterprise Architecture · Platform Engineering · Agentic AI
           </p>
           <div className="profile-meta">
-            <span>London, United Kingdom</span>
+            <span>{profile.location}</span>
             <a
-              href="https://github.com/mikeajijola"
+              href={links.github}
               target="_blank"
               rel="noreferrer"
             >
@@ -63,9 +71,9 @@ export default function CV() {
         >
           <h2 className="section-title">Profile</h2>
           <p className="lead">
-            I build the foundations that help engineering teams move with
-            confidence: capable platforms, observable systems and clear
-            technical direction.
+            Strategic technical adviser and enterprise architect working
+            across platform engineering, AI adoption, M&A integration and
+            product innovation.
           </p>
         </section>
         <section className="cv-section" id="experience">
@@ -136,6 +144,29 @@ export default function CV() {
               </span>
             ))}
           </div>
+        </section>
+        <section className="cv-section" id="recognition">
+          <h2 className="section-title">Recognition</h2>
+          {recognition.map((item) => (
+            <article className="cv-entry" key={item.id}>
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+              {item.source && (
+                <a href={item.source.url} target="_blank" rel="noreferrer">
+                  {item.source.label} ↗
+                </a>
+              )}
+            </article>
+          ))}
+        </section>
+        <section className="cv-section" id="education">
+          <h2 className="section-title">Education</h2>
+          {education.map((item) => (
+            <article className="cv-entry" key={item.id}>
+              <h3>{item.qualification}</h3>
+              <p>{item.institution}</p>
+            </article>
+          ))}
         </section>
       </article>
     </div>

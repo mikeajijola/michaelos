@@ -1,5 +1,5 @@
 export const HIGHLIGHT_VIEWS = [
-  ["all", "All content"],
+  ["all", "None"],
   ["platform", "Platform engineering"],
   ["architecture", "Enterprise architecture"],
   ["ai", "Agentic AI"],

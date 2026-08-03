@@ -715,7 +715,7 @@
   {
     "id": "article.list",
     "schemaVersion": 1,
-    "description": "Return published writing.",
+    "description": "Return Mike’s available writing, including clearly labelled drafts.",
     "parameters": [],
     "cliCommand": "run article.list",
     "actionKeyTemplate": [
@@ -723,7 +723,7 @@
       "LIST",
       "ENTER"
     ],
-    "accessibleLabel": "List published articles",
+    "accessibleLabel": "List available articles",
     "risk": "read",
     "navigatorEnabled": true
   },
@@ -746,7 +746,7 @@
       "<query>",
       "ENTER"
     ],
-    "accessibleLabel": "Search published articles",
+    "accessibleLabel": "Search available articles",
     "risk": "read",
     "navigatorEnabled": true
   },

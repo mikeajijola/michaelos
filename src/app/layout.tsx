@@ -17,8 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mike Ajijola — Platform engineer & systems thinker",
-  description: "A portfolio and browser-native capability application.",
+  title: "Mike Ajijola — Enterprise Solutions Architect",
+  description:
+    "Enterprise architecture, AI strategy, platform engineering and product innovation—presented through a browser-native capability environment.",
 };
 
 export default function RootLayout({

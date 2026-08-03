@@ -10,7 +10,7 @@ export function ArchitectureWorkbench() {
   const [selected, setSelected] = useState("project.view");
   const [search, setSearch] = useState("");
   const [params, setParams] = useState<Record<string, string>>({
-    slug: "atlas-platform",
+    slug: "nexus-backstage",
   });
   const current = registry.get(selected)!;
   const list = useMemo(
@@ -137,7 +137,7 @@ export function ArchitectureWorkbench() {
           </div>
           <div className="protocol-example">
             <b>Action Key Mode</b>
-            <code>PROJECT VIEW atlas-platform ENTER</code>
+            <code>PROJECT VIEW nexus-backstage ENTER</code>
             <span>
               Both CLI and Action Key clients resolve to{" "}
               <code>project.view</code>.

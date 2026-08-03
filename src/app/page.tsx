@@ -1,5 +1,5 @@
 "use client";
-import { articles, experience, projects, skills } from "@/data/content";
+import { articles, experience, profile, projects, skills } from "@/data/content";
 import { ProjectCard } from "@/components/common/ProjectCard";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
 import { LilyLandingPrompt } from "@/components/lily/LilyLandingPrompt";
@@ -22,15 +22,17 @@ export default function Home() {
       </div>
       <div className="shell hero hero-supporting">
         <div>
-          <div className="eyebrow">Mike Ajijola</div>
-          <h1>
-            Enterprise architecture. Platform engineering. <em>Agentic AI.</em>
-          </h1>
+          <div className="eyebrow">
+            Enterprise architecture · AI strategy · Platform engineering
+          </div>
+          <h1>I design systems that help organisations move.</h1>
         </div>
         <div className="hero-aside">
           <p className="lead">
-            I help complex organisations turn architecture, platforms and AI
-            into systems people can understand, adopt and build upon.
+            I’m {profile.name}, an enterprise solutions architect and strategic
+            adviser. I work across AI, platforms, product development and
+            organisational integration, turning complex change into systems
+            people can understand and adopt.
           </p>
           <div className="actions">
             <CapabilityButton
@@ -38,18 +40,34 @@ export default function Home() {
               label="Open selected projects"
               buttonClassName="primary"
             >
-              See selected work
+              Explore selected work
             </CapabilityButton>
             <CapabilityButton
-              capabilityId="navigation.goExperience"
-              label="Open professional experience"
+              capabilityId="navi.open"
+              label="Open Navi"
               buttonClassName="secondary"
             >
-              About my work
+              Ask Navi
+            </CapabilityButton>
+            <CapabilityButton
+              capabilityId="navigation.goCv"
+              label="Open Mike’s CV"
+              buttonClassName="secondary"
+            >
+              View CV
             </CapabilityButton>
           </div>
         </div>
       </div>
+      <section className="section architecture-statement">
+        <div className="shell">
+          <p>
+            MichaelOS is a browser-native portfolio and capability environment.
+            Every interface—including the UI, Navi, Agent CLI and Action
+            Keys—operates through the same registered capabilities.
+          </p>
+        </div>
+      </section>
       <section className="section">
         <div className="shell">
           <div className="section-head">

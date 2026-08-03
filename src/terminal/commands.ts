@@ -24,7 +24,7 @@ const definition = (id: string) => {
     requiresConfirmation: item.requiresConfirmation ?? false,
   };
 };
-export const helpText = `MICHAELOS AGENT CLI\n\nDiscovery: help → capabilities → describe <id> → run <id> <parameters>\n\nhelp                                      Show this guide\ncapabilities [--search text] [--category namespace] [--json]\ndescribe <capability-id> [--json]\nrun <capability-id> [--name value] [--json '{"name":"value"}']\nhistory [--caller caller] [--capability id] [--json]\nclear                                     Clear CLI output only\n\nAction Key Mode: Ctrl + Alt + K (Windows/Linux) or Command + Option + K (macOS), then enter an Action Key such as\nPROJECT VIEW atlas-platform ENTER`;
+export const helpText = `MICHAELOS AGENT CLI\n\nDiscovery: help → capabilities → describe <id> → run <id> <parameters>\n\nhelp                                      Show this guide\ncapabilities [--search text] [--category namespace] [--json]\ndescribe <capability-id> [--json]\nrun <capability-id> [--name value] [--json '{"name":"value"}']\nhistory [--caller caller] [--capability id] [--json]\nclear                                     Clear CLI output only\n\nAction Key Mode: Ctrl + Alt + K (Windows/Linux) or Command + Option + K (macOS), then enter an Action Key such as\nPROJECT VIEW nexus-backstage ENTER`;
 
 export async function runCommand(
   line: string,

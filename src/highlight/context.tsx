@@ -31,7 +31,7 @@ export function HighlightProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<HighlightRuntime>(
     () => ({
       view,
-      label: HIGHLIGHT_VIEWS.find(([id]) => id === view)?.[1] ?? "All content",
+      label: HIGHLIGHT_VIEWS.find(([id]) => id === view)?.[1] ?? "None",
       setView,
       matches: (content) => matchesHighlightView(view, content),
     }),

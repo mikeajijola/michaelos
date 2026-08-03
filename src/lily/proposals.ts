@@ -201,6 +201,20 @@ export function recoverLilyProposal(
         needsAnotherTurn: true,
       };
     }
+    if (
+      /\b(ceoclaw|ceo claw|lawneeds|law needs|aeroknite|aeronite|backstage|platform engineering|omnicede|omni seed)\b/.test(
+        text,
+      ) &&
+      !completedCapabilityIds.includes("article.search")
+    ) {
+      return {
+        kind: "capability",
+        capabilityId: "article.search",
+        arguments: { query: searchQueryFromRequest(request) },
+        message: "I’ll search Mike’s writing.",
+        needsAnotherTurn: true,
+      };
+    }
     return {
       kind: "capability",
       capabilityId: "article.list",
@@ -224,7 +238,7 @@ export function recoverLilyProposal(
 
   const asksForProjects =
     /\b(project|projects)\b/.test(text) ||
-    /\b(platform[-\s]+engineering|automation|agentic[-\s]+ai|ai[-\s]+work)\b/.test(
+    /\b(platform[-\s]+engineering|automation|agentic[-\s]+ai|ai[-\s]+work|lawneeds|law needs|aeroknite|aeronite|aero knite|nexus|backstage|omnicede|omni seed|michaelos|michael os|innovation endorsement|endorsed venture)\b/.test(
       text,
     );
   if (asksForProjects) {
@@ -239,6 +253,16 @@ export function recoverLilyProposal(
     const asksToOpen = /\b(open|take|show|choose|strongest|best|interesting)\b/.test(
       text,
     );
+    if (
+      project &&
+      completedCapabilityIds.includes("project.search") &&
+      /\b(what is|explain|tell me about)\b/.test(text)
+    ) {
+      return {
+        kind: "final",
+        message: `${project.label}: ${project.summary ?? "I found the matching project."}`,
+      };
+    }
     if (project && asksToOpen) {
       return {
         kind: "capability",

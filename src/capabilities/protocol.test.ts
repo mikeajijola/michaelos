@@ -30,17 +30,17 @@ describe("capability registry", () => {
   });
   it("resolves CLI and protocol from the same definition", () => {
     const item = capabilities.find((entry) => entry.id === "project.view")!;
-    expect(resolveCli(item, { slug: "atlas-platform" })).toBe(
-      "run project.view --slug atlas-platform",
+    expect(resolveCli(item, { slug: "nexus-backstage" })).toBe(
+      "run project.view --slug nexus-backstage",
     );
     expect(
-      resolveTemplate(item.keyboard.template, { slug: "atlas-platform" }),
-    ).toBe("PROJECT VIEW atlas-platform ENTER");
+      resolveTemplate(item.keyboard.template, { slug: "nexus-backstage" }),
+    ).toBe("PROJECT VIEW nexus-backstage ENTER");
     expect(
-      parseProtocol("PROJECT VIEW atlas-platform ENTER", capabilities),
+      parseProtocol("PROJECT VIEW nexus-backstage ENTER", capabilities),
     ).toMatchObject({
       capability: { id: "project.view" },
-      params: { slug: "atlas-platform" },
+      params: { slug: "nexus-backstage" },
     });
   });
   it("exposes colour mode through canonical CLI and Action Keys", () => {
@@ -150,11 +150,11 @@ describe("Action Key history compatibility", () => {
     const [event] = normaliseExecutionHistory([
       {
         capabilityId: "project.view",
-        resolvedProtocol: "PROJECT VIEW atlas-platform ENTER",
+        resolvedProtocol: "PROJECT VIEW nexus-backstage ENTER",
       },
     ]);
-    expect(event.resolvedActionKeys).toBe("PROJECT VIEW atlas-platform ENTER");
-    expect(event.resolvedProtocol).toBe("PROJECT VIEW atlas-platform ENTER");
+    expect(event.resolvedActionKeys).toBe("PROJECT VIEW nexus-backstage ENTER");
+    expect(event.resolvedProtocol).toBe("PROJECT VIEW nexus-backstage ENTER");
   });
 
   it("keeps a current Action Key value when both fields exist", () => {

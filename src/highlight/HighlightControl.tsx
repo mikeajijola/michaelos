@@ -23,7 +23,7 @@ export function HighlightControl() {
       () =>
         setStatus(
           next === "all"
-            ? "Showing all content"
+            ? "Highlighting cleared"
             : `${nextLabel} content highlighted`,
         ),
       180,

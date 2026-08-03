@@ -14,6 +14,7 @@ export function ProjectCard({ project }: { project: Project }) {
     project.description,
     project.role,
     ...project.technologies,
+    ...project.themes,
   ]);
   return (
     <div
@@ -52,6 +53,7 @@ export function ProjectCard({ project }: { project: Project }) {
           <span>{project.year}</span>
         </span>
         <h3>{project.name}</h3>
+        {project.subtitle && <span className="muted">{project.subtitle}</span>}
         <p>{project.summary}</p>
         <dl className="project-facts">
           <div>

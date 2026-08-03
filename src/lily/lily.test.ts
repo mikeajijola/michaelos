@@ -56,7 +56,7 @@ describe("Lily proposal boundary", () => {
   it("accepts a returned entity reference", () => {
     const refs = compactReferences({
       projects: [
-        { slug: "atlas-platform", name: "Atlas Platform", summary: "Platform" },
+        { slug: "nexus-backstage", name: "Nexus", summary: "Platform" },
       ],
     });
     expect(
@@ -64,14 +64,14 @@ describe("Lily proposal boundary", () => {
         {
           kind: "capability",
           capabilityId: "project.view",
-          arguments: { slug: "atlas-platform" },
+          arguments: { slug: "nexus-backstage" },
           message: "Open it",
         },
         refs,
       ),
     ).toMatchObject({
       capabilityId: "project.view",
-      arguments: { slug: "atlas-platform" },
+      arguments: { slug: "nexus-backstage" },
     });
   });
   it("repairs a missing required search query from natural wording", () => {
@@ -143,6 +143,14 @@ describe("Lily proposal boundary", () => {
       ]),
     ).toEqual({ kind: "final", message: "I opened Local-first systems." });
   });
+  it("searches for a specifically named real article before opening it", () => {
+    expect(
+      recoverLilyProposal("Show me the article about CEOclaw", []),
+    ).toMatchObject({
+      capabilityId: "article.search",
+      arguments: { query: expect.stringContaining("CEOclaw") },
+    });
+  });
   it("replaces a premature text response with grounded project navigation", () => {
     const final = {
       kind: "final" as const,
@@ -162,7 +170,7 @@ describe("Lily proposal boundary", () => {
 
     const references = compactReferences({
       projects: [
-        { slug: "atlas-platform", name: "Atlas Platform", summary: "Platform" },
+        { slug: "nexus-backstage", name: "Nexus", summary: "Platform" },
       ],
     });
     expect(
@@ -174,7 +182,7 @@ describe("Lily proposal boundary", () => {
       ),
     ).toMatchObject({
       capabilityId: "project.view",
-      arguments: { slug: "atlas-platform" },
+      arguments: { slug: "nexus-backstage" },
     });
   });
   it("keeps genuine website-orientation answers as text responses", () => {
@@ -237,14 +245,14 @@ describe("Lily Gemini client context", () => {
   it("carries grounded references and confirmed browser executions after a capability turn", () => {
     const reference = {
       kind: "project" as const,
-      id: "atlas-platform",
-      label: "Atlas Platform",
+      id: "nexus-backstage",
+      label: "Nexus",
     };
     const context = buildLilyClientContext({
       request: "Open the first one",
       session: {
         currentRoute: "/projects",
-        currentEntity: { type: "project", id: "atlas-platform" },
+        currentEntity: { type: "project", id: "nexus-backstage" },
       },
       conversation: Array.from({ length: 15 }, (_, index) => ({
         role: "user" as const,

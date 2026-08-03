@@ -1,4 +1,13 @@
-import { articles, experience, projects, skills } from "@/data/content";
+import {
+  aliases,
+  articles,
+  education,
+  experience,
+  profile,
+  projects,
+  recognition,
+  skills,
+} from "@/data/content";
 import type {
   CapabilityContext,
   CapabilityDefinition,
@@ -45,10 +54,43 @@ const findArticle = (slug: unknown) => {
     );
   return item;
 };
-const contains = (values: string[], query: unknown) =>
-  values.some((value) =>
-    value.toLowerCase().includes(String(query).toLowerCase()),
-  );
+const searchStopWords = new Set([
+  "about",
+  "anything",
+  "did",
+  "does",
+  "explain",
+  "find",
+  "his",
+  "michael",
+  "mike",
+  "open",
+  "project",
+  "projects",
+  "show",
+  "take",
+  "the",
+  "what",
+  "with",
+  "work",
+]);
+const normaliseSearch = (value: unknown) =>
+  String(value)
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+const contains = (values: string[], query: unknown) => {
+  const haystack = normaliseSearch(values.join(" "));
+  const phrase = normaliseSearch(query);
+  if (!phrase) return true;
+  if (haystack.includes(phrase)) return true;
+  const terms = phrase
+    .split(" ")
+    .filter((term) => term.length > 2 && !searchStopWords.has(term));
+  return terms.length > 0 && terms.some((term) => haystack.includes(term));
+};
+const entityAliases = (id: string) => aliases[id] ?? [];
 const openExternal = (url: string) => {
   window.open(url, "_blank", "noopener,noreferrer");
   return { url };
@@ -232,7 +274,16 @@ const handlers: Record<string, Handler> = {
   "project.search": async (p) => {
     const rows = projects.filter((x) =>
       contains(
-        [x.name, x.summary, x.description, x.technologies.join(" ")],
+        [
+          x.name,
+          x.subtitle ?? "",
+          x.summary,
+          x.description,
+          x.role,
+          x.technologies.join(" "),
+          x.themes.join(" "),
+          entityAliases(x.slug).join(" "),
+        ],
         p.query,
       ),
     );
@@ -252,7 +303,8 @@ const handlers: Record<string, Handler> = {
   }),
   "project.openExternal": async (p) => {
     const project = findProject(p.slug);
-    const url = project.url ?? project.repositoryUrl;
+    const url =
+      project.url ?? project.repositoryUrl ?? project.externalSources?.[0]?.url;
     if (!url)
       throw new CapabilityError(
         "PROJECT_URL_NOT_FOUND",
@@ -276,16 +328,29 @@ const handlers: Record<string, Handler> = {
   },
   "experience.filter": async (p) => ({
     experience: experience.filter((x) =>
-      contains([x.organisation, x.title, x.summary], p.query),
+      contains(
+        [x.organisation, x.title, x.summary, x.achievements.join(" ")],
+        p.query,
+      ),
     ),
     query: p.query,
   }),
-  "article.list": async () => ({
-    articles: articles.filter((x) => x.status === "published"),
-  }),
+  "article.list": async () => ({ articles }),
   "article.search": async (p) => ({
     articles: articles.filter((x) =>
-      contains([x.title, x.summary, x.tags.join(" ")], p.query),
+      contains(
+        [
+          x.title,
+          x.alternativeTitle ?? "",
+          x.summary,
+          x.excerpt,
+          x.tags.join(" "),
+          x.sections.map((section) => section.heading).join(" "),
+          entityAliases(x.slug).join(" "),
+          x.slug.includes("ceoclaw") ? entityAliases("ceoclaw").join(" ") : "",
+        ],
+        p.query,
+      ),
     ),
     query: p.query,
   }),
@@ -302,16 +367,15 @@ const handlers: Record<string, Handler> = {
     tag: p.tag,
   }),
   "article.openExternal": async (p) => {
-    const article = findArticle(p.slug) as (typeof articles)[number] & {
-      externalUrl?: string;
-    };
-    if (!article.externalUrl)
+    const article = findArticle(p.slug);
+    const url = article.externalSources?.[0]?.url;
+    if (!url)
       throw new CapabilityError(
         "ARTICLE_URL_NOT_FOUND",
         `No external URL is available for "${article.slug}".`,
         article.slug,
       );
-    return openExternal(article.externalUrl);
+    return openExternal(url);
   },
   "skill.list": async () => ({ skills }),
   "skill.search": async (p) => ({
@@ -338,12 +402,13 @@ const handlers: Record<string, Handler> = {
   "cv.exportJson": async () => {
     const data = {
       profile: {
-        name: "Mike Ajijola",
-        role: "Platform engineer & systems thinker",
+        ...profile,
       },
       experience,
       projects,
       skills,
+      recognition,
+      education,
     };
     const link = document.createElement("a");
     link.href = URL.createObjectURL(
@@ -782,7 +847,7 @@ export const capabilities: CapabilityDefinition[] = [
       ["PROJECT", "VIEW", "<slug>", "ENTER"],
       "Open project details",
       [text("slug", "The unique project slug.")],
-      { slug: "atlas-platform" },
+      { slug: "nexus-backstage" },
     ),
   ),
   define(
@@ -806,7 +871,7 @@ export const capabilities: CapabilityDefinition[] = [
       ["PROJECT", "OPEN", "EXTERNAL", "<slug>", "ENTER"],
       "Open project external link",
       [text("slug", "The project slug.")],
-      { slug: "signal-room" },
+      { slug: "michaelos" },
     ),
   ),
   simple(
@@ -843,9 +908,9 @@ export const capabilities: CapabilityDefinition[] = [
   simple(
     "article.list",
     "List articles",
-    "Return published writing.",
+    "Return Mike’s available writing, including clearly labelled drafts.",
     ["ARTICLE", "LIST"],
-    "List published articles",
+    "List available articles",
   ),
   define(
     base(
@@ -854,9 +919,9 @@ export const capabilities: CapabilityDefinition[] = [
       "Search article titles, summaries, and tags.",
       "run article.search --query <query>",
       ["ARTICLE", "SEARCH", "<query>", "ENTER"],
-      "Search published articles",
+      "Search available articles",
       [text("query", "Words to search for.")],
-      { query: "local-first" },
+      { query: "platform engineering" },
     ),
   ),
   define(
@@ -868,7 +933,7 @@ export const capabilities: CapabilityDefinition[] = [
       ["ARTICLE", "VIEW", "<slug>", "ENTER"],
       "Open article",
       [text("slug", "The article slug.")],
-      { slug: "capabilities-not-interfaces" },
+      { slug: "backstage-platform-engineering-as-a-product" },
     ),
   ),
   define(
@@ -892,7 +957,7 @@ export const capabilities: CapabilityDefinition[] = [
       ["ARTICLE", "OPEN", "EXTERNAL", "<slug>", "ENTER"],
       "Open external article",
       [text("slug", "Article slug.")],
-      { slug: "capabilities-not-interfaces" },
+      { slug: "backstage-platform-engineering-as-a-product" },
     ),
   ),
   simple(

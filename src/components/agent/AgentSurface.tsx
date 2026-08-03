@@ -167,7 +167,7 @@ function ActionKeyMode() {
             id="action-key-input"
             value={runtime.protocol.buffer}
             onChange={(event) => runtime.setActionKeyInput(event.target.value)}
-            placeholder="PROJECT VIEW atlas-platform"
+            placeholder="PROJECT VIEW nexus-backstage"
             autoComplete="off"
             spellCheck={false}
             aria-describedby="action-key-help action-key-error"

@@ -41,10 +41,10 @@ export default function Projects() {
     <div className="page-shell">
       <div className="page-head">
         <div className="eyebrow">Selected work</div>
-        <h1 className="page-title">Systems made useful.</h1>
+        <h1 className="page-title">Work that connects architecture to outcomes.</h1>
         <p>
-          Editorial case studies in platforms, products and public-interest
-          technology.
+          Selected enterprise, platform, AI and startup work across
+          organisations at different stages of scale.
         </p>
         <div className="toolbar">
           <input
@@ -82,6 +82,7 @@ export default function Projects() {
             {selected.status} · {selected.year}
           </div>
           <h2>{selected.name}</h2>
+          {selected.subtitle && <p className="professional-headline">{selected.subtitle}</p>}
           <p>{selected.description}</p>
           <div className="tags">
             {selected.technologies.map((item) => (
@@ -90,6 +91,21 @@ export default function Projects() {
               </span>
             ))}
           </div>
+          {selected.externalSources?.length ? (
+            <div className="actions" style={{ marginTop: 20 }}>
+              {selected.externalSources.map((source) => (
+                <a
+                  className="secondary"
+                  href={source.url}
+                  key={source.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {source.label} ↗
+                </a>
+              ))}
+            </div>
+          ) : null}
           <div style={{ marginTop: 24 }}>
             <CapabilityButton
               capabilityId="navigation.goProjects"

@@ -45,6 +45,17 @@ export default function Experience() {
                       <li key={achievement}>{achievement}</li>
                     ))}
                   </ul>
+                  {item.externalSources?.map((source) => (
+                    <a
+                      className="text-link"
+                      href={source.url}
+                      key={source.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {source.label} ↗
+                    </a>
+                  ))}
                 </div>
               </article>
             );
