@@ -39,11 +39,19 @@ import type {
 
 type LilyRuntime = {
   session: LilySession;
-  submit: (text: string) => Promise<void>;
+  submit: (
+    text: string,
+    options?: { maxCapabilitySteps?: number },
+  ) => Promise<NaviSubmissionResult | undefined>;
   open: () => void;
   close: () => void;
   clear: () => void;
   setPresentation: (value: LilyPresentationState) => void;
+};
+export type NaviSubmissionResult = {
+  text: string;
+  trace: CapabilityTraceEntry[];
+  failed: boolean;
 };
 const LilyContext = createContext<LilyRuntime | null>(null);
 const now = () => new Date().toISOString();
@@ -130,7 +138,10 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("lily-control", control);
   }, [clear, close, open]);
   const submit = useCallback(
-    async (raw: string) => {
+    async (
+      raw: string,
+      options: { maxCapabilitySteps?: number } = {},
+    ): Promise<NaviSubmissionResult | undefined> => {
       const text = raw.trim();
       if (!text || sessionRef.current.activeRequestId) return;
       const requestId = `lily_request_${crypto.randomUUID()}`;
@@ -168,7 +179,11 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             sessionRef.current.eveSession,
           );
         let prompt = text;
-        for (let step = 0; step < 4; step++) {
+        const maxCapabilitySteps = Math.min(
+          4,
+          Math.max(1, options.maxCapabilitySteps ?? 4),
+        );
+        for (let step = 0; step < maxCapabilitySteps; step++) {
           const clientContext = JSON.parse(
             JSON.stringify(
               buildLilyClientContext({
@@ -320,6 +335,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
       }));
       if (navigated)
         window.setTimeout(() => setPresentation("bubble-open"), 760);
+      return { text: finalText, trace, failed };
     },
     [capabilities, setPresentation, update],
   );

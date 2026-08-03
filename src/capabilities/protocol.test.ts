@@ -68,6 +68,13 @@ describe("capability registry", () => {
       params: {},
     });
     expect(capabilities.some((entry) => entry.id === "lily.open")).toBe(false);
+    const voice = capabilities.find(
+      (entry) => entry.id === "navi.startVoice",
+    )!;
+    expect(resolveCli(voice, {})).toBe("run navi.startVoice");
+    expect(resolveTemplate(voice.keyboard.template, {})).toBe(
+      "NAVI VOICE START ENTER",
+    );
   });
 });
 

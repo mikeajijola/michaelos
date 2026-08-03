@@ -104,6 +104,38 @@
     "navigatorEnabled": false
   },
   {
+    "id": "navi.startVoice",
+    "schemaVersion": 1,
+    "description": "Request microphone permission and start a bounded Navi voice session.",
+    "parameters": [],
+    "cliCommand": "run navi.startVoice",
+    "actionKeyTemplate": [
+      "NAVI",
+      "VOICE",
+      "START",
+      "ENTER"
+    ],
+    "accessibleLabel": "Start Navi Voice Mode",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
+    "id": "navi.endVoice",
+    "schemaVersion": 1,
+    "description": "Stop microphone capture, playback and the active Navi voice connection.",
+    "parameters": [],
+    "cliCommand": "run navi.endVoice",
+    "actionKeyTemplate": [
+      "NAVI",
+      "VOICE",
+      "END",
+      "ENTER"
+    ],
+    "accessibleLabel": "End Navi Voice Mode",
+    "risk": "read",
+    "navigatorEnabled": false
+  },
+  {
     "id": "system.openCommandSurface",
     "schemaVersion": 1,
     "description": "Open the floating agent capability console.",

@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { useLily } from "@/lily/context";
 import { useCapabilities } from "@/capabilities/context";
 import { LilyConversation } from "./LilyConversation";
+import { NaviVoiceSurface } from "@/components/navi/NaviVoiceSurface";
+import { useNaviVoice } from "@/navi/voice/use-navi-voice";
 import type { LilyBubblePosition } from "@/lily/types";
 import { clampBubblePosition, didDrag } from "@/lily/bubble-position";
 import {
@@ -47,6 +49,17 @@ export function LilyCompanion() {
     lily.session.presentation,
     lily.session.activeRequestId,
   );
+  const voice = useNaviVoice(async (request) => {
+    const result = await lily.submit(request, { maxCapabilitySteps: 3 });
+    return (
+      result ?? {
+        text: "I’m ready for another request.",
+        trace: [],
+        failed: false,
+      }
+    );
+  });
+  const voiceMode = voice.state !== "inactive";
   const save = (next: LilyBubblePosition) => {
     const value = clampBubblePosition(next);
     setPosition(value);
@@ -86,6 +99,9 @@ export function LilyCompanion() {
     window.addEventListener("keydown", escape);
     return () => window.removeEventListener("keydown", escape);
   }, [lily.close, panelOpen]);
+  useEffect(() => {
+    if (!panelOpen && voice.active) voice.stop("panel-close");
+  }, [panelOpen, voice.active, voice.stop]);
   const style: CSSProperties = dragPreview
     ? {
         left: Math.max(
@@ -106,7 +122,7 @@ export function LilyCompanion() {
   if (!visible || runtime.surface.open) return null;
   return (
     <div
-      className={`lily-companion ${position.yRatio > 0.5 ? "upper" : "lower"} ${lily.session.presentation === "morphing-to-bubble" ? "confirm" : ""}`}
+      className={`lily-companion ${position.yRatio > 0.5 ? "upper" : "lower"} ${lily.session.presentation === "morphing-to-bubble" ? "confirm" : ""} navi-voice-host-${voice.state}`}
       style={style}
     >
       {!panelOpen && (
@@ -159,6 +175,25 @@ export function LilyCompanion() {
               <i /> Navi
             </b>
             <div>
+              {voice.enabled && (
+                <button
+                  className="navi-microphone"
+                  aria-label={voiceMode ? "End Navi voice mode" : "Start Navi voice mode"}
+                  aria-pressed={voiceMode}
+                  title="Voice mode"
+                  onClick={async () => {
+                    if (voiceMode) {
+                      await runtime.execute("navi.endVoice");
+                      voice.stop();
+                    } else {
+                      await runtime.execute("navi.startVoice");
+                      await voice.start();
+                    }
+                  }}
+                >
+                  <span aria-hidden="true">🎙</span>
+                </button>
+              )}
               <button
                 className="lily-position-trigger"
                 aria-haspopup="menu"
@@ -209,8 +244,8 @@ export function LilyCompanion() {
               </button>
             </div>
           )}
-          <LilyConversation compact />
-          <footer>
+          {voiceMode ? <NaviVoiceSurface voice={voice} /> : <LilyConversation compact />}
+          {!voiceMode && <footer>
             <button onClick={() => runtime.execute("navi.clearConversation")}>
               Clear Navi conversation
             </button>
@@ -220,7 +255,7 @@ export function LilyCompanion() {
             <button onClick={() => runtime.execute("system.openActionKeyMode")}>
               Open Action Key Mode
             </button>
-          </footer>
+          </footer>}
         </section>
       )}
     </div>

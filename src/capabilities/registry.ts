@@ -130,6 +130,14 @@ const handlers: Record<string, Handler> = {
     c.surface.open("lily");
     return { open: true, tab: "lily" };
   },
+  "navi.startVoice": async () => ({
+    requested: true,
+    message: "Navi Voice Mode requested.",
+  }),
+  "navi.endVoice": async () => ({
+    ended: true,
+    message: "Navi Voice Mode ended.",
+  }),
   "system.getApplicationInfo": async () => ({
     runtime: "browser",
     architecture: "capability-first",
@@ -540,6 +548,20 @@ export const capabilities: CapabilityDefinition[] = [
     "Open the Agent Console with the shared Navi conversation.",
     ["NAVI", "OPEN", "CONSOLE"],
     "Open full Agent Console",
+  ),
+  simple(
+    "navi.startVoice",
+    "Start Navi Voice Mode",
+    "Request microphone permission and start a bounded Navi voice session.",
+    ["NAVI", "VOICE", "START"],
+    "Start Navi Voice Mode",
+  ),
+  simple(
+    "navi.endVoice",
+    "End Navi Voice Mode",
+    "Stop microphone capture, playback and the active Navi voice connection.",
+    ["NAVI", "VOICE", "END"],
+    "End Navi Voice Mode",
   ),
   simple(
     "system.openCommandSurface",
