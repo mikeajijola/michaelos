@@ -31,12 +31,19 @@ export function LilyLandingPrompt() {
             <span className="lily-composer-avatar" aria-hidden="true">
               L
             </span>
-            <input
+            <textarea
               id="lily-landing-input"
               value={value}
               onChange={(event) => setValue(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && !event.shiftKey) {
+                  event.preventDefault();
+                  send();
+                }
+              }}
               placeholder="Message Lily…"
               autoComplete="off"
+              rows={4}
             />
             <button
               disabled={!value.trim() || Boolean(session.activeRequestId)}

@@ -522,7 +522,7 @@ input:focus-visible {
 .cap-info-backdrop {
   position: fixed;
   inset: 0;
-  background: var(--background);
+  background: rgb(15 16 20 / 72%);
   z-index: 1200;
   display: grid;
   place-items: center;
@@ -2610,8 +2610,8 @@ html[data-theme="dark"] .global-inspector pre {
 
 /* The homepage presents Lily as a conversation, not a site-search panel. */
 .home-lily-stage .lily-chat-composer {
-  width: min(1080px, 100%);
-  max-width: 1080px;
+  width: min(720px, 100%);
+  max-width: 720px;
   display: block;
   margin: 0 auto;
   padding: 0;
@@ -2633,12 +2633,12 @@ html[data-theme="dark"] .global-inspector pre {
   white-space: nowrap;
 }
 .home-lily-stage .lily-chat-composer .lily-composer-field {
-  min-height: 68px;
+  min-height: 184px;
   display: grid;
   grid-template-columns: 42px minmax(0, 1fr) 44px;
-  align-items: center;
+  align-items: end;
   gap: 10px;
-  padding: 7px 9px 7px 12px;
+  padding: 14px;
   border: 1px solid var(--border);
   border-radius: 22px;
   background: var(--surface);
@@ -2656,21 +2656,23 @@ html[data-theme="dark"] .global-inspector pre {
   font-size: 15px;
   font-weight: 750;
 }
-.home-lily-stage .lily-chat-composer input {
+.home-lily-stage .lily-chat-composer textarea {
   width: 100%;
-  min-height: 52px;
-  padding: 0;
+  min-height: 142px;
+  padding: 4px 0;
   border: 0;
   border-radius: 0;
   background: transparent;
   color: var(--text);
   font-size: 17px;
+  line-height: 1.55;
   outline: none;
+  resize: none;
 }
-.home-lily-stage .lily-chat-composer input::placeholder {
+.home-lily-stage .lily-chat-composer textarea::placeholder {
   color: var(--text-muted);
 }
-.home-lily-stage .lily-chat-composer input:focus {
+.home-lily-stage .lily-chat-composer textarea:focus {
   border: 0;
   box-shadow: none;
 }
@@ -2710,7 +2712,7 @@ html[data-theme="dark"] .global-inspector pre {
     padding: 0;
   }
   .home-lily-stage .lily-chat-composer .lily-composer-field {
-    min-height: 62px;
+    min-height: 156px;
     grid-template-columns: 36px minmax(0, 1fr) 42px;
     gap: 8px;
     border-radius: 19px;
@@ -2719,8 +2721,8 @@ html[data-theme="dark"] .global-inspector pre {
     width: 34px;
     height: 34px;
   }
-  .home-lily-stage .lily-chat-composer input {
-    min-height: 48px;
+  .home-lily-stage .lily-chat-composer textarea {
+    min-height: 116px;
     font-size: 16px;
   }
   .home-lily-stage .lily-chat-composer form button {
