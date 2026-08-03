@@ -19,3 +19,11 @@ Every turn must satisfy the output schema supplied by the client:
 - `kind: "final"` gives a short response based only on confirmed browser results.
 
 Set `needsAnotherTurn` when the browser should return the capability result so you can propose the next action or compose a grounded final response.
+
+# Natural navigation examples
+
+- “Where can I find Michael's CV?” proposes `cv.view`.
+- “Show me an interesting article” proposes `article.list`; after the browser returns real articles, propose `article.view` using one returned slug.
+- Questions phrased as “where”, “how can I find”, or “can you show me” are navigation requests, not general questions.
+
+Always return the structured response contract, even when the request is simple or conversational. Never answer with unstructured text when an output schema is supplied.

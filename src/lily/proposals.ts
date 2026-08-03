@@ -3,7 +3,16 @@ import { validateParams } from "@/capabilities/protocol";
 import type { CapabilityDefinition } from "@/capabilities/types";
 import type { LilyProposal, LilyResultReference } from "./types";
 
-export const LILY_CAPABILITY_IDS = new Set(capabilities.filter((item) => item.navigator.enabled && item.risk !== "write" && item.risk !== "destructive").map((item) => item.id));
+export const LILY_CAPABILITY_IDS = new Set(
+  capabilities
+    .filter(
+      (item) =>
+        item.navigator.enabled &&
+        item.risk !== "write" &&
+        item.risk !== "destructive",
+    )
+    .map((item) => item.id),
+);
 export function lilyCapabilityShortlist() {
   return [...LILY_CAPABILITY_IDS]
     .map((id) => registry.get(id))
@@ -70,6 +79,73 @@ export function validateLilyProposal(
       "Lily proposed an experience ID that was not returned by a browser capability.",
     );
   return { ...proposal, arguments: args };
+}
+
+/**
+ * A narrow browser-side recovery for common navigation requests when a hosted
+ * model turn completes without its requested structured result. It can only
+ * return registry-backed proposals and can only open entities supplied by a
+ * preceding browser execution.
+ */
+export function recoverLilyProposal(
+  request: string,
+  references: LilyResultReference[],
+  completedCapabilityIds: string[] = [],
+): LilyProposal | null {
+  const text = request
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (/\b(cv|resume|curriculum vitae)\b/.test(text)) {
+    if (completedCapabilityIds.includes("cv.view")) {
+      return { kind: "final", message: "I opened Mike’s CV." };
+    }
+    return {
+      kind: "capability",
+      capabilityId: "cv.view",
+      arguments: {},
+      message: "I’ll open Mike’s CV.",
+      needsAnotherTurn: true,
+    };
+  }
+
+  if (/\b(article|articles|writing|writings|blog|post|posts)\b/.test(text)) {
+    if (completedCapabilityIds.includes("article.view")) {
+      const article = references.find(
+        (reference) => reference.kind === "article",
+      );
+      return {
+        kind: "final",
+        message: article
+          ? `I opened ${article.label}.`
+          : "I opened one of Mike’s articles.",
+      };
+    }
+    const article = references.find(
+      (reference) => reference.kind === "article",
+    );
+    if (article) {
+      return {
+        kind: "capability",
+        capabilityId: "article.view",
+        arguments: { slug: article.id },
+        message: `I’ll open ${article.label}.`,
+        needsAnotherTurn: true,
+      };
+    }
+    return {
+      kind: "capability",
+      capabilityId: "article.list",
+      arguments: {},
+      message: "I’ll look through Mike’s writing.",
+      needsAnotherTurn: true,
+    };
+  }
+
+  return null;
 }
 export const lilyProposalSchema = {
   type: "object",

@@ -16,6 +16,7 @@ import {
   compactReferences,
   lilyCapabilityShortlist,
   lilyProposalSchema,
+  recoverLilyProposal,
   validateLilyProposal,
 } from "./proposals";
 import { loadLilySession, saveLilySession } from "./conversation-storage";
@@ -157,10 +158,16 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
           );
         let prompt = text;
         for (let step = 0; step < 4; step++) {
-        const clientContext = JSON.parse(JSON.stringify({ route: sessionRef.current.currentRoute, permittedCapabilities: lilyCapabilityShortlist(), previousResults: references }));
-        const response = await remote.current.send<LilyProposal>({
-          message: prompt,
-          clientContext,
+          const clientContext = JSON.parse(
+            JSON.stringify({
+              route: sessionRef.current.currentRoute,
+              permittedCapabilities: lilyCapabilityShortlist(),
+              previousResults: references,
+            }),
+          );
+          const response = await remote.current.send<LilyProposal>({
+            message: prompt,
+            clientContext,
             outputSchema: lilyProposalSchema,
           });
           const result = await response.result();
@@ -168,7 +175,14 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             ...current,
             eveSession: remote.current?.state,
           }));
-          const proposal = validateLilyProposal(result.data, references);
+          const recovered =
+            result.data ??
+            recoverLilyProposal(
+              text,
+              references,
+              trace.map((entry) => entry.capabilityId),
+            );
+          const proposal = validateLilyProposal(recovered, references);
           if (proposal.kind === "clarification") {
             finalText = proposal.message;
             update((current) => ({
