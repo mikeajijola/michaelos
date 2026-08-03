@@ -1598,11 +1598,25 @@ input:focus-visible {
   z-index: 2;
 }
 .lily-panel > footer {
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 0;
+  align-items: stretch;
 }
-.lily-panel > footer button:last-child {
-  margin-left: auto;
+.lily-panel > footer button {
+  display: flex;
+  min-width: 0;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 8px;
+  line-height: 1.35;
+  text-align: center;
+  text-wrap: balance;
+}
+.lily-panel > footer button + button {
+  border-left: 1px solid var(--line);
 }
 
 .action-key-backdrop {
