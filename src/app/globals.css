@@ -2797,6 +2797,16 @@ html[data-theme="dark"] .global-inspector pre {
 }
 
 /* Navi Voice Mode */
+.lily-panel > header button.navi-microphone {
+  width: auto;
+  min-width: 84px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
 .navi-microphone[aria-pressed="true"] {
   background: var(--highlight) !important;
   color: #111217 !important;

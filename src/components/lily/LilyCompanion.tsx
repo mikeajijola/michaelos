@@ -165,7 +165,7 @@ export function LilyCompanion() {
             setDragPreview(null);
           }}
         >
-          Navi
+          <span aria-hidden="true">🎙</span>
         </button>
       )}
       {panelOpen && (
@@ -191,7 +191,7 @@ export function LilyCompanion() {
                     }
                   }}
                 >
-                  <span aria-hidden="true">🎙</span>
+                  {voiceMode ? "End voice" : "Voice mode"}
                 </button>
               )}
               <button

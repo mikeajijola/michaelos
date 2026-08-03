@@ -29,7 +29,7 @@ export function NaviVoiceSurface({ voice }: { voice: NaviVoiceViewModel }) {
       aria-live="polite"
     >
       <div className="navi-voice-orb" aria-hidden="true">
-        <span>N</span>
+        <span>🎙</span>
       </div>
       <p className="navi-voice-status">
         {voiceStatusText(voice.state, voice.muted)}

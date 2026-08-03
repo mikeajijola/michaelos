@@ -29,7 +29,7 @@ export function LilyLandingPrompt() {
           <label htmlFor="lily-landing-input">Message Navi</label>
           <div className="lily-composer-field">
             <span className="lily-composer-avatar" aria-hidden="true">
-              L
+              🎙
             </span>
             <textarea
               id="lily-landing-input"
