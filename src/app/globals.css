@@ -759,6 +759,25 @@ input:focus-visible {
   }
 }
 
+/* Static editorial copy keeps the standard pointer; only editable text uses an I-beam. */
+body {
+  cursor: default;
+}
+a[href],
+button,
+summary,
+label[for],
+select {
+  cursor: pointer;
+}
+input,
+textarea,
+[contenteditable="true"],
+.xterm-helper-textarea {
+  cursor: text;
+  caret-color: auto;
+}
+
 /* Executive publication theme ------------------------------------------------ */
 body {
   background: var(--background);
