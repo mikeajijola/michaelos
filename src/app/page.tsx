@@ -6,7 +6,18 @@ import { LilyLandingPrompt } from "@/components/lily/LilyLandingPrompt";
 export default function Home() {
   return (
     <>
-      <div className="shell hero">
+      <div className="shell home-lily-stage">
+        <div className="home-lily-intro">
+          <div className="eyebrow">MichaelOS conversational navigation</div>
+          <h1>Where would you like to go?</h1>
+          <p>
+            Ask naturally. Lily can find Mike’s work and show the registered
+            capability used to get you there.
+          </p>
+        </div>
+        <LilyLandingPrompt />
+      </div>
+      <div className="shell hero hero-supporting">
         <div>
           <div className="eyebrow">Platform engineer · Systems thinker</div>
           <h1>
@@ -35,9 +46,6 @@ export default function Home() {
             </CapabilityButton>
           </div>
         </div>
-      </div>
-      <div className="shell">
-        <LilyLandingPrompt />
       </div>
       <section className="section">
         <div className="shell">
