@@ -2804,6 +2804,14 @@ html[data-theme="dark"] .global-inspector pre {
   height: 38px;
   font-size: 15px;
 }
+html[data-theme="dark"]
+  .home-lily-stage
+  .lily-chat-composer
+  form
+  button.lily-composer-avatar {
+  background: #08090b;
+  color: #f4f5f7;
+}
 .lily-composer-avatar:focus-visible {
   outline: 3px solid var(--highlight);
   outline-offset: 3px;
