@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const PROFILE_IMAGE_PATH = "/images/mike-ajijola-profile.jpg";
+const PROFILE_IMAGE_PATH = "/images/mike-ajijola-profile.png";
 
 export function ProfilePortrait({
   size = "page",

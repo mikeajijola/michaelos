@@ -2,7 +2,7 @@
 
 Add Mike's profile photograph here as:
 
-`mike-ajijola-profile.jpg`
+`mike-ajijola-profile.png`
 
 The same square image is used for the centred homepage portrait and the
 circular avatar beside the MichaelOS wordmark. Use a high-resolution square
