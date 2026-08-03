@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useCapabilities } from "@/capabilities/context";
 import { resolveCli, resolveTemplate } from "@/capabilities/protocol";
 import { registry } from "@/capabilities/registry";
@@ -17,6 +18,14 @@ export function CapabilityInfo({
   const [open, setOpen] = useState(false);
   const capability = registry.get(capabilityId);
   const { selectElement, execute } = useCapabilities();
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
   if (!capability) return null;
   const metadata = {
     text: controlLabel,
@@ -42,64 +51,66 @@ export function CapabilityInfo({
       >
         ⓘ
       </button>
-      {open && (
-        <div
-          className="cap-info-backdrop"
-          role="presentation"
-          onMouseDown={() => setOpen(false)}
-        >
-          <section
-            className="cap-info-panel"
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Capability details for ${controlLabel}`}
-            onMouseDown={(event) => event.stopPropagation()}
+      {open &&
+        createPortal(
+          <div
+            className="cap-info-backdrop"
+            role="presentation"
+            onMouseDown={() => setOpen(false)}
           >
-            <button
-              className="cap-info-close"
-              aria-label="Close capability details"
-              onClick={() => setOpen(false)}
+            <section
+              className="cap-info-panel"
+              role="dialog"
+              aria-modal="true"
+              aria-label={`Capability details for ${controlLabel}`}
+              onMouseDown={(event) => event.stopPropagation()}
             >
-              ×
-            </button>
-            <div className="eyebrow">Capability details</div>
-            <h2>{capabilityId}</h2>
-            <p>{capability.description}</p>
-            <dl>
-              <dt>Parameters</dt>
-              <dd>
-                <code>{JSON.stringify(params, null, 2)}</code>
-              </dd>
-              <dt>CLI</dt>
-              <dd>
-                <code>{resolveCli(capability, params)}</code>
-              </dd>
-              <dt>Action Keys</dt>
-              <dd>
-                <code>
-                  {resolveTemplate(capability.keyboard.template, params)}
-                </code>
-              </dd>
-              <dt>Accessible label</dt>
-              <dd>{controlLabel}</dd>
-              <dt>Risk</dt>
-              <dd>{capability.risk}</dd>
-            </dl>
-            <div className="gateway-note">
-              <b>Action Key Mode</b>
-              <code>Ctrl + Alt + K</code>
-              <code>⌘ + Option + K</code>
-              <span>
-                Open the labelled command input, then enter the Action Key
-                above.
-              </span>
-              <button onClick={() => execute("system.openActionKeyMode")}>
-                Open Action Key Mode
+              <button
+                className="cap-info-close"
+                aria-label="Close capability details"
+                onClick={() => setOpen(false)}
+              >
+                ×
               </button>
-            </div>
-          </section>
-        </div>
-      )}
+              <div className="eyebrow">Capability details</div>
+              <h2>{capabilityId}</h2>
+              <p>{capability.description}</p>
+              <dl>
+                <dt>Parameters</dt>
+                <dd>
+                  <code>{JSON.stringify(params, null, 2)}</code>
+                </dd>
+                <dt>CLI</dt>
+                <dd>
+                  <code>{resolveCli(capability, params)}</code>
+                </dd>
+                <dt>Action Keys</dt>
+                <dd>
+                  <code>
+                    {resolveTemplate(capability.keyboard.template, params)}
+                  </code>
+                </dd>
+                <dt>Accessible label</dt>
+                <dd>{controlLabel}</dd>
+                <dt>Risk</dt>
+                <dd>{capability.risk}</dd>
+              </dl>
+              <div className="gateway-note">
+                <b>Action Key Mode</b>
+                <code>Ctrl + Alt + K</code>
+                <code>⌘ + Option + K</code>
+                <span>
+                  Open the labelled command input, then enter the Action Key
+                  above.
+                </span>
+                <button onClick={() => execute("system.openActionKeyMode")}>
+                  Open Action Key Mode
+                </button>
+              </div>
+            </section>
+          </div>,
+          document.body,
+        )}
     </>
   );
 }

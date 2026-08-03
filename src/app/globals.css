@@ -2610,8 +2610,8 @@ html[data-theme="dark"] .global-inspector pre {
 
 /* The homepage presents Lily as a conversation, not a site-search panel. */
 .home-lily-stage .lily-chat-composer {
-  width: min(720px, 100%);
-  max-width: 720px;
+  width: min(1080px, 100%);
+  max-width: 1080px;
   display: block;
   margin: 0 auto;
   padding: 0;
