@@ -2948,6 +2948,8 @@ html[data-theme="dark"] .global-inspector pre {
 
 /* Navi's code-native face is shared by every public Navi surface. */
 .navi-face {
+  --navi-accent: #efc66d;
+  --navi-cheek: #e9a996;
   position: relative;
   display: inline-grid;
   flex: 0 0 auto;
@@ -2991,17 +2993,32 @@ html[data-theme="dark"] .global-inspector pre {
   animation: navi-ring-drift 16s linear infinite;
 }
 .navi-face-ring path {
-  stroke: var(--highlight) !important;
+  stroke: var(--navi-accent) !important;
   stroke-width: 1.65 !important;
   filter:
-    drop-shadow(0 0 2px var(--highlight))
-    drop-shadow(0 0 5px color-mix(in srgb, var(--highlight) 72%, transparent));
+    drop-shadow(0 0 2px var(--navi-accent))
+    drop-shadow(0 0 5px color-mix(in srgb, var(--navi-accent) 72%, transparent));
+}
+.navi-face-portrait {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: navi-face-personality 8s ease-in-out infinite;
+}
+.navi-face-hair path {
+  stroke: var(--navi-accent) !important;
+  stroke-width: 1.45 !important;
+  opacity: 0.82;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--navi-accent) 56%, transparent));
+}
+.navi-face-eyes ellipse {
+  fill: currentColor;
 }
 .navi-face-lashes path {
-  stroke-width: 1.65 !important;
+  stroke-width: 1.5 !important;
 }
 .navi-face-cheeks {
-  opacity: 0.48;
+  color: var(--navi-cheek);
+  opacity: 0.7;
 }
 .navi-face-cheeks path {
   stroke-width: 1.45 !important;
@@ -3020,11 +3037,17 @@ html[data-theme="dark"] .global-inspector pre {
   transform: scaleY(var(--navi-mouth-energy, 1));
   animation: navi-face-listening-wave 0.72s ease-in-out infinite alternate;
 }
+.navi-face-listening .navi-face-portrait {
+  animation: navi-face-attentive 2.8s ease-in-out infinite;
+}
 .navi-face-listening .navi-face-ring {
   animation: navi-ring-listening 1.35s ease-in-out infinite;
 }
 .navi-face-speaking .navi-face-mouth {
   animation: navi-face-speaking-wave 1.15s ease-in-out infinite;
+}
+.navi-face-speaking .navi-face-portrait {
+  animation: navi-face-warm-response 2.6s ease-in-out infinite;
 }
 .navi-face-speaking .navi-face-ring {
   animation: navi-ring-speaking 2.4s ease-in-out infinite;
@@ -3041,7 +3064,8 @@ html[data-theme="dark"] .global-inspector pre {
   animation: navi-face-progress 0.8s linear infinite;
 }
 .navi-face-error .navi-face-eyes,
-.navi-face-error .navi-face-mouth {
+.navi-face-error .navi-face-mouth,
+.navi-face-error .navi-face-portrait {
   animation: none;
 }
 .navi-face-error .navi-face-mouth {
@@ -3060,7 +3084,7 @@ html[data-theme="dark"] .global-inspector pre {
   place-items: center;
   border: 2px solid var(--dark-panel);
   border-radius: 50%;
-  background: var(--highlight);
+  background: var(--navi-accent);
   color: #111217;
   line-height: 0;
 }
@@ -3107,6 +3131,33 @@ html[data-theme="dark"] .global-inspector pre {
   }
   50% {
     transform: translateY(-0.5px) scaleY(1.04);
+  }
+}
+@keyframes navi-face-personality {
+  0%,
+  100% {
+    transform: rotate(-1deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.4deg) translateY(-0.4px);
+  }
+}
+@keyframes navi-face-attentive {
+  0%,
+  100% {
+    transform: rotate(-1.5deg) scale(1);
+  }
+  50% {
+    transform: rotate(1.5deg) scale(1.025);
+  }
+}
+@keyframes navi-face-warm-response {
+  0%,
+  100% {
+    transform: rotate(-1deg) translateY(0);
+  }
+  50% {
+    transform: rotate(2deg) translateY(-0.8px);
   }
 }
 @keyframes navi-ring-drift {
@@ -3339,6 +3390,7 @@ html[data-theme="dark"] .global-inspector pre {
   .navi-face,
   .navi-face-ring,
   .navi-face-ring path,
+  .navi-face-portrait,
   .navi-face-eyes,
   .navi-face-mouth,
   .navi-face-mouth path {
