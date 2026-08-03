@@ -10,11 +10,12 @@ export default function Home() {
     <>
       <div className="shell home-lily-stage">
         <div className="home-lily-intro">
-          <div className="eyebrow">MichaelOS conversational navigation</div>
-          <h1>Where would you like to go?</h1>
+          <div className="eyebrow">Your MichaelOS guide</div>
+          <h1>Chat with Lily.</h1>
           <p>
-            Ask naturally. Lily can find Mike’s work and show the registered
-            capability used to get you there.
+            Ask about Mike’s projects, experience, writing or CV. Lily can
+            answer, take you to the right place and show the capability she
+            used.
           </p>
         </div>
         <LilyLandingPrompt />

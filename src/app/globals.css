@@ -2589,3 +2589,124 @@ html[data-theme="dark"] .global-inspector pre {
     padding: 0;
   }
 }
+
+/* The homepage presents Lily as a conversation, not a site-search panel. */
+.home-lily-stage .lily-chat-composer {
+  width: min(720px, 100%);
+  max-width: 720px;
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text);
+}
+.lily-chat-composer .lily-landing-content {
+  width: 100%;
+}
+.lily-chat-composer form > label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.home-lily-stage .lily-chat-composer .lily-composer-field {
+  min-height: 68px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 9px 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: 0 14px 40px #11121712;
+}
+.lily-composer-avatar {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--dark-panel);
+  color: #fff;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 750;
+}
+.home-lily-stage .lily-chat-composer input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 17px;
+  outline: none;
+}
+.home-lily-stage .lily-chat-composer input::placeholder {
+  color: var(--text-muted);
+}
+.home-lily-stage .lily-chat-composer input:focus {
+  border: 0;
+  box-shadow: none;
+}
+.home-lily-stage .lily-chat-composer .lily-composer-field:focus-within {
+  border-color: var(--text);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--text) 12%, transparent),
+    0 14px 40px #11121712;
+}
+.home-lily-stage .lily-chat-composer form button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--background);
+  font-size: 22px;
+  line-height: 1;
+}
+.home-lily-stage .lily-chat-composer .lily-landing-response {
+  margin-top: 18px;
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+.home-lily-stage .lily-chat-composer .lily-landing-response > span,
+.home-lily-stage .lily-chat-composer .lily-landing-response > p,
+.home-lily-stage .lily-chat-composer .lily-status {
+  color: var(--text) !important;
+}
+
+@media (max-width: 700px) {
+  .home-lily-stage .lily-chat-composer {
+    padding: 0;
+  }
+  .home-lily-stage .lily-chat-composer .lily-composer-field {
+    min-height: 62px;
+    grid-template-columns: 36px minmax(0, 1fr) 42px;
+    gap: 8px;
+    border-radius: 19px;
+  }
+  .lily-composer-avatar {
+    width: 34px;
+    height: 34px;
+  }
+  .home-lily-stage .lily-chat-composer input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+  .home-lily-stage .lily-chat-composer form button {
+    width: 42px;
+    height: 42px;
+  }
+}
