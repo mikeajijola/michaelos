@@ -27,7 +27,7 @@ export function buildLilyClientContext(input: {
   return {
     contextVersion: LILY_CONTEXT_VERSION,
     agent: {
-      name: "Lily",
+      name: "Navi",
       role: "MichaelOS conversational navigation agent",
       executionBoundary:
         "Propose only. The browser validates and executes every capability.",

@@ -291,7 +291,7 @@ export function AgentSurface() {
         next === "terminal"
           ? "system.openTerminal"
           : next === "lily"
-            ? "lily.openConsole"
+            ? "navi.openConsole"
             : next === "history"
               ? "system.openHistory"
               : "system.openInspector",
@@ -345,7 +345,7 @@ export function AgentSurface() {
                   className={tab === "lily" ? "active" : ""}
                   onClick={() => select("lily")}
                 >
-                  Lily
+                  Navi
                 </button>
                 <button
                   className={tab === "terminal" ? "active" : ""}

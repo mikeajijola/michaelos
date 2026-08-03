@@ -2785,13 +2785,13 @@ html[data-theme="dark"] .global-inspector pre {
 /* Lily's presence keeps a visible halo; navigation opens the panel directly. */
 .lily-bubble {
   box-shadow:
-    0 0 0 3px var(--surface),
-    0 0 0 6px color-mix(in srgb, var(--text) 24%, transparent),
-    0 0 26px color-mix(in srgb, var(--text) 24%, transparent);
+    0 0 0 3px var(--highlight),
+    0 0 0 6px color-mix(in srgb, var(--highlight) 62%, transparent),
+    0 0 26px var(--highlight);
 }
 .lily-composer-avatar {
   box-shadow:
-    0 0 0 3px var(--surface),
-    0 0 0 5px color-mix(in srgb, var(--text) 18%, transparent),
-    0 0 18px color-mix(in srgb, var(--text) 18%, transparent);
+    0 0 0 3px var(--highlight),
+    0 0 0 5px color-mix(in srgb, var(--highlight) 62%, transparent),
+    0 0 18px var(--highlight);
 }

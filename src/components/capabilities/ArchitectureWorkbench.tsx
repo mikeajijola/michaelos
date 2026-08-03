@@ -128,7 +128,7 @@ export function ArchitectureWorkbench() {
             <div className="eyebrow">Global client</div>
             <h2>Agent CLI is available everywhere.</h2>
             <p>
-              Open the Agent Console through Lily, or launch Action Key Mode
+              Open the Agent Console through Navi, or launch Action Key Mode
               with Ctrl+Alt+K (Command+Option+K on macOS).
             </p>
             <button onClick={() => runtime.execute("system.openTerminal")}>

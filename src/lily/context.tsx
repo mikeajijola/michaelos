@@ -293,7 +293,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             : "I couldn’t map that request to an available action.";
       } catch (error) {
         failed = true;
-        finalText = `Lily couldn’t resolve that request. ${error instanceof Error ? error.message : String(error)}`;
+        finalText = `Navi couldn’t resolve that request. ${error instanceof Error ? error.message : String(error)}`;
       }
       const navigated = trace.some(
         (entry) =>

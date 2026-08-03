@@ -115,7 +115,7 @@ export function LilyCompanion() {
         <button
           ref={bubble}
           className="lily-bubble"
-          aria-label="Open Lily"
+          aria-label="Open Navi"
           aria-expanded={false}
           onPointerDown={(event) => {
             drag.current = { x: event.clientX, y: event.clientY, moved: false };
@@ -144,21 +144,21 @@ export function LilyCompanion() {
               });
               return;
             }
-            void runtime.execute("lily.open");
+            void runtime.execute("navi.open");
           }}
           onPointerCancel={() => {
             drag.current = null;
             setDragPreview(null);
           }}
         >
-          Lily
+          Navi
         </button>
       )}
       {panelOpen && (
-        <section className="lily-panel" aria-label="Lily Panel">
+        <section className="lily-panel" aria-label="Navi Panel">
           <header>
             <b>
-              <i /> Lily
+              <i /> Navi
             </b>
             <div>
               <button
@@ -170,7 +170,7 @@ export function LilyCompanion() {
                 Position
               </button>
               <button
-                aria-label="Minimise Lily"
+                aria-label="Minimise Navi"
                 onClick={() => {
                   lily.close();
                   window.setTimeout(() => bubble.current?.focus(), 0);
@@ -179,9 +179,9 @@ export function LilyCompanion() {
                 —
               </button>
               <button
-                aria-label="Close Lily"
+                aria-label="Close Navi"
                 onClick={() => {
-                  void runtime.execute("lily.close");
+                  void runtime.execute("navi.close");
                   window.setTimeout(() => bubble.current?.focus(), 0);
                 }}
               >
@@ -192,31 +192,31 @@ export function LilyCompanion() {
           {menu && (
             <div className="lily-position-menu" role="menu">
               <button role="menuitem" onClick={() => move("left")}>
-                Move Lily to left
+                Move Navi to left
               </button>
               <button role="menuitem" onClick={() => move("right")}>
-                Move Lily to right
+                Move Navi to right
               </button>
               <button role="menuitem" onClick={() => move(position.edge, -0.1)}>
-                Move Lily higher
+                Move Navi higher
               </button>
               <button role="menuitem" onClick={() => move(position.edge, 0.1)}>
-                Move Lily lower
+                Move Navi lower
               </button>
               <button
                 role="menuitem"
-                onClick={() => runtime.execute("lily.resetPosition")}
+                onClick={() => runtime.execute("navi.resetPosition")}
               >
-                Reset Lily position
+                Reset Navi position
               </button>
             </div>
           )}
           <LilyConversation compact />
           <footer>
-            <button onClick={() => runtime.execute("lily.clearConversation")}>
-              Clear Lily conversation
+            <button onClick={() => runtime.execute("navi.clearConversation")}>
+              Clear Navi conversation
             </button>
-            <button onClick={() => runtime.execute("lily.openConsole")}>
+            <button onClick={() => runtime.execute("navi.openConsole")}>
               Open full Agent Console
             </button>
             <button onClick={() => runtime.execute("system.openActionKeyMode")}>

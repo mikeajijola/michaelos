@@ -27,74 +27,74 @@
     "navigatorEnabled": true
   },
   {
-    "id": "lily.open",
+    "id": "navi.open",
     "schemaVersion": 1,
-    "description": "Open the compact Lily Panel.",
+    "description": "Open the compact Navi Panel.",
     "parameters": [],
-    "cliCommand": "run lily.open",
+    "cliCommand": "run navi.open",
     "actionKeyTemplate": [
-      "LILY",
+      "NAVI",
       "OPEN",
       "ENTER"
     ],
-    "accessibleLabel": "Open Lily",
+    "accessibleLabel": "Open Navi",
     "risk": "read",
     "navigatorEnabled": false
   },
   {
-    "id": "lily.close",
+    "id": "navi.close",
     "schemaVersion": 1,
-    "description": "Close the compact Lily Panel.",
+    "description": "Close the compact Navi Panel.",
     "parameters": [],
-    "cliCommand": "run lily.close",
+    "cliCommand": "run navi.close",
     "actionKeyTemplate": [
-      "LILY",
+      "NAVI",
       "CLOSE",
       "ENTER"
     ],
-    "accessibleLabel": "Close Lily",
+    "accessibleLabel": "Close Navi",
     "risk": "read",
     "navigatorEnabled": false
   },
   {
-    "id": "lily.clearConversation",
+    "id": "navi.clearConversation",
     "schemaVersion": 1,
-    "description": "Clear the locally stored Lily conversation.",
+    "description": "Clear the locally stored Navi conversation.",
     "parameters": [],
-    "cliCommand": "run lily.clearConversation",
+    "cliCommand": "run navi.clearConversation",
     "actionKeyTemplate": [
-      "LILY",
+      "NAVI",
       "CLEAR",
       "ENTER"
     ],
-    "accessibleLabel": "Clear Lily conversation",
+    "accessibleLabel": "Clear Navi conversation",
     "risk": "read",
     "navigatorEnabled": false
   },
   {
-    "id": "lily.resetPosition",
+    "id": "navi.resetPosition",
     "schemaVersion": 1,
-    "description": "Reset the Lily Bubble to its default safe position.",
+    "description": "Reset the Navi Bubble to its default safe position.",
     "parameters": [],
-    "cliCommand": "run lily.resetPosition",
+    "cliCommand": "run navi.resetPosition",
     "actionKeyTemplate": [
-      "LILY",
+      "NAVI",
       "RESET",
       "POSITION",
       "ENTER"
     ],
-    "accessibleLabel": "Reset Lily position",
+    "accessibleLabel": "Reset Navi position",
     "risk": "read",
     "navigatorEnabled": false
   },
   {
-    "id": "lily.openConsole",
+    "id": "navi.openConsole",
     "schemaVersion": 1,
-    "description": "Open the Agent Console with the shared Lily conversation.",
+    "description": "Open the Agent Console with the shared Navi conversation.",
     "parameters": [],
-    "cliCommand": "run lily.openConsole",
+    "cliCommand": "run navi.openConsole",
     "actionKeyTemplate": [
-      "LILY",
+      "NAVI",
       "OPEN",
       "CONSOLE",
       "ENTER"
@@ -202,7 +202,7 @@
   {
     "id": "system.openAiConsole",
     "schemaVersion": 1,
-    "description": "Open the Agent Console on the Lily tab. Retained for history compatibility.",
+    "description": "Open the Agent Console on the Navi tab. Retained for history compatibility.",
     "parameters": [],
     "cliCommand": "run system.openAiConsole",
     "actionKeyTemplate": [
@@ -211,7 +211,7 @@
       "AI",
       "ENTER"
     ],
-    "accessibleLabel": "Open Lily in the Agent Console",
+    "accessibleLabel": "Open Navi in the Agent Console",
     "risk": "read",
     "navigatorEnabled": false
   },

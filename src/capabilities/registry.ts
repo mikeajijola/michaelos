@@ -99,31 +99,31 @@ const handlers: Record<string, Handler> = {
     window.dispatchEvent(new CustomEvent("action-key-mode-close"));
     return { open: false, mode: "action-keys" };
   },
-  "lily.open": async () => {
+  "navi.open": async () => {
     window.dispatchEvent(
       new CustomEvent("lily-control", { detail: { action: "open" } }),
     );
     return { open: true };
   },
-  "lily.close": async () => {
+  "navi.close": async () => {
     window.dispatchEvent(
       new CustomEvent("lily-control", { detail: { action: "close" } }),
     );
     return { open: false };
   },
-  "lily.clearConversation": async () => {
+  "navi.clearConversation": async () => {
     window.dispatchEvent(
       new CustomEvent("lily-control", { detail: { action: "clear" } }),
     );
     return { cleared: true };
   },
-  "lily.resetPosition": async () => {
+  "navi.resetPosition": async () => {
     window.dispatchEvent(
       new CustomEvent("lily-control", { detail: { action: "reset-position" } }),
     );
     return { reset: true };
   },
-  "lily.openConsole": async (_, c) => {
+  "navi.openConsole": async (_, c) => {
     window.dispatchEvent(
       new CustomEvent("lily-control", { detail: { action: "close" } }),
     );
@@ -507,38 +507,38 @@ export const capabilities: CapabilityDefinition[] = [
     ),
   ),
   simple(
-    "lily.open",
-    "Open Lily",
-    "Open the compact Lily Panel.",
-    ["LILY", "OPEN"],
-    "Open Lily",
+    "navi.open",
+    "Open Navi",
+    "Open the compact Navi Panel.",
+    ["NAVI", "OPEN"],
+    "Open Navi",
   ),
   simple(
-    "lily.close",
-    "Close Lily",
-    "Close the compact Lily Panel.",
-    ["LILY", "CLOSE"],
-    "Close Lily",
+    "navi.close",
+    "Close Navi",
+    "Close the compact Navi Panel.",
+    ["NAVI", "CLOSE"],
+    "Close Navi",
   ),
   simple(
-    "lily.clearConversation",
-    "Clear Lily conversation",
-    "Clear the locally stored Lily conversation.",
-    ["LILY", "CLEAR"],
-    "Clear Lily conversation",
+    "navi.clearConversation",
+    "Clear Navi conversation",
+    "Clear the locally stored Navi conversation.",
+    ["NAVI", "CLEAR"],
+    "Clear Navi conversation",
   ),
   simple(
-    "lily.resetPosition",
-    "Reset Lily position",
-    "Reset the Lily Bubble to its default safe position.",
-    ["LILY", "RESET", "POSITION"],
-    "Reset Lily position",
+    "navi.resetPosition",
+    "Reset Navi position",
+    "Reset the Navi Bubble to its default safe position.",
+    ["NAVI", "RESET", "POSITION"],
+    "Reset Navi position",
   ),
   simple(
-    "lily.openConsole",
+    "navi.openConsole",
     "Open full Agent Console",
-    "Open the Agent Console with the shared Lily conversation.",
-    ["LILY", "OPEN", "CONSOLE"],
+    "Open the Agent Console with the shared Navi conversation.",
+    ["NAVI", "OPEN", "CONSOLE"],
     "Open full Agent Console",
   ),
   simple(
@@ -585,10 +585,10 @@ export const capabilities: CapabilityDefinition[] = [
   ),
   simple(
     "system.openAiConsole",
-    "Open Lily (legacy alias)",
-    "Open the Agent Console on the Lily tab. Retained for history compatibility.",
+    "Open Navi (legacy alias)",
+    "Open the Agent Console on the Navi tab. Retained for history compatibility.",
     ["SYSTEM", "OPEN", "AI"],
-    "Open Lily in the Agent Console",
+    "Open Navi in the Agent Console",
   ),
   simple(
     "system.openInspector",

@@ -57,6 +57,18 @@ describe("capability registry", () => {
       params: { mode: "dark" },
     });
   });
+  it("exposes Navi under the renamed canonical capability namespace", () => {
+    const item = capabilities.find((entry) => entry.id === "navi.open")!;
+    expect(resolveCli(item, {})).toBe("run navi.open");
+    expect(resolveTemplate(item.keyboard.template, {})).toBe(
+      "NAVI OPEN ENTER",
+    );
+    expect(parseProtocol("NAVI OPEN ENTER", capabilities)).toMatchObject({
+      capability: { id: "navi.open" },
+      params: {},
+    });
+    expect(capabilities.some((entry) => entry.id === "lily.open")).toBe(false);
+  });
 });
 
 describe("agent gateway", () => {

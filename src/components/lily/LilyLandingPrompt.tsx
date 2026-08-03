@@ -17,7 +17,7 @@ export function LilyLandingPrompt() {
   return (
     <section
       className={`lily-landing lily-chat-composer ${active ? session.presentation : ""}`}
-      aria-label="Chat with Lily"
+      aria-label="Chat with Navi"
     >
       <div className="lily-landing-content">
         <form
@@ -26,7 +26,7 @@ export function LilyLandingPrompt() {
             send();
           }}
         >
-          <label htmlFor="lily-landing-input">Message Lily</label>
+          <label htmlFor="lily-landing-input">Message Navi</label>
           <div className="lily-composer-field">
             <span className="lily-composer-avatar" aria-hidden="true">
               L
@@ -41,13 +41,13 @@ export function LilyLandingPrompt() {
                   send();
                 }
               }}
-              placeholder="Message Lily…"
+              placeholder="Message Navi…"
               autoComplete="off"
               rows={4}
             />
             <button
               disabled={!value.trim() || Boolean(session.activeRequestId)}
-              aria-label="Send message to Lily"
+              aria-label="Send message to Navi"
             >
               <span aria-hidden="true">↑</span>
             </button>
@@ -55,7 +55,7 @@ export function LilyLandingPrompt() {
         </form>
         {latestResponse && (
           <div className="lily-landing-response" aria-live="polite">
-            <span>Lily</span>
+            <span>Navi</span>
             <p>{latestResponse.text}</p>
             {latestResponse.clarificationOptions && (
               <div className="lily-options">
@@ -73,7 +73,7 @@ export function LilyLandingPrompt() {
         )}
         {session.activeRequestId && (
           <p className="lily-status" role="status">
-            Lily is resolving your request through registered capabilities…
+            Navi is resolving your request through registered capabilities…
           </p>
         )}
       </div>

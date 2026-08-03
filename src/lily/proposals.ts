@@ -98,17 +98,17 @@ export function validateLilyProposal(
   references: LilyResultReference[],
 ): LilyProposal {
   if (!value || typeof value !== "object")
-    throw new Error("Lily returned no structured proposal.");
+    throw new Error("Navi returned no structured proposal.");
   const proposal = value as LilyProposal;
   if (
     !["capability", "clarification", "final"].includes(proposal.kind) ||
     typeof proposal.message !== "string"
   )
-    throw new Error("Lily returned an invalid proposal shape.");
+    throw new Error("Navi returned an invalid proposal shape.");
   if (proposal.kind !== "capability") return proposal;
   if (!proposal.capabilityId || !LILY_CAPABILITY_IDS.has(proposal.capabilityId))
     throw new Error(
-      "Lily proposed a capability outside the permitted shortlist.",
+      "Navi proposed a capability outside the permitted shortlist.",
     );
   const capability = registry.get(proposal.capabilityId);
   if (
@@ -117,7 +117,7 @@ export function validateLilyProposal(
     capability.risk === "destructive"
   )
     throw new Error(
-      "Lily proposed a capability that is not safe for navigation.",
+      "Navi proposed a capability that is not safe for navigation.",
     );
   const args = validateParams(capability, proposal.arguments ?? {});
   if (
@@ -131,7 +131,7 @@ export function validateLilyProposal(
       )
     )
       throw new Error(
-        "Lily proposed an entity slug that was not returned by a browser capability.",
+        "Navi proposed an entity slug that was not returned by a browser capability.",
       );
   }
   if (
@@ -141,7 +141,7 @@ export function validateLilyProposal(
     )
   )
     throw new Error(
-      "Lily proposed an experience ID that was not returned by a browser capability.",
+      "Navi proposed an experience ID that was not returned by a browser capability.",
     );
   return { ...proposal, arguments: args };
 }

@@ -31,7 +31,7 @@ export function CapabilityTrace({
               <b>
                 Capability {index + 1} of {entries.length}
               </b>
-              <p className="invoked-by">Invoked by Lily</p>
+              <p className="invoked-by">Invoked by Navi</p>
               <dl>
                 <dt>Capability</dt>
                 <dd>

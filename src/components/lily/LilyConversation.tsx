@@ -31,7 +31,7 @@ export function LilyConversation({ compact = false }: { compact?: boolean }) {
             >
               <span>
                 {item.role === "lily"
-                  ? "Lily"
+                  ? "Navi"
                   : item.role === "user"
                     ? "You"
                     : "System"}
@@ -56,7 +56,7 @@ export function LilyConversation({ compact = false }: { compact?: boolean }) {
           ))
         ) : (
           <p className="lily-empty">
-            Ask Lily to find Mike’s projects, experience, writing or CV.
+            Ask Navi to find Mike’s projects, experience, writing or CV.
           </p>
         )}
       </div>
@@ -68,19 +68,19 @@ export function LilyConversation({ compact = false }: { compact?: boolean }) {
         }}
       >
         <label htmlFor={compact ? "lily-panel-input" : "lily-console-input"}>
-          Ask Lily to navigate MichaelOS
+          Ask Navi to navigate MichaelOS
         </label>
         <div>
           <input
             id={compact ? "lily-panel-input" : "lily-console-input"}
             value={input}
             onChange={(event) => setInput(event.target.value)}
-            placeholder="Ask Lily to navigate…"
+            placeholder="Ask Navi to navigate…"
             autoComplete="off"
           />
           <button
             disabled={!input.trim() || Boolean(session.activeRequestId)}
-            aria-label="Send request to Lily"
+            aria-label="Send request to Navi"
           >
             ↑
           </button>

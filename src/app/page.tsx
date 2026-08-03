@@ -11,9 +11,9 @@ export default function Home() {
       <div className="shell home-lily-stage">
         <div className="home-lily-intro">
           <div className="eyebrow">Your MichaelOS guide</div>
-          <h1>Chat with Lily.</h1>
+          <h1>Chat with Navi.</h1>
           <p>
-            Ask about Mike’s projects, experience, writing or CV. Lily can
+            Ask about Mike’s projects, experience, writing or CV. Navi can
             answer, take you to the right place and show the capability she
             used.
           </p>
