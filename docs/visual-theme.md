@@ -14,7 +14,7 @@ MichaelOS uses an executive-publication visual system with technical tooling ben
 
 The sticky product toolbar exposes a persisted `Highlight relevant` view. The supported lenses are platform engineering, enterprise architecture, agentic AI, startup advisory, M&A integration, procurement and renewals, and customer ownership.
 
-Matching projects, roles, writing, skills and CV evidence receive a soft-yellow background and dark left marker. Non-matching content remains readable at 68% opacity. Lens matching is presentation-only and does not bypass or invoke the capability executor.
+Matching projects, roles, writing, skills and CV evidence receive a soft-yellow background and dark left marker. Non-matching content remains comfortably readable. Lens matching is presentation-only and does not bypass or invoke the capability executor.
 
 ## Interaction feedback
 

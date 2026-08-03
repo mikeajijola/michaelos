@@ -151,6 +151,14 @@ describe("Lily proposal boundary", () => {
       arguments: { query: expect.stringContaining("CEOclaw") },
     });
   });
+  it("resolves the article that follows the CEOclaw origin story", () => {
+    expect(
+      recoverLilyProposal("Open the article that follows the CEOclaw one", []),
+    ).toMatchObject({
+      capabilityId: "article.search",
+      arguments: { query: "Company as Code" },
+    });
+  });
   it("replaces a premature text response with grounded project navigation", () => {
     const final = {
       kind: "final" as const,

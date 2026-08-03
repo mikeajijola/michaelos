@@ -80,14 +80,10 @@ function Footer() {
       <div className="page-shell">
         <div className="footer-grid">
           <div>
-            <h2>
-              Calm systems.
-              <br />
-              Credible outcomes.
-            </h2>
+            <h2>Mike Ajijola</h2>
             <p>
-              Architecture, platforms and agentic systems designed for
-              organisations doing consequential work.
+              Mike works across enterprise architecture, AI strategy, platform
+              engineering and product innovation.
             </p>
           </div>
           <div>

@@ -177,7 +177,10 @@ export function recoverLilyProposal(
     };
   }
 
-  if (/\b(article|articles|writing|writings|blog|post|posts)\b/.test(text)) {
+  if (
+    /\b(article|articles|writing|writings|blog|post|posts)\b/.test(text) ||
+    /\b(company as code|ceoclaw|ceo claw)\b/.test(text)
+  ) {
     if (completedCapabilityIds.includes("article.view")) {
       const article = references.find(
         (reference) => reference.kind === "article",
@@ -187,6 +190,21 @@ export function recoverLilyProposal(
         message: article
           ? `I opened ${article.label}.`
           : "I opened one of Mike’s articles.",
+      };
+    }
+    const asksForCompanyFollowUp =
+      /\b(follows?|after|lead to|led to|continue reading)\b/.test(text) &&
+      /\b(ceoclaw|ceo claw|ceo)\b/.test(text);
+    if (
+      asksForCompanyFollowUp &&
+      !completedCapabilityIds.includes("article.search")
+    ) {
+      return {
+        kind: "capability",
+        capabilityId: "article.search",
+        arguments: { query: "Company as Code" },
+        message: "I’ll find the article that develops the CEOclaw idea.",
+        needsAnotherTurn: true,
       };
     }
     const article = references.find(
@@ -202,7 +220,7 @@ export function recoverLilyProposal(
       };
     }
     if (
-      /\b(ceoclaw|ceo claw|lawneeds|law needs|aeroknite|aeronite|backstage|platform engineering|omnicede|omni seed)\b/.test(
+      /\b(company as code|ceoclaw|ceo claw|lawneeds|law needs|aeroknite|aeronite|backstage|platform engineering|omnicede|omni seed)\b/.test(
         text,
       ) &&
       !completedCapabilityIds.includes("article.search")

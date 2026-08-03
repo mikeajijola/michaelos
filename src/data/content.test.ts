@@ -25,7 +25,8 @@ describe("real portfolio content", () => {
       expect(publicData).not.toContain(placeholder);
 
     expect(projects.map((project) => project.slug)).toEqual([
-      "uk-innovation-endorsements",
+      "lawneeds",
+      "aeroknite",
       "nexus-backstage",
       "omnicede-ui",
       "michaelos",
@@ -38,15 +39,15 @@ describe("real portfolio content", () => {
     expect(recognition[0].title).toContain("innovation endorsements");
   });
 
-  it("keeps all four essays explicitly in development", () => {
-    expect(articles).toHaveLength(4);
+  it("keeps all five essays explicitly in development", () => {
+    expect(articles).toHaveLength(5);
     expect(articles.every((article) => article.status === "draft")).toBe(true);
     expect(articles.every((article) => article.sections.length >= 4)).toBe(true);
   });
 
   it.each([
-    ["Open the LawNeeds project", "uk-innovation-endorsements"],
-    ["Show me Mike’s work with Aeroknite", "uk-innovation-endorsements"],
+    ["Open the LawNeeds project", "lawneeds"],
+    ["Show me Mike’s work with Aeroknite", "aeroknite"],
     ["Show me his platform-engineering work", "nexus-backstage"],
     ["Explain Omnicede UI", "omnicede-ui"],
     ["What is MichaelOS?", "michaelos"],
@@ -61,6 +62,7 @@ describe("real portfolio content", () => {
 
   it.each([
     ["Show me the article about CEOclaw", "from-ceoclaw-to-omnicede-ui"],
+    ["Explain Company as Code", "company-as-code"],
     [
       "platform engineering Backstage",
       "backstage-platform-engineering-as-a-product",
@@ -79,5 +81,14 @@ describe("real portfolio content", () => {
     expect(JSON.stringify({ projects, experience, articles })).not.toContain(
       "aeronite",
     );
+  });
+
+  it("links the CEOclaw origin story to Company as Code", () => {
+    const origin = articles.find(
+      (article) => article.slug === "from-ceoclaw-to-omnicede-ui",
+    );
+    const company = articles.find((article) => article.slug === "company-as-code");
+    expect(origin?.continuesWith).toContain("company-as-code");
+    expect(company?.originArticle).toBe("from-ceoclaw-to-omnicede-ui");
   });
 });

@@ -43,8 +43,8 @@ export function HighlightControl() {
         aria-haspopup="menu"
         onClick={() => setOpen((value) => !value)}
       >
-        <span>Highlight relevant</span>
-        <code>{view === "all" ? "Choose view" : label}</code>
+        <span>Tailor this CV for:</span>
+        <code>{label}</code>
       </button>
       {open && (
         <div

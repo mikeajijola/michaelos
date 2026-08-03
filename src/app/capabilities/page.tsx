@@ -9,8 +9,8 @@ export default function CapabilityPage() {
           <div className="eyebrow">Application architecture</div>
           <h1 className="page-title">Capability explorer</h1>
           <p>
-            Every meaningful action, described once and available to every
-            interface.
+            MichaelOS describes each action once, then makes it available to
+            every approved interface.
           </p>
         </div>
         <div className="runtime">
@@ -22,9 +22,8 @@ export default function CapabilityPage() {
         “The browser is the runtime. The capability registry is the
         application.”
         <span>
-          The graphical interface, Agent CLI, Action Keys, accessibility tools,
-          deterministic search, and future Navi client share the same underlying
-          system.
+          The graphical interface, Navi, Agent CLI, Action Keys and
+          accessibility tools all execute through the same capability registry.
         </span>
       </div>
     </div>

@@ -14,7 +14,7 @@ describe("Highlight relevant lenses", () => {
 
   it("does not mark unrelated evidence as relevant", () => {
     expect(
-      matchesHighlightView("procurement", ["Local-first research notes"]),
+      matchesHighlightView("startup", ["Enterprise cloud infrastructure"]),
     ).toBe(false);
   });
 });

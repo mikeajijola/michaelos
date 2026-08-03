@@ -1632,7 +1632,7 @@ time,
   align-self: center;
 }
 
-/* Lily is one continuous surface: landing prompt, movable companion and console client. */
+/* Navi is one continuous surface: landing prompt, movable companion and console client. */
 .home-lily-stage {
   padding: 76px 0 64px;
 }
@@ -2174,7 +2174,7 @@ time,
   }
 }
 
-/* Lily is the only public floating entry point. The panel replaces its bubble. */
+/* Navi is the only public floating entry point. The panel replaces its bubble. */
 .lily-panel {
   position: fixed;
   right: 16px;
@@ -2609,7 +2609,7 @@ html[data-theme="dark"] .global-inspector pre {
   }
 }
 
-/* The homepage presents Lily as a conversation, not a site-search panel. */
+/* The homepage presents Navi as a conversation rather than a site-search panel. */
 .home-lily-stage .lily-chat-composer {
   width: min(720px, 100%);
   max-width: 720px;
@@ -2778,7 +2778,7 @@ html[data-theme="dark"] .global-inspector pre {
   }
 }
 
-/* Softer continuity between Lily, the companion, and destination pages. */
+/* Softer continuity between Navi, the companion, and destination pages. */
 .page-transition {
   animation: michaelos-page-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -2828,7 +2828,7 @@ html[data-theme="dark"] .global-inspector pre {
   }
 }
 
-/* Lily's presence keeps a visible halo; navigation opens the panel directly. */
+/* Navi's presence keeps a visible halo; navigation opens the panel directly. */
 .lily-bubble {
   box-shadow:
     0 0 0 3px var(--highlight),

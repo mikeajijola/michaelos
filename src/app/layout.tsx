@@ -17,9 +17,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mike Ajijola — Enterprise Solutions Architect",
+  title:
+    "Mike Ajijola — Enterprise Solutions Architect, AI Strategist and Platform Leader",
   description:
-    "Enterprise architecture, AI strategy, platform engineering and product innovation—presented through a browser-native capability environment.",
+    "Mike Ajijola designs enterprise platforms, AI adoption strategies and capability-led operating systems for large organisations and emerging ventures.",
 };
 
 export default function RootLayout({

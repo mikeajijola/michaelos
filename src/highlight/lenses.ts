@@ -2,11 +2,8 @@ export const HIGHLIGHT_VIEWS = [
   ["all", "None"],
   ["platform", "Platform engineering"],
   ["architecture", "Enterprise architecture"],
-  ["ai", "Agentic AI"],
+  ["ai", "AI strategy"],
   ["startup", "Startup advisory"],
-  ["ma", "M&A integration"],
-  ["procurement", "Procurement and renewals"],
-  ["customer", "Customer ownership"],
 ] as const;
 
 export type HighlightView = (typeof HIGHLIGHT_VIEWS)[number][0];
@@ -31,22 +28,6 @@ const keywords: Record<Exclude<HighlightView, "all">, string[]> = {
   ],
   ai: ["agent", "ai", "automation", "capability", "gemini"],
   startup: ["startup", "seed", "independent", "advisor", "product"],
-  ma: [
-    "m&a",
-    "merger",
-    "acquisition",
-    "integration",
-    "modernisation",
-    "migration",
-  ],
-  procurement: ["procurement", "renewal", "vendor", "commercial", "contract"],
-  customer: [
-    "customer",
-    "ownership",
-    "service ownership",
-    "product",
-    "adoption",
-  ],
 };
 
 export function matchesHighlightView(

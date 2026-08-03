@@ -78,9 +78,10 @@ export default function Experience() {
         >
           <h2 className="section-title">Profile</h2>
           <p className="lead">
-            Strategic technical adviser and enterprise architect working
-            across platform engineering, AI adoption, M&A integration and
-            product innovation.
+            I work across enterprise architecture, AI strategy, platform
+            engineering and product innovation. I help organisations turn
+            ambiguous business goals into systems, operating models and
+            technical roadmaps that people can understand, adopt and extend.
           </p>
         </section>
         <section className="cv-section" id="experience">
@@ -116,7 +117,7 @@ export default function Experience() {
         <section className="cv-section" id="projects">
           <h2 className="section-title">Selected work</h2>
           <div>
-            {projects.slice(0, 3).map((project) => (
+            {projects.map((project) => (
               <article
                 className="cv-entry"
                 key={project.id}

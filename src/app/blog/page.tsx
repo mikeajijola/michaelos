@@ -24,6 +24,9 @@ export default function Blog() {
             {` · ${selected.readTime}`}
           </div>
           <h2>{selected.title}</h2>
+          {selected.alternativeTitle && (
+            <p className="professional-headline">{selected.alternativeTitle}</p>
+          )}
           <p className="lead">{selected.excerpt}</p>
           {selected.externalSources?.map((source) => (
             <a
@@ -44,6 +47,27 @@ export default function Blog() {
               ))}
             </section>
           ))}
+          {selected.relatedArticleIds?.length ? (
+            <section>
+              <h3>Continue reading</h3>
+              <div className="actions">
+                {selected.relatedArticleIds.map((slug) => {
+                  const related = articles.find((article) => article.slug === slug);
+                  return related ? (
+                    <CapabilityButton
+                      key={slug}
+                      capabilityId="article.view"
+                      params={{ slug }}
+                      label={`Open ${related.title}`}
+                      buttonClassName="secondary"
+                    >
+                      {related.title}
+                    </CapabilityButton>
+                  ) : null;
+                })}
+              </div>
+            </section>
+          ) : null}
         </article>
       )}
       <section className="editorial-section">

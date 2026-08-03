@@ -64,6 +64,9 @@ export type Article = {
   tags: string[];
   sections: ArticleSection[];
   relatedProjectIds: string[];
+  relatedArticleIds?: string[];
+  continuesWith?: string[];
+  originArticle?: string;
   externalSources?: ExternalSource[];
 };
 
@@ -92,7 +95,7 @@ export const links = {
   github: "https://github.com/mikeajijola",
   linkedin: "https://www.linkedin.com/in/mike-ajijola",
   michaelosRepository: "https://github.com/mikeajijola/michaelos",
-  michaelosLive: "https://michaelos-nine.vercel.app/",
+  michaelosLive: "https://mikeajijola.com/",
   lawneeds: "https://lawneeds.co.uk/",
   aeroknite: "https://www.aeroknite.com/",
   spotifyBackstage:
@@ -108,7 +111,7 @@ export const profile: Profile = {
   summary:
     "Mike Ajijola is an enterprise solutions architect and strategic technical adviser working across platform engineering, AI adoption, M&A integration and product innovation. He helps large organisations and early-stage ventures turn ambiguous business goals into adoptable systems, operating models and technical roadmaps.",
   longSummary:
-    "Mike works where architecture, organisational change and product strategy meet. His experience spans enterprise developer platforms, cloud infrastructure, automation, acquisition integration, agentic AI and startup product design. He has led initiatives inside one of the UK’s largest privately held software companies and advised ventures that went on to receive UK innovation endorsements.",
+    "Mike designs enterprise platforms, integration approaches and AI adoption programmes. His experience includes cloud infrastructure, automation, acquisition integration and startup product design. He has led initiatives inside one of the UK’s largest privately held software companies and advised ventures that went on to receive UK innovation endorsements.",
 };
 
 export const aliases: Record<string, string[]> = {
@@ -141,34 +144,52 @@ export const aliases: Record<string, string[]> = {
     "browser-native portfolio",
   ],
   ceoclaw: ["ceo claw", "imperial competition"],
+  "company-as-code": [
+    "company as code",
+    "organisation as code",
+    "organization as code",
+    "executable organisation",
+  ],
 };
 
 export const projects: Project[] = [
   {
-    id: "uk-innovation-endorsements",
-    slug: "uk-innovation-endorsements",
-    name: "Turning ambitious products into endorsed innovation",
-    subtitle: "LawNeeds and Aeroknite",
+    id: "lawneeds",
+    slug: "lawneeds",
+    name: "LawNeeds",
+    subtitle: "Turning an urgent legal need into an endorsed product",
     summary:
-      "Product architecture and innovation strategy for two ventures that subsequently secured UK innovation endorsements.",
+      "Advisory work on an AI-supported legal product that subsequently secured a UK innovation endorsement.",
     description:
-      "Mike advised LawNeeds and Aeroknite as they developed their propositions, technical architecture and innovation narratives. The work involved clarifying the problem being solved, connecting product features to a defensible innovation thesis, shaping technical roadmaps and helping each venture explain how its approach differed meaningfully from existing alternatives.",
+      "Mike advised LawNeeds on its proposition, product architecture, technical roadmap and innovation narrative. The work focused on helping people understand a legal need before they know its formal category, while keeping a clear boundary between useful guidance and professional legal judgement.",
     role: "Adviser · Product architecture · Innovation strategy",
-    technologies: ["AI", "Product architecture", "Innovation strategy"],
-    themes: [
-      "Startup advisory",
-      "UK innovation",
-      "Legal technology",
-      "Autonomous systems",
-    ],
-    status: "Advisory · Public recognition",
+    technologies: ["Legal technology", "AI", "Product architecture"],
+    themes: ["Startup advisory", "Innovation strategy", "UK innovation"],
+    status: "Advisory · UK innovation endorsement",
     featured: true,
     year: "2024–2025",
     accent: "yellow",
-    externalSources: [
-      { label: "Visit LawNeeds", url: links.lawneeds },
-      { label: "Visit Aeroknite", url: links.aeroknite },
-    ],
+    url: links.lawneeds,
+    externalSources: [{ label: "Visit LawNeeds", url: links.lawneeds }],
+  },
+  {
+    id: "aeroknite",
+    slug: "aeroknite",
+    name: "Aeroknite",
+    subtitle: "Autonomous systems and wildfire-response innovation",
+    summary:
+      "Product and innovation strategy for an autonomous UAV venture that subsequently secured a UK innovation endorsement.",
+    description:
+      "Mike advised Aeroknite as it connected autonomous aircraft, sensing, wildfire intelligence and operational response into one credible product story. The work helped turn ambitious engineering into an understandable roadmap and innovation case.",
+    role: "Strategic and product adviser",
+    technologies: ["Autonomous systems", "UAVs", "AI"],
+    themes: ["Wildfire response", "Product architecture", "UK innovation"],
+    status: "Advisory · UK innovation endorsement",
+    featured: true,
+    year: "2024–2025",
+    accent: "coral",
+    url: links.aeroknite,
+    externalSources: [{ label: "Visit Aeroknite", url: links.aeroknite }],
   },
   {
     id: "nexus-backstage",
@@ -288,7 +309,7 @@ export const experience: Experience[] = [
       "Advised LawNeeds and Aeroknite, two ventures that subsequently gained UK innovation endorsements.",
       "Developed Omnicede and Omnicede UI concepts around agentic memory and capability-led organisational systems.",
     ],
-    relatedProjectIds: ["uk-innovation-endorsements", "omnicede-ui"],
+    relatedProjectIds: ["lawneeds", "aeroknite", "omnicede-ui"],
   },
   {
     id: "wso-consulting",
@@ -343,7 +364,7 @@ export const articles: Article[] = [
     readingMinutes: 8,
     readTime: "8 min",
     tags: ["Legal technology", "AI", "Startup advisory", "Product strategy", "Innovation"],
-    relatedProjectIds: ["uk-innovation-endorsements"],
+    relatedProjectIds: ["lawneeds"],
     externalSources: [{ label: "Visit LawNeeds", url: links.lawneeds }],
     sections: [
       {
@@ -388,7 +409,7 @@ export const articles: Article[] = [
     readingMinutes: 8,
     readTime: "8 min",
     tags: ["Autonomous systems", "Drones", "Wildfire technology", "AI", "Product architecture", "Innovation"],
-    relatedProjectIds: ["uk-innovation-endorsements"],
+    relatedProjectIds: ["aeroknite"],
     externalSources: [{ label: "Visit Aeroknite", url: links.aeroknite }],
     sections: [
       {
@@ -481,6 +502,8 @@ export const articles: Article[] = [
     readTime: "10 min",
     tags: ["Agentic organisations", "Omnicede UI", "Capabilities", "Organisational design", "AI strategy"],
     relatedProjectIds: ["omnicede-ui", "michaelos"],
+    relatedArticleIds: ["company-as-code"],
+    continuesWith: ["company-as-code"],
     sections: [
       {
         heading: "The CEOclaw starting point",
@@ -508,9 +531,138 @@ export const articles: Article[] = [
           "The work remains active research and development. The next step is to test how composable workspaces, organisational memory and KPI feedback can operate without turning the interface into another rigid dashboard.",
         ],
       },
+      {
+        heading: "From CEOclaw to Company as Code",
+        paragraphs: [
+          "CEOclaw gave me a reason to express the idea clearly, but the idea did not stop with the competition. I became increasingly interested in what happens when the company itself becomes the system being designed.",
+          "Infrastructure as Code showed that infrastructure could be described, versioned, reviewed and reproduced. The same pattern has since spread into policy, security and configuration. My question became: what would it mean to apply that discipline to the company itself?",
+          "That question became Company as Code. It now sits beneath my work on Omnicede UI and the broader idea of capability-led organisations.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "company-as-code",
+    slug: "company-as-code",
+    title: "Company as Code",
+    alternativeTitle:
+      "What happens when the organisation becomes the system we describe, test and evolve?",
+    excerpt:
+      "Infrastructure as Code made infrastructure explicit, versioned and repeatable. Company as Code applies the same principle to organisational capabilities, work products, decisions, data and feedback loops.",
+    summary:
+      "A working model for making organisational capabilities, work products, permissions and feedback explicit and inspectable.",
+    status: "draft",
+    readingMinutes: 14,
+    readTime: "14 min",
+    tags: [
+      "Company as Code",
+      "Organisational design",
+      "Agentic organisations",
+      "Capabilities",
+      "AI strategy",
+      "Omnicede UI",
+    ],
+    relatedProjectIds: ["omnicede-ui", "michaelos"],
+    relatedArticleIds: ["from-ceoclaw-to-omnicede-ui"],
+    originArticle: "from-ceoclaw-to-omnicede-ui",
+    sections: [
+      {
+        heading: "What would Company as Code look like?",
+        paragraphs: [
+          "Software teams once configured infrastructure manually. Servers were created through dashboards, settings were remembered by individuals, and environments drifted apart over time. Infrastructure as Code changed that relationship. Infrastructure became something a team could describe, version, review, test and reproduce.",
+          "That principle now appears in Policy as Code, Security as Code and Configuration as Code. Each makes previously implicit operating logic explicit and inspectable. I have been asking what happens when we apply the same idea to the organisation itself.",
+          "Company as Code would not reduce every human interaction to software. It would make the organisation’s operating logic explicit enough that people and agents could understand, inspect and improve it.",
+        ],
+      },
+      {
+        heading: "A company already behaves like a system",
+        paragraphs: [
+          "Every organisation has inputs, outputs, constraints and feedback loops. Sales turns relationships and market information into revenue. Finance turns transactions into controls, forecasts and decisions. Product teams turn customer needs into work products. Operations turns resources into repeatable delivery.",
+          "Each function is governed by goals, responsibilities, permissions, data, work products, measures of success and dependencies. Most of that logic is distributed across job descriptions, meetings, dashboards, policies, spreadsheets and the memories of experienced employees. The company runs, but its source code is fragmented and often implicit.",
+          "Company as Code begins by describing that operating logic explicitly.",
+        ],
+      },
+      {
+        heading: "Capabilities, not departments",
+        paragraphs: [
+          "Organisational charts describe reporting lines. They do not necessarily describe what the organisation can do. A capability-led model asks what outcome the organisation can produce, which inputs and permissions it requires, which work product it creates, who or what may execute it, and how success is measured.",
+          "Capabilities might assess customer credit risk, approve a supplier, launch a product, respond to an incident, integrate an acquired company or prepare a regulatory submission.",
+          "A person may use a normal application to access a capability. An agent may invoke a structured tool. A specialist may use a command interface. An accessibility client may expose the same action differently. The interface changes; the organisational capability remains the same.",
+        ],
+      },
+      {
+        heading: "Work products are the stable objects",
+        paragraphs: [
+          "Organisations often automate existing workflows step by step. That can preserve a process without asking whether it still makes sense. I prefer to begin with the work product: what must exist when the work is complete?",
+          "The answer might be an approved architecture, a customer risk assessment, a forecast, a deployment, a signed agreement, an integration plan or a product decision. People and agents can develop different working practices around producing it, provided they respect the controls and achieve the expected outcome.",
+          "This lets the organisation evolve without encoding every historical habit as permanent logic.",
+        ],
+      },
+      {
+        heading: "KPIs are feedback loops",
+        paragraphs: [
+          "A capability needs a way to determine whether it is producing the intended result. KPIs can become feedback signals rather than passive reporting fields. Work changes the organisation’s state; the relevant measure changes; that change affects the next decision or action.",
+          "Those loops do not always agree. Sales may optimise for growth, finance for cash preservation, engineering for reliability and product for speed of learning. These are organisational merge conflicts, not necessarily failures.",
+        ],
+      },
+      {
+        heading: "Organisational merge conflicts",
+        paragraphs: [
+          "In software, two valid changes can conflict because they modify the same part of a system in incompatible ways. Companies experience the same problem when teams pursue legitimate goals that compete for resources or produce incompatible outcomes.",
+          "Company as Code would make the conflict visible in the operating model. It should show the affected capability, work products and measures, then route the decision to the appropriate person or governance process. The system should not resolve every conflict autonomously.",
+        ],
+      },
+      {
+        heading: "Branches and experimentation",
+        paragraphs: [
+          "Code can be branched before it is merged. Organisational change could work similarly. A company could test a pricing model, onboarding process, operating structure, AI-assisted practice or risk policy as a bounded branch.",
+          "The branch would state its objective, affected capabilities, expected work products, permitted data, success measures and review point. Evidence would determine whether it should be merged, revised or abandoned.",
+        ],
+      },
+      {
+        heading: "Agents inside Company as Code",
+        paragraphs: [
+          "Agents become more useful when they are given a defined capability, a work product, relevant context, permissions, constraints, feedback and a way to surface conflicts. Giving an agent access to every application does not provide those things.",
+          "An agent can develop a working practice around a required outcome. The organisation governs the capability and evaluates the result rather than prescribing every mouse click. This is the distinction between adding an assistant to existing software and designing an agent-first operating model.",
+        ],
+      },
+      {
+        heading: "Omnicede UI",
+        paragraphs: [
+          "Company as Code describes the organisational system. Omnicede UI is the operating interface through which people and agents interact with it.",
+          "The interface should assemble the data, work products and actions relevant to the present goal while preserving permissions and provenance. A finance leader, engineer and agent may each see a different interface, but they operate the same underlying capabilities.",
+        ],
+      },
+      {
+        heading: "MichaelOS as a smaller experiment",
+        paragraphs: [
+          "MichaelOS applies parts of this idea at a personal scale. The normal interface, Navi, Agent CLI, Action Keys and accessibility tools are clients of one capability registry. A Navi action is registered, inspectable and available through other interfaces.",
+          "MichaelOS is not the full Company as Code system. It makes the architectural pattern tangible in a browser.",
+        ],
+      },
+      {
+        heading: "What comes next",
+        paragraphs: [
+          "Company as Code is still developing as a model. The immediate work is to represent capabilities and work products, connect KPIs to operational feedback, express permissions and boundaries, handle conflicting objectives, support bounded agent practices and preserve an inspectable history.",
+          "The long-term idea is straightforward. A company should understand what it can do, how those capabilities connect, who or what may execute them, and whether the resulting work is moving the organisation toward its goals.",
+          "Infrastructure became easier to govern when it became explicit. The same may be true of the company.",
+        ],
+      },
     ],
   },
 ];
+
+const articleOrder = [
+  "company-as-code",
+  "from-ceoclaw-to-omnicede-ui",
+  "backstage-platform-engineering-as-a-product",
+  "lawneeds-from-need-to-innovation",
+  "aeroknite-autonomous-systems-innovation",
+];
+articles.sort(
+  (left, right) =>
+    articleOrder.indexOf(left.slug) - articleOrder.indexOf(right.slug),
+);
 
 export const skills: Skill[] = [
   { id: "enterprise-architecture", name: "Enterprise and solution architecture", category: "Architecture", description: "Connecting business goals, operating models, systems and delivery roadmaps", proficiency: "Principal practice" },

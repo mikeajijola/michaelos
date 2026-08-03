@@ -63,8 +63,8 @@ export default function Home() {
         <div className="shell">
           <p>
             MichaelOS is a browser-native portfolio and capability environment.
-            Every interface—including the UI, Navi, Agent CLI and Action
-            Keys—operates through the same registered capabilities.
+            Every interface, including the UI, Navi, Agent CLI and Action Keys,
+            operates through the same registered capabilities.
           </p>
         </div>
       </section>
@@ -100,8 +100,8 @@ export default function Home() {
               <h2 className="section-title">Experience</h2>
             </div>
             <p className="section-kicker">
-              I work where systems, teams and product strategy meet—turning
-              recurring friction into dependable foundations.
+              I design shared systems and working practices that make recurring
+              problems easier for teams to solve.
             </p>
           </div>
           {experience.slice(0, 2).map((x) => (
