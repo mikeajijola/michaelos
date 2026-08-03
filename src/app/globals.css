@@ -2490,3 +2490,102 @@ time,
     transform: rotate(360deg);
   }
 }
+
+/* Governed colour mode and circular identity marks. */
+.brand-cluster,
+.theme-capability {
+  display: flex;
+  align-items: center;
+}
+.brand-cluster {
+  gap: 10px;
+}
+.theme-capability {
+  gap: 4px;
+}
+.theme-toggle {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+}
+.theme-toggle:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--text) 28%, transparent);
+  outline-offset: 2px;
+}
+.site-header .theme-capability .cap-info-button {
+  display: grid;
+}
+.brand-mark,
+.lily-mark,
+.home-lily-stage .lily-mark,
+.lily-bubble {
+  border-radius: 50%;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0d0e11;
+  --surface: #15171c;
+  --surface-soft: #1c1f25;
+  --text: #f3f4f6;
+  --text-muted: #a4a8b1;
+  --border: #30343b;
+  --highlight: #5b5228;
+  --dark-panel: #08090b;
+  --dark-panel-soft: #121419;
+  --green: #f3f4f6;
+}
+html[data-theme="dark"] .site-header {
+  background: rgb(13 14 17 / 94%);
+}
+html[data-theme="dark"] .brand-mark {
+  background: #f3f4f6;
+  color: #111217;
+}
+html[data-theme="dark"] .nav-cta,
+html[data-theme="dark"] .primary {
+  border-color: #f3f4f6;
+  background: #f3f4f6;
+  color: #111217 !important;
+}
+html[data-theme="dark"] .links,
+html[data-theme="dark"] .links > .cap-control > button:first-child {
+  color: var(--text-muted);
+}
+html[data-theme="dark"] .links button:hover,
+html[data-theme="dark"] .links button.active,
+html[data-theme="dark"] .links > .cap-control > button.active {
+  color: var(--text);
+}
+html[data-theme="dark"] .secondary:hover,
+html[data-theme="dark"] .global-inspector pre {
+  background: var(--surface);
+}
+
+@media (max-width: 700px) {
+  .brand-cluster {
+    gap: 5px;
+  }
+  .theme-toggle span:last-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .theme-toggle {
+    width: 40px;
+    justify-content: center;
+    padding: 0;
+  }
+}

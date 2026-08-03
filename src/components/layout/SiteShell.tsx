@@ -2,6 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
+import { nextThemeMode } from "@/theme/mode";
+import { useTheme } from "@/theme/context";
 
 const nav = [
   ["Projects", "navigation.goProjects"],
@@ -12,18 +14,32 @@ const nav = [
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { mode } = useTheme();
+  const targetMode = nextThemeMode(mode);
   return (
     <>
       <header className="site-header">
         <div className="page-shell nav">
-          <CapabilityButton
-            capabilityId="navigation.goHome"
-            label="Go to homepage"
-            buttonClassName="brand"
-          >
-            <span className="brand-mark">MA</span>
-            <span>MichaelOS</span>
-          </CapabilityButton>
+          <div className="brand-cluster">
+            <CapabilityButton
+              capabilityId="navigation.goHome"
+              label="Go to homepage"
+              buttonClassName="brand"
+            >
+              <span className="brand-mark">MA</span>
+              <span>MichaelOS</span>
+            </CapabilityButton>
+            <CapabilityButton
+              capabilityId="theme.setMode"
+              params={{ mode: targetMode }}
+              label={`Switch to ${targetMode} mode`}
+              className="theme-capability"
+              buttonClassName="theme-toggle"
+            >
+              <span aria-hidden="true">{mode === "dark" ? "☀" : "◐"}</span>
+              <span>{mode === "dark" ? "Light" : "Dark"}</span>
+            </CapabilityButton>
+          </div>
           <nav className="links" aria-label="Primary navigation">
             {nav.map(([label, id]) => (
               <CapabilityButton

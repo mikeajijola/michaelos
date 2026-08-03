@@ -7,6 +7,7 @@ import { SiteShell } from "@/components/layout/SiteShell";
 import { AgentSurface } from "@/components/agent/AgentSurface";
 import { LilyProvider } from "@/lily/context";
 import { HighlightProvider } from "@/highlight/context";
+import { ThemeProvider } from "@/theme/context";
 import "@xterm/xterm/css/xterm.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -31,10 +32,12 @@ export default function RootLayout({
         <Suspense>
           <CapabilityProvider>
             <LilyProvider>
-              <HighlightProvider>
-                <SiteShell>{children}</SiteShell>
-                <AgentSurface />
-              </HighlightProvider>
+              <ThemeProvider>
+                <HighlightProvider>
+                  <SiteShell>{children}</SiteShell>
+                  <AgentSurface />
+                </HighlightProvider>
+              </ThemeProvider>
             </LilyProvider>
           </CapabilityProvider>
         </Suspense>

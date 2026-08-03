@@ -1,5 +1,32 @@
 [
   {
+    "id": "theme.setMode",
+    "schemaVersion": 1,
+    "description": "Switch MichaelOS between its light and dark colour modes.",
+    "parameters": [
+      {
+        "name": "mode",
+        "description": "Colour mode to apply.",
+        "type": "enum",
+        "required": true,
+        "values": [
+          "light",
+          "dark"
+        ]
+      }
+    ],
+    "cliCommand": "run theme.setMode --mode <mode>",
+    "actionKeyTemplate": [
+      "THEME",
+      "SET",
+      "<mode>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Set MichaelOS colour mode",
+    "risk": "read",
+    "navigatorEnabled": true
+  },
+  {
     "id": "lily.open",
     "schemaVersion": 1,
     "description": "Open the compact Lily Panel.",

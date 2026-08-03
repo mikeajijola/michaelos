@@ -43,6 +43,20 @@ describe("capability registry", () => {
       params: { slug: "atlas-platform" },
     });
   });
+  it("exposes colour mode through canonical CLI and Action Keys", () => {
+    const item = capabilities.find((entry) => entry.id === "theme.setMode")!;
+    expect(item.navigator.enabled).toBe(true);
+    expect(resolveCli(item, { mode: "dark" })).toBe(
+      "run theme.setMode --mode dark",
+    );
+    expect(resolveTemplate(item.keyboard.template, { mode: "dark" })).toBe(
+      "THEME SET dark ENTER",
+    );
+    expect(parseProtocol("THEME SET dark ENTER", capabilities)).toMatchObject({
+      capability: { id: "theme.setMode" },
+      params: { mode: "dark" },
+    });
+  });
 });
 
 describe("agent gateway", () => {

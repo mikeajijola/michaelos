@@ -346,6 +346,16 @@ const handlers: Record<string, Handler> = {
       message: "Print dialog opened — choose Save as PDF to export the CV.",
     };
   },
+  "theme.setMode": async (p) => {
+    const mode = String(p.mode);
+    window.dispatchEvent(
+      new CustomEvent("theme-control", { detail: { mode } }),
+    );
+    return {
+      mode,
+      message: mode === "dark" ? "Dark mode enabled." : "Light mode enabled.",
+    };
+  },
   "inspector.getLastExecution": async (_, c) => ({
     execution: c.getHistory()[0] ?? null,
   }),
@@ -400,6 +410,7 @@ type Spec = Omit<CapabilityDefinition, "execute" | "examples"> & {
   example?: Record<string, unknown>;
 };
 const navigatorIds = new Set([
+  "theme.setMode",
   "navigation.goHome",
   "navigation.goProjects",
   "navigation.goExperience",
@@ -475,6 +486,26 @@ const simple = (
   );
 
 export const capabilities: CapabilityDefinition[] = [
+  define(
+    base(
+      "theme.setMode",
+      "Set colour mode",
+      "Switch MichaelOS between its light and dark colour modes.",
+      "run theme.setMode --mode <mode>",
+      ["THEME", "SET", "<mode>", "ENTER"],
+      "Set MichaelOS colour mode",
+      [
+        {
+          name: "mode",
+          description: "Colour mode to apply.",
+          type: "enum",
+          required: true,
+          values: ["light", "dark"],
+        },
+      ],
+      { mode: "dark" },
+    ),
+  ),
   simple(
     "lily.open",
     "Open Lily",
