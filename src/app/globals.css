@@ -522,7 +522,7 @@ input:focus-visible {
 .cap-info-backdrop {
   position: fixed;
   inset: 0;
-  background: #10171399;
+  background: var(--background);
   z-index: 1200;
   display: grid;
   place-items: center;
@@ -816,8 +816,7 @@ time,
   top: 0;
   z-index: 700;
   border-bottom: 1px solid var(--border);
-  background: rgb(236 238 241 / 94%);
-  backdrop-filter: blur(12px);
+  background: var(--background);
 }
 .site-header .nav {
   height: 68px;
@@ -2243,7 +2242,7 @@ time,
   display: grid;
   place-items: start center;
   padding-top: min(18vh, 140px);
-  background: #07120c73;
+  background: var(--dark-panel);
 }
 .secret-gateway-status {
   position: fixed;
@@ -2564,7 +2563,7 @@ html[data-theme="dark"] {
   --green: #f3f4f6;
 }
 html[data-theme="dark"] .site-header {
-  background: rgb(13 14 17 / 94%);
+  background: var(--background);
 }
 html[data-theme="dark"] .brand-mark {
   background: #f3f4f6;
