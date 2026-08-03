@@ -44,13 +44,16 @@ export function LilyCompanion() {
     y: number;
   } | null>(null);
   const visible = shouldShowLilyCompanion(pathname);
-  const panelOpen = shouldOpenLilyPanel(
+  const presentationPanelOpen = shouldOpenLilyPanel(
     pathname,
     lily.session.presentation,
     lily.session.activeRequestId,
   );
   const voice = useNaviVoice(async (request) => {
-    const result = await lily.submit(request, { maxCapabilitySteps: 3 });
+    const result = await lily.submit(request, {
+      maxCapabilitySteps: 3,
+      keepPanelOpen: true,
+    });
     return (
       result ?? {
         text: "I’m ready for another request.",
@@ -60,6 +63,7 @@ export function LilyCompanion() {
     );
   });
   const voiceMode = voice.state !== "inactive";
+  const panelOpen = voiceMode || presentationPanelOpen;
   const save = (next: LilyBubblePosition) => {
     const value = clampBubblePosition(next);
     setPosition(value);
@@ -83,22 +87,23 @@ export function LilyCompanion() {
     return () => window.removeEventListener("lily-control", control);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useLayoutEffect(() => {
-    if (!panelOpen) return;
+    if (!panelOpen || voiceMode) return;
     document
       .querySelector<HTMLInputElement>("#lily-panel-input")
       ?.focus({ preventScroll: true });
-  }, [panelOpen, pathname]);
+  }, [panelOpen, pathname, voiceMode]);
   useEffect(() => {
     if (!panelOpen) return;
     const escape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        if (voice.active) voice.stop("panel-close");
         lily.close();
         window.setTimeout(() => bubble.current?.focus(), 0);
       }
     };
     window.addEventListener("keydown", escape);
     return () => window.removeEventListener("keydown", escape);
-  }, [lily.close, panelOpen]);
+  }, [lily.close, panelOpen, voice.active, voice.stop]);
   useEffect(() => {
     if (!panelOpen && voice.active) voice.stop("panel-close");
   }, [panelOpen, voice.active, voice.stop]);
@@ -211,6 +216,7 @@ export function LilyCompanion() {
               <button
                 aria-label="Minimise Navi"
                 onClick={() => {
+                  if (voice.active) voice.stop("panel-close");
                   lily.close();
                   window.setTimeout(() => bubble.current?.focus(), 0);
                 }}
@@ -220,6 +226,7 @@ export function LilyCompanion() {
               <button
                 aria-label="Close Navi"
                 onClick={() => {
+                  if (voice.active) voice.stop("panel-close");
                   void runtime.execute("navi.close");
                   window.setTimeout(() => bubble.current?.focus(), 0);
                 }}

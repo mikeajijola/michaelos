@@ -300,6 +300,11 @@ describe("Lily homepage surface continuity", () => {
     expect(shouldShowLilyCompanion("/projects")).toBe(true);
   });
 
+  it("keeps an active voice panel open across homepage navigation", () => {
+    expect(completedLilyPresentation(true, true, true)).toBe("bubble-open");
+    expect(shouldOpenLilyPanel("/projects", "bubble-open")).toBe(true);
+  });
+
   it("opens the panel immediately on the destination without flashing the bubble", () => {
     expect(
       shouldOpenLilyPanel(

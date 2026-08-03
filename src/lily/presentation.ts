@@ -11,7 +11,9 @@ export function restoredLilyPresentation(
 export function completedLilyPresentation(
   startedOnHomepage: boolean,
   navigated: boolean,
+  keepPanelOpen = false,
 ): LilyPresentationState {
+  if (keepPanelOpen) return "bubble-open";
   if (!startedOnHomepage) return "bubble-open";
   return navigated ? "morphing-to-bubble" : "landing-idle";
 }

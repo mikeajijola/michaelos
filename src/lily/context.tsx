@@ -41,7 +41,7 @@ type LilyRuntime = {
   session: LilySession;
   submit: (
     text: string,
-    options?: { maxCapabilitySteps?: number },
+    options?: { maxCapabilitySteps?: number; keepPanelOpen?: boolean },
   ) => Promise<NaviSubmissionResult | undefined>;
   open: () => void;
   close: () => void;
@@ -140,7 +140,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
   const submit = useCallback(
     async (
       raw: string,
-      options: { maxCapabilitySteps?: number } = {},
+      options: { maxCapabilitySteps?: number; keepPanelOpen?: boolean } = {},
     ): Promise<NaviSubmissionResult | undefined> => {
       const text = raw.trim();
       if (!text || sessionRef.current.activeRequestId) return;
@@ -154,10 +154,12 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
         { role: "user" as const, text, status: "complete" as const },
       ];
       const landing = sessionRef.current.currentRoute === "/";
+      const keepPanelOpen = options.keepPanelOpen === true;
       update((current) => ({
         ...current,
         activeRequestId: requestId,
-        presentation: landing ? "landing-resolving" : "bubble-open",
+        presentation:
+          landing && !keepPanelOpen ? "landing-resolving" : "bubble-open",
         messages: [
           ...current.messages,
           createMessage("user", text),
@@ -266,7 +268,10 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
           }
           update((current) => ({
             ...current,
-            presentation: landing ? "landing-navigating" : current.presentation,
+            presentation:
+              landing && !keepPanelOpen
+                ? "landing-navigating"
+                : "bubble-open",
           }));
           const execution = await capabilities.execute(
             proposal.capabilityId!,
@@ -299,8 +304,10 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             finalText = `I couldn’t complete ${execution.capabilityId}. ${execution.error?.message ?? "The browser capability failed."}`;
             break;
           }
-          if (!proposal.needsAnotherTurn && step === 3)
+          if (!proposal.needsAnotherTurn) {
             finalText = proposal.message;
+            break;
+          }
         }
         if (!finalText)
           finalText = trace.length
@@ -321,7 +328,11 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
         ...current,
         activeRequestId: undefined,
         previousResults: references,
-        presentation: completedLilyPresentation(landing, navigated),
+        presentation: completedLilyPresentation(
+          landing,
+          navigated,
+          keepPanelOpen,
+        ),
         messages: current.messages.map((item) =>
           item.id === requestId
             ? {
@@ -333,7 +344,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             : item,
         ),
       }));
-      if (navigated)
+      if (navigated && !keepPanelOpen)
         window.setTimeout(() => setPresentation("bubble-open"), 760);
       return { text: finalText, trace, failed };
     },
