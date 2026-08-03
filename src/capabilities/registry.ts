@@ -341,7 +341,10 @@ const handlers: Record<string, Handler> = {
   },
   "cv.print": async () => {
     window.print();
-    return { opened: true };
+    return {
+      opened: true,
+      message: "Print dialog opened — choose Save as PDF to export the CV.",
+    };
   },
   "inspector.getLastExecution": async (_, c) => ({
     execution: c.getHistory()[0] ?? null,
@@ -891,10 +894,10 @@ export const capabilities: CapabilityDefinition[] = [
   ),
   simple(
     "cv.print",
-    "Print CV",
-    "Open the browser print dialog.",
+    "Print or export CV as PDF",
+    "Open the browser print dialog to print the CV or save it as a PDF.",
     ["CV", "PRINT"],
-    "Print curriculum vitae",
+    "Print or export curriculum vitae as PDF",
   ),
   simple(
     "inspector.getLastExecution",

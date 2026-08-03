@@ -1214,6 +1214,13 @@ time,
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+.cv-actions {
+  align-items: stretch;
+  justify-content: flex-end;
+}
+.cv-actions .highlight-trigger {
+  height: 100%;
+}
 .cv-sheet {
   max-width: none;
   padding: 46px;
@@ -1256,6 +1263,12 @@ time,
   .experience-entry,
   .cv-section {
     grid-template-columns: 1fr;
+  }
+  .cv-head {
+    display: grid;
+  }
+  .cv-actions {
+    justify-content: flex-start;
   }
 }
 @media (max-width: 700px) {

@@ -881,7 +881,7 @@
   {
     "id": "cv.print",
     "schemaVersion": 1,
-    "description": "Open the browser print dialog.",
+    "description": "Open the browser print dialog to print the CV or save it as a PDF.",
     "parameters": [],
     "cliCommand": "run cv.print",
     "actionKeyTemplate": [
@@ -889,7 +889,7 @@
       "PRINT",
       "ENTER"
     ],
-    "accessibleLabel": "Print curriculum vitae",
+    "accessibleLabel": "Print or export curriculum vitae as PDF",
     "risk": "read",
     "navigatorEnabled": false
   },

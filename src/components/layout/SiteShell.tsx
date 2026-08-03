@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
-import { HighlightControl } from "@/highlight/HighlightControl";
 
 const nav = [
   ["Projects", "navigation.goProjects"],
@@ -42,7 +41,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
           <div className="header-tools">
-            <HighlightControl />
             <CapabilityButton
               capabilityId="navigation.goCapabilities"
               label="Open capability explorer"

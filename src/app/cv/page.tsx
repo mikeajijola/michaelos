@@ -3,6 +3,7 @@
 import { experience, projects, skills } from "@/data/content";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
 import { useHighlight } from "@/highlight/context";
+import { HighlightControl } from "@/highlight/HighlightControl";
 
 export default function CV() {
   const { view, matches } = useHighlight();
@@ -26,7 +27,8 @@ export default function CV() {
             </a>
           </div>
         </div>
-        <div className="actions">
+        <div className="actions cv-actions">
+          <HighlightControl />
           <CapabilityButton
             capabilityId="cv.exportJson"
             label="Export CV as JSON"
@@ -36,10 +38,10 @@ export default function CV() {
           </CapabilityButton>
           <CapabilityButton
             capabilityId="cv.print"
-            label="Print curriculum vitae"
+            label="Print or export curriculum vitae as PDF"
             buttonClassName="primary"
           >
-            Print CV
+            Print / export PDF
           </CapabilityButton>
         </div>
       </header>
