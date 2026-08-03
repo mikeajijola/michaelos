@@ -23,22 +23,23 @@ export function NaviFace({
         </g>
         <g className="navi-face-portrait">
           <g className="navi-face-hair">
-            <path d="M14.5 30c-1-10 6.5-17 16.5-16.5 9 .5 16 5.5 18 14.5-5-5-10-7.5-16-8-7-.5-12.5 3-16 9" />
-            <path d="M31 14c-4 4-6.5 8-7 12 4.5-3 10-5.5 17-5.5" />
+            <path d="M15.5 29.5c-1-9.5 6-16 16-16s15.5 5.5 17 14.5" />
+            <path d="M31.5 14c-4 3-6.5 7-7 11.5" />
+            <path d="M38.5 16c-4 2-7 5-9 8" />
           </g>
           <g className="navi-face-eyes">
             <ellipse cx="22" cy="26" rx="2.65" ry="3.2" />
             <ellipse cx="42" cy="26" rx="2.65" ry="3.2" />
             <g className="navi-face-lashes">
-              <path d="m19.8 23.6-2-1.5m1.2 3.2-2.4-.1" />
-              <path d="m44.2 23.6 2-1.5m-1.2 3.2 2.4-.1" />
+              <path d="m19.8 24-1.4-1.1m.7 2.4-1.6-.1" />
+              <path d="m44.2 24 1.4-1.1m-.7 2.4 1.6-.1" />
             </g>
           </g>
           <g className="navi-face-cheeks">
-            <path d="M16.5 33.5h3M44.5 33.5h3" />
+            <path d="M18.5 32h2.5M43 32h2.5" />
           </g>
           <g className="navi-face-mouth">
-            <path d="M22 38.5c4.5 5.5 15.5 5.5 20 0" />
+            <path d="M23 38.5c4 5 14 5 18 0" />
           </g>
         </g>
       </svg>

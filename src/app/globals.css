@@ -2949,6 +2949,7 @@ html[data-theme="dark"] .global-inspector pre {
 /* Navi's code-native face is shared by every public Navi surface. */
 .navi-face {
   --navi-accent: #efc66d;
+  --navi-hair: #c99943;
   --navi-cheek: #e9a996;
   position: relative;
   display: inline-grid;
@@ -3005,16 +3006,16 @@ html[data-theme="dark"] .global-inspector pre {
   animation: navi-face-personality 8s ease-in-out infinite;
 }
 .navi-face-hair path {
-  stroke: var(--navi-accent) !important;
-  stroke-width: 1.45 !important;
-  opacity: 0.82;
-  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--navi-accent) 56%, transparent));
+  stroke: var(--navi-hair) !important;
+  stroke-width: 2 !important;
+  opacity: 0.92;
+  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--navi-hair) 48%, transparent));
 }
 .navi-face-eyes ellipse {
   fill: currentColor;
 }
 .navi-face-lashes path {
-  stroke-width: 1.5 !important;
+  stroke-width: 1.25 !important;
 }
 .navi-face-cheeks {
   color: var(--navi-cheek);
