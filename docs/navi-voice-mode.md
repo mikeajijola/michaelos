@@ -6,7 +6,7 @@ Navi Voice Mode is another input client of the shared Navi controller. It does n
 
 The provider-neutral `NaviRealtimeAdapter` interface owns connection, capture, playback, mute, interruption and shutdown. Its first implementation uses Google Gemini Live with a short-lived token.
 
-Vercel AI Gateway added beta realtime support through AI SDK 7 in June 2026, but its current official realtime quickstart and model pages document Gateway tokens for OpenAI realtime models rather than a supported Gemini Live tool flow. Until that combination is documented, MichaelOS uses Google's official browser-safe fallback boundary:
+Vercel AI Gateway added beta realtime support through AI SDK 7 in June 2026, but its current official realtime quickstart and model pages document Gateway tokens for OpenAI realtime models rather than a supported Gemini Live tool flow. Until that combination is documented, MikeOS uses Google's official browser-safe fallback boundary:
 
 1. `/api/navi/realtime-token` reads the permanent Gemini credential only on the server.
 2. The server provisions a single-use token constrained to the configured Gemini Live model and Navi tool configuration.

@@ -1,6 +1,6 @@
-# MichaelOS visual theme
+# MikeOS visual theme
 
-MichaelOS uses an executive-publication visual system with technical tooling beneath it. The information architecture, browser capability runtime, Navi agent, Agent CLI, Action Keys, Inspector and persistence model are unchanged.
+MikeOS uses an executive-publication visual system with technical tooling beneath it. The information architecture, browser capability runtime, Navi agent, Agent CLI, Action Keys, Inspector and persistence model are unchanged.
 
 ## Foundations
 

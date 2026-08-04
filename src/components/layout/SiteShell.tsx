@@ -27,7 +27,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               buttonClassName="brand"
             >
               <ProfilePortrait size="header" />
-              <span>MichaelOS</span>
+              <span>MikeOS</span>
             </CapabilityButton>
             <CapabilityButton
               capabilityId="theme.setMode"

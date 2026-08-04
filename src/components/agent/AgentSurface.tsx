@@ -132,7 +132,7 @@ function TerminalClient() {
           <code>run &lt;capability-id&gt; --name value</code>.
         </span>
       </aside>
-      <div className="xterm-host" ref={host} aria-label="MichaelOS Agent CLI" />
+      <div className="xterm-host" ref={host} aria-label="MikeOS Agent CLI" />
     </div>
   );
 }

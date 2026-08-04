@@ -266,12 +266,12 @@ export const projects: Project[] = [
   {
     id: "michaelos",
     slug: "michaelos",
-    name: "MichaelOS",
+    name: "MikeOS",
     subtitle: "A browser-native capability operating environment",
     summary:
       "An interactive portfolio in which the UI, Navi, Agent CLI, Action Keys and Inspector share one capability registry.",
     description:
-      "MichaelOS demonstrates a pattern in which software describes what it can do before deciding which interface a human or agent must use. It combines conversational navigation, Capability Trace, browser-local state, accessibility clients and governed capability execution.",
+      "MikeOS demonstrates a pattern in which software describes what it can do before deciding which interface a human or agent must use. It combines conversational navigation, Capability Trace, browser-local state, accessibility clients and governed capability execution.",
     role: "Creator",
     technologies: ["Next.js", "SQLite WASM", "Local-first", "Agentic UI"],
     themes: [
@@ -288,7 +288,7 @@ export const projects: Project[] = [
     url: links.michaelosLive,
     repositoryUrl: links.michaelosRepository,
     externalSources: [
-      { label: "View MichaelOS source", url: links.michaelosRepository },
+      { label: "View MikeOS source", url: links.michaelosRepository },
       { label: "Open the live site", url: links.michaelosLive },
     ],
   },
@@ -565,9 +565,9 @@ export const articles: Article[] = [
         ],
       },
       {
-        heading: "Omnicede UI and MichaelOS",
+        heading: "Omnicede UI and MikeOS",
         paragraphs: [
-          "Omnicede UI is the active research and product direction for that operating interface. MichaelOS is the personal-scale demonstrator: one capability system, multiple interfaces, persistent context, governed agent navigation and an execution trace that shows what happened.",
+          "Omnicede UI is the active research and product direction for that operating interface. MikeOS is the personal-scale demonstrator: one capability system, multiple interfaces, persistent context, governed agent navigation and an execution trace that shows what happened.",
           "The work remains active research and development. The next step is to test how composable workspaces, organisational memory and KPI feedback can operate without turning the interface into another rigid dashboard.",
         ],
       },
@@ -608,19 +608,19 @@ export const articles: Article[] = [
     sources: [
       {
         title: "I won CEOclaw. Here’s what I built next.",
-        publisher: "MichaelOS",
+        publisher: "MikeOS",
         url: "/blog?article=from-ceoclaw-to-omnicede-ui",
         relationship: "related-work",
       },
       {
         title: "Omnicede UI",
-        publisher: "MichaelOS",
+        publisher: "MikeOS",
         url: "/projects?project=omnicede-ui",
         relationship: "related-work",
       },
       {
-        title: "MichaelOS",
-        publisher: "MichaelOS",
+        title: "MikeOS",
+        publisher: "MikeOS",
         url: "/projects?project=michaelos",
         relationship: "related-work",
       },
@@ -847,10 +847,10 @@ export const articles: Article[] = [
         ],
       },
       {
-        heading: "MichaelOS as a smaller experiment",
+        heading: "MikeOS as a smaller experiment",
         paragraphs: [
-          "MichaelOS applies parts of this idea at a personal scale. The normal interface, Navi, Agent CLI, Action Keys and accessibility tools are clients of one capability registry. A Navi action is registered, inspectable and available through other interfaces.",
-          "MichaelOS is not the full Company as Code system. It makes the architectural pattern tangible in a browser.",
+          "MikeOS applies parts of this idea at a personal scale. The normal interface, Navi, Agent CLI, Action Keys and accessibility tools are clients of one capability registry. A Navi action is registered, inspectable and available through other interfaces.",
+          "MikeOS is not the full Company as Code system. It makes the architectural pattern tangible in a browser.",
           "The capability is defined once. The interfaces are clients.",
         ],
         examples: [

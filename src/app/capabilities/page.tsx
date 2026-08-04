@@ -9,7 +9,7 @@ export default function CapabilityPage() {
           <div className="eyebrow">Application architecture</div>
           <h1 className="page-title">Capability explorer</h1>
           <p>
-            MichaelOS describes each action once, then makes it available to
+            MikeOS describes each action once, then makes it available to
             every approved interface.
           </p>
         </div>

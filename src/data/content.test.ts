@@ -102,7 +102,7 @@ describe("real portfolio content", () => {
     ["Show me Mike’s work with Aeroknite", "aeroknite"],
     ["Show me his platform-engineering work", "nexus-backstage"],
     ["Explain Omnicede UI", "omnicede-ui"],
-    ["What is MichaelOS?", "michaelos"],
+    ["What is MikeOS?", "michaelos"],
   ])("grounds project search %s", async (query, expectedSlug) => {
     const result = (await registry
       .get("project.search")!

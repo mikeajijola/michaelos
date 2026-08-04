@@ -1,6 +1,6 @@
 # Navi navigation architecture
 
-Navi is the conversational navigation agent for MichaelOS. She is built with Vercel's eve framework and uses registered capabilities to help visitors move through the website. Every action is validated and executed by MichaelOS in the browser.
+Navi is the conversational navigation agent for MikeOS. She is built with Vercel's eve framework and uses registered capabilities to help visitors move through the website. Every action is validated and executed by MikeOS in the browser.
 
 ## Surfaces and session
 
@@ -18,7 +18,7 @@ The presentation states are landing idle/resolving/navigating, morphing to the B
 6. When another turn is needed, the browser sends the confirmed structured execution result back to Navi.
 7. The UI constructs Capability Trace entries from the resulting executor events.
 
-The eve agent has no MichaelOS execution tools. It cannot access the DOM, client-side SQLite, portfolio components, browser navigation, Action Key formatting, or Agent CLI formatting. Entity-view proposals are accepted only when their slug or ID came from a preceding browser capability result.
+The eve agent has no MikeOS execution tools. It cannot access the DOM, client-side SQLite, portfolio components, browser navigation, Action Key formatting, or Agent CLI formatting. Entity-view proposals are accepted only when their slug or ID came from a preceding browser capability result.
 
 ## Filesystem-first eve definition
 

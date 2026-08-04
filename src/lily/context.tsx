@@ -166,7 +166,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
           createMessage("user", text),
           createMessage(
             "lily",
-            "Consulting the permitted MichaelOS capabilities…",
+            "Consulting the permitted MikeOS capabilities…",
             { id: requestId, status: "pending" },
           ),
         ],

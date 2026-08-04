@@ -68,7 +68,7 @@ export function LilyConversation({ compact = false }: { compact?: boolean }) {
         }}
       >
         <label htmlFor={compact ? "lily-panel-input" : "lily-console-input"}>
-          Ask Navi to navigate MichaelOS
+          Ask Navi to navigate MikeOS
         </label>
         <div>
           <input

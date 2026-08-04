@@ -14,7 +14,7 @@ export default function Home() {
           <ProfilePortrait />
         </div>
         <div className="home-lily-intro">
-          <div className="eyebrow">Your MichaelOS guide</div>
+          <div className="eyebrow">Your MikeOS guide</div>
           <h1>Chat with Navi.</h1>
           <p>
             Type a message, or turn on Voice Mode and speak naturally. Ask
@@ -66,7 +66,7 @@ export default function Home() {
       <section className="section architecture-statement">
         <div className="shell">
           <p>
-            MichaelOS is a browser-native portfolio and capability environment.
+            MikeOS is a browser-native portfolio and capability environment.
             Every interface, including the UI, Navi, Agent CLI and Action Keys,
             operates through the same registered capabilities.
           </p>

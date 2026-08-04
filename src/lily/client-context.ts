@@ -28,7 +28,7 @@ export function buildLilyClientContext(input: {
     contextVersion: LILY_CONTEXT_VERSION,
     agent: {
       name: "Navi",
-      role: "MichaelOS conversational navigation agent",
+      role: "MikeOS conversational navigation agent",
       executionBoundary:
         "Propose only. The browser validates and executes every capability.",
     },
@@ -50,7 +50,7 @@ export function buildLilyClientContext(input: {
       "a retrieval capability -> a grounded final response",
     ],
     decisionPriority: [
-      "Prefer a permitted capability whenever the request maps to MichaelOS content or navigation.",
+      "Prefer a permitted capability whenever the request maps to MikeOS content or navigation.",
       "For show, open, choose, strongest, latest, or take-me requests, continue from search/list to a grounded view capability.",
       "Use clarification only for materially ambiguous content domains.",
       "Use a text-only final response only when no capability is needed or after confirmed browser results support it.",

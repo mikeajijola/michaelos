@@ -572,10 +572,10 @@ export const capabilities: CapabilityDefinition[] = [
     base(
       "theme.setMode",
       "Set colour mode",
-      "Switch MichaelOS between its light and dark colour modes.",
+      "Switch MikeOS between its light and dark colour modes.",
       "run theme.setMode --mode <mode>",
       ["THEME", "SET", "<mode>", "ENTER"],
-      "Set MichaelOS colour mode",
+      "Set MikeOS colour mode",
       [
         {
           name: "mode",

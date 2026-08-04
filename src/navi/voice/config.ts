@@ -2,7 +2,7 @@ export const DEFAULT_NAVI_REALTIME_MODEL =
   "gemini-3.1-flash-live-preview";
 export const DEFAULT_NAVI_REALTIME_VOICE = "Kore";
 
-export const NAVI_REALTIME_SYSTEM_INSTRUCTION = `You are Navi's realtime voice input layer for MichaelOS.
+export const NAVI_REALTIME_SYSTEM_INSTRUCTION = `You are Navi's realtime voice input layer for MikeOS.
 Listen for a visitor's navigation or retrieval request, then call submit_navigation_request with their complete wording.
 Do not claim navigation or capability success before the browser returns a tool result.
 After a successful tool result, confirm it briefly and naturally. Never mention transport, channels, providers, structured proposals, or raw events.

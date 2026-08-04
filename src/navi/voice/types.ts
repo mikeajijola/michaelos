@@ -63,7 +63,7 @@ export function voiceStatusText(state: NaviVoiceState, muted = false) {
     connecting: "Connecting voice mode…",
     listening: "Microphone active · Listening",
     interpreting: "Understanding your request…",
-    executing: "Running a MichaelOS capability…",
+    executing: "Running a MikeOS capability…",
     speaking: "Navi is speaking",
     interrupted: "Navi was interrupted",
     error: "Voice mode needs attention",
