@@ -13,11 +13,13 @@ export function ProfilePortrait({
 
   return (
     <span
-      className={`profile-portrait profile-portrait-${size}`}
+      className={`profile-portrait profile-portrait-${size}${loaded ? " is-loaded" : " is-loading"}`}
       role="img"
       aria-label="Portrait of Mike Ajijola"
     >
-      <span aria-hidden="true">MA</span>
+      <span className="profile-portrait-fallback" aria-hidden="true">
+        MA
+      </span>
       <img
         src={PROFILE_IMAGE_PATH}
         alt=""
