@@ -319,8 +319,8 @@ export function CapabilityProvider({
     if (previousPathname.current === pathname) return;
     previousPathname.current = pathname;
 
-    // Technical overlays belong to the page on which they were opened. Navi
-    // is managed by its own global provider and intentionally remains open.
+    // Action Key Mode belongs to the page on which it was opened. Navi and
+    // the full Agent Console are global tools and intentionally remain open.
     buffer.current = "";
     actionKeyPriorFocus.current = null;
     priorFocus.current = null;
@@ -329,11 +329,6 @@ export function CapabilityProvider({
       active: false,
       buffer: "",
       error: null,
-    }));
-    setSurface((current) => ({
-      ...current,
-      open: false,
-      minimised: false,
     }));
   }, [pathname]);
   const submitActionKey = useCallback(async () => {

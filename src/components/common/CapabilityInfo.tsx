@@ -108,8 +108,21 @@ export function CapabilityInfo({
                   Open the labelled command input, then enter the Action Key
                   above.
                 </span>
-                <button onClick={() => execute("system.openActionKeyMode")}>
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    void execute("system.openActionKeyMode");
+                  }}
+                >
                   Open Action Key Mode
+                </button>
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    void execute("system.openCommandSurface");
+                  }}
+                >
+                  Open Agent Console
                 </button>
               </div>
             </section>
