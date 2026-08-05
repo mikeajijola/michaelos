@@ -316,7 +316,10 @@ export function CapabilityProvider({
   const submitActionKey = useCallback(async () => {
     const entered = buffer.current.trim();
     if (!entered) return;
-    const parsed = parseProtocol(`${entered} ENTER`, capabilities);
+    // parseProtocol accepts the canonical trailing ENTER token and adds it
+    // when omitted, so pasted registry commands and manually typed commands
+    // follow the same execution path.
+    const parsed = parseProtocol(entered, capabilities);
     if (!parsed) {
       setProtocol((current) => ({
         ...current,

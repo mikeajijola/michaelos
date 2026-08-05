@@ -140,6 +140,22 @@ describe("Action Key Mode", () => {
     });
   });
 
+  it("accepts a complete Action Key with its canonical ENTER token", () => {
+    expect(parseProtocol("THEME SET light ENTER", capabilities)).toMatchObject(
+      {
+        capability: { id: "theme.setMode" },
+        params: { mode: "light" },
+      },
+    );
+  });
+
+  it("accepts the same Action Key when the user omits the ENTER token", () => {
+    expect(parseProtocol("THEME SET dark", capabilities)).toMatchObject({
+      capability: { id: "theme.setMode" },
+      params: { mode: "dark" },
+    });
+  });
+
   it("rejects commands that are not registry Action Keys", () => {
     expect(parseProtocol("DELETE EVERYTHING", capabilities)).toBeNull();
   });

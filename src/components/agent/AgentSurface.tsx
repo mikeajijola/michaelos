@@ -167,13 +167,16 @@ function ActionKeyMode() {
             id="action-key-input"
             value={runtime.protocol.buffer}
             onChange={(event) => runtime.setActionKeyInput(event.target.value)}
-            placeholder="PROJECT VIEW nexus-backstage"
+            placeholder="THEME SET light ENTER"
             autoComplete="off"
             spellCheck={false}
             aria-describedby="action-key-help action-key-error"
           />
           <div>
-            <small id="action-key-help">Enter to execute · Esc to cancel</small>
+            <small id="action-key-help">
+              Paste or type the full Action Key; the final ENTER token is
+              optional · Press Enter to execute · Esc to cancel
+            </small>
             <button type="submit" disabled={!runtime.protocol.buffer.trim()}>
               Execute
             </button>
