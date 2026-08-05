@@ -1993,7 +1993,7 @@ time,
 .lily-bubble:active {
   cursor: grabbing;
 }
-.lily-companion.confirm .lily-bubble {
+.lily-companion.confirm .navi-face-bubble {
   animation: lily-confirm 0.52s ease;
 }
 .lily-menu-trigger {
@@ -2946,7 +2946,7 @@ html[data-theme="dark"]
   transform: translateY(10px) scale(0.96);
   border-radius: 28px;
 }
-.lily-companion.confirm .lily-bubble {
+.lily-companion.confirm .navi-face-bubble {
   animation: lily-confirm 0.76s cubic-bezier(0.22, 1, 0.36, 1);
 }
 @keyframes lily-confirm {
@@ -2966,15 +2966,22 @@ html[data-theme="dark"]
 }
 @media (prefers-reduced-motion: reduce) {
   .page-transition,
-  .lily-companion.confirm .lily-bubble {
+  .lily-companion.confirm .navi-face-bubble {
     animation: none !important;
   }
 }
 
-/* Navi's presence keeps a visible halo; navigation opens the panel directly. */
+/* The draggable control keeps a generous hit target while Navi herself floats. */
 .lily-bubble {
   border-color: transparent;
-  box-shadow: 0 12px 38px #10251b66;
+  background: transparent;
+  box-shadow: none;
+  padding: 7px;
+  overflow: visible;
+}
+.lily-bubble:focus-visible {
+  outline: 2px solid var(--navi-accent, #efc66d);
+  outline-offset: 2px;
 }
 .lily-composer-avatar {
   box-shadow: 0 8px 22px #11121726;
@@ -3003,6 +3010,16 @@ html[data-theme="dark"]
 .navi-face-bubble {
   width: 44px;
   height: 44px;
+  border-radius: 50%;
+  background: #08090b;
+  box-shadow:
+    0 10px 24px #11121738,
+    0 0 20px color-mix(in srgb, var(--navi-accent) 34%, transparent);
+}
+html[data-theme="dark"] .navi-face-bubble {
+  box-shadow:
+    0 12px 28px #0009,
+    0 0 25px color-mix(in srgb, var(--navi-accent) 44%, transparent);
 }
 .navi-face-voice {
   width: 74px;
@@ -3317,11 +3334,11 @@ html[data-theme="dark"]
     box-shadow 90ms linear;
 }
 .navi-voice-listening .navi-voice-orb,
-.navi-voice-host-listening .lily-bubble {
+.navi-voice-host-listening .navi-face-bubble {
   animation: navi-listening-pulse 1.35s ease-in-out infinite;
 }
 .navi-voice-speaking .navi-voice-orb,
-.navi-voice-host-speaking .lily-bubble {
+.navi-voice-host-speaking .navi-face-bubble {
   animation: navi-speaking-glow 2.2s ease-in-out infinite;
 }
 .navi-voice-executing .navi-voice-orb {
@@ -3438,8 +3455,8 @@ html[data-theme="dark"]
     transform: none !important;
   }
   .navi-voice-orb,
-  .navi-voice-host-listening .lily-bubble,
-  .navi-voice-host-speaking .lily-bubble {
+  .navi-voice-host-listening .navi-face-bubble,
+  .navi-voice-host-speaking .navi-face-bubble {
     animation: none !important;
     transition: none !important;
   }
