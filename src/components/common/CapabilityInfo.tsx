@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
 import { useCapabilities } from "@/capabilities/context";
 import { resolveCli, resolveTemplate } from "@/capabilities/protocol";
 import { registry } from "@/capabilities/registry";
@@ -16,6 +17,7 @@ export function CapabilityInfo({
   controlLabel: string;
 }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
   const capability = registry.get(capabilityId);
   const { selectElement, execute } = useCapabilities();
   useEffect(() => {
@@ -26,6 +28,9 @@ export function CapabilityInfo({
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [open]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
   if (!capability) return null;
   const metadata = {
     text: controlLabel,

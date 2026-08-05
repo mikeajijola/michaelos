@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { articles, experience, projects, skills } from "@/data/content";
 import {
   executeCapability,
@@ -77,6 +77,7 @@ export function CapabilityProvider({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [last, setLast] = useState<CapabilityExecution | null>(null);
   const [history, setHistory] = useState<CapabilityExecution[]>([]);
   const historyRef = useRef<CapabilityExecution[]>([]);
@@ -110,6 +111,7 @@ export function CapabilityProvider({
   const buffer = useRef("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const actionKeyPriorFocus = useRef<HTMLElement | null>(null);
+  const previousPathname = useRef(pathname);
 
   useEffect(() => {
     surfaceRef.current = surface;
@@ -313,6 +315,27 @@ export function CapabilityProvider({
     buffer.current = value;
     setProtocol((current) => ({ ...current, buffer: value, error: null }));
   }, []);
+  useEffect(() => {
+    if (previousPathname.current === pathname) return;
+    previousPathname.current = pathname;
+
+    // Technical overlays belong to the page on which they were opened. Navi
+    // is managed by its own global provider and intentionally remains open.
+    buffer.current = "";
+    actionKeyPriorFocus.current = null;
+    priorFocus.current = null;
+    setProtocol((current) => ({
+      ...current,
+      active: false,
+      buffer: "",
+      error: null,
+    }));
+    setSurface((current) => ({
+      ...current,
+      open: false,
+      minimised: false,
+    }));
+  }, [pathname]);
   const submitActionKey = useCallback(async () => {
     const entered = buffer.current.trim();
     if (!entered) return;
