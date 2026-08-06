@@ -169,6 +169,12 @@ describe("Lily proposal boundary", () => {
       arguments: { query: expect.stringContaining("CEOclaw") },
     });
   });
+  it("searches for Semantic Alerts through Navi before opening it", () => {
+    expect(recoverLilyProposal("Explain semantic alerts", [])).toMatchObject({
+      capabilityId: "article.search",
+      arguments: { query: expect.stringContaining("semantic alerts") },
+    });
+  });
   it("resolves the article that follows the CEOclaw origin story", () => {
     expect(
       recoverLilyProposal("Open the article that follows the CEOclaw one", []),

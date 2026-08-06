@@ -20,7 +20,9 @@ export default function Blog() {
       {selected && (
         <article className="detail-banner article-detail">
           <div className="eyebrow">
-            {selected.status === "draft" ? "In development" : selected.publishedAt}
+            {selected.status === "draft"
+              ? "In development"
+              : (selected.publishedAt ?? "Published")}
             {` · ${selected.readTime}`}
           </div>
           <h2>{selected.title}</h2>
@@ -138,7 +140,10 @@ export default function Blog() {
               >
                 <>
                   <div className="meta">
-                    <span>{a.publishedAt ?? "In development"}</span>
+                    <span>
+                      {a.publishedAt ??
+                        (a.status === "published" ? "Published" : "In development")}
+                    </span>
                     <span>
                       {a.status === "draft" ? "Draft" : "Published"} · {a.readTime}
                     </span>

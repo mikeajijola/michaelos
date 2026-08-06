@@ -169,6 +169,14 @@ export const aliases: Record<string, string[]> = {
     "organization as code",
     "executable organisation",
   ],
+  "semantic-alerts": [
+    "semantic alert",
+    "semantic alerts",
+    "meaning based alerts",
+    "organisational alerts",
+    "organizational alerts",
+    "organisational drift",
+  ],
 };
 
 export const projects: Project[] = [
@@ -603,7 +611,7 @@ export const articles: Article[] = [
       "Omnicede UI",
     ],
     relatedProjectIds: ["omnicede-ui", "michaelos"],
-    relatedArticleIds: ["from-ceoclaw-to-omnicede-ui"],
+    relatedArticleIds: ["from-ceoclaw-to-omnicede-ui", "semantic-alerts"],
     originArticle: "from-ceoclaw-to-omnicede-ui",
     sources: [
       {
@@ -876,6 +884,13 @@ export const articles: Article[] = [
         ],
       },
       {
+        heading: "Semantic alerts",
+        paragraphs: [
+          "A declared company model becomes more useful when it can notice meaningful drift. Semantic alerts allow a Company as Code system to monitor meaning, detect when reality no longer matches the operating model and activate the capability responsible for responding.",
+          "The related Semantic Alerts article develops this mechanism in detail, including evidence, routing and the role of human judgement.",
+        ],
+      },
+      {
         heading: "What comes next",
         paragraphs: [
           "Company as Code is still developing as a model. The immediate work is to represent capabilities and work products, connect KPIs to operational feedback, express permissions and boundaries, handle conflicting objectives, support bounded agent practices and preserve an inspectable history.",
@@ -885,9 +900,189 @@ export const articles: Article[] = [
       },
     ],
   },
+  {
+    id: "semantic-alerts",
+    slug: "semantic-alerts",
+    title: "Semantic Alerts",
+    alternativeTitle: "From system monitoring to organisational awareness",
+    excerpt:
+      "Most software alerts watch numbers. Semantic alerts watch for changes in meaning: a customer losing confidence, a capability weakening or an organisation drifting from its declared design.",
+    summary:
+      "How meaning-based alerts can connect evidence, organisational capabilities and accountable action inside a Company as Code model.",
+    status: "published",
+    readingMinutes: 12,
+    readTime: "12 min",
+    tags: [
+      "Semantic alerts",
+      "Company as Code",
+      "Organisational design",
+      "Agentic organisations",
+      "Governance",
+      "AI strategy",
+    ],
+    relatedProjectIds: ["omnicede-ui", "michaelos"],
+    relatedArticleIds: ["company-as-code"],
+    sources: [
+      {
+        title: "Company as Code",
+        publisher: "MikeOS",
+        url: "/blog?article=company-as-code",
+        relationship: "related-work",
+      },
+    ],
+    evidenceNote:
+      "This article develops Mike’s Company as Code thesis. Its organisational scenarios and schemas are illustrative examples.",
+    sections: [
+      {
+        heading: "Beyond numeric thresholds",
+        paragraphs: [
+          "Most software alerts are built around numbers. CPU usage crosses 80 percent. A service takes longer than two seconds to respond. Error rates rise above a fixed threshold. A payment fails three times.",
+          "These alerts are useful because numbers are easy to measure. The system checks a value, compares it with a rule and sends a notification when the rule is broken.",
+          "Companies do not operate through numbers alone. Important changes are often expressed through meaning: a customer is becoming unhappy; a project is drifting from its goal; a regulation may affect a product; a critical capability is becoming dependent on one person; or a team is repeatedly treating symptoms without fixing the underlying cause.",
+          "These conditions may never cross a simple numeric threshold. The system needs to understand what is happening and why it matters. This is the role of semantic alerts.",
+        ],
+      },
+      {
+        heading: "What is a semantic alert?",
+        paragraphs: [
+          "A semantic alert is triggered by meaning rather than by a fixed number. Instead of asking whether a metric crossed a threshold, it asks whether something happened that matches an important business condition.",
+          "The condition can be expressed in normal language: alert customer success when recent conversations suggest that a strategic customer is losing confidence; alert architecture when a proposed change introduces a dependency on a capability the company does not own; or alert governance when a new policy conflicts with an active workflow.",
+          "The trigger remains deterministic at the orchestration level. A scheduled task, event listener or workflow checks the relevant information. What it checks is semantic: a pattern, situation, risk or opportunity.",
+        ],
+      },
+      {
+        heading: "From monitoring systems to understanding systems",
+        paragraphs: [
+          "Traditional monitoring tells a company when a system is unhealthy. Semantic monitoring can tell a company when its understanding of itself may be unhealthy.",
+          "A normal platform might detect that a service is failing. A semantic alert might detect that the service works as designed, but the design no longer supports the company’s strategy. A normal alert might report that a project is late; a semantic alert might report that it is delivering output but no longer improving the capability it was meant to support.",
+          "Several harmless-looking changes may also create a governance risk when considered together. Semantic alerting moves monitoring beyond infrastructure and into the operating model of the company.",
+        ],
+      },
+      {
+        heading: "Semantic alerts as part of Company as Code",
+        paragraphs: [
+          "Company as Code represents the organisation through explicit, machine-readable capabilities, agents, workflows, responsibilities, policies, systems, dependencies, goals, controls, evidence and decision rights.",
+          "That representation lets a company define a desired state, compare it with reality and identify drift, missing capabilities or broken dependencies. The existing Company as Code article explains the wider model; semantic alerts are the mechanism that makes the model active.",
+          "Without alerts, Company as Code is a map. With semantic alerts, it becomes a living operating system.",
+          "The company can watch for evidence that a capability is weakening, a workflow no longer achieves its purpose, an agent lacks authority or information, policy is being violated, reality has drifted from the declared design, or a human decision has created unexpected downstream effects.",
+          "The alert is generated because the system understands what the company says it is trying to do.",
+        ],
+      },
+      {
+        heading: "A simple example",
+        paragraphs: [
+          "Imagine that a company defines a capability for retaining strategic customers. A traditional alert could watch for a 20 percent usage drop over 30 days. That signal may be useful, but it sees only one part of the situation.",
+          "A semantic alert can consider several weak signals together: increasingly negative support language, reduced product usage, repeated unresolved issues, absent stakeholders, questions about contract flexibility, interest in data exports and references to alternative suppliers.",
+          "No single signal proves that a customer will leave. Together, they may describe a meaningful situation.",
+        ],
+        examples: [
+          {
+            label: "Illustrative example",
+            title: "Customer-retention capability",
+            value: {
+              id: "retain-strategic-customers",
+              purpose:
+                "Protect long-term revenue by identifying and resolving customer risk early",
+              owner: "customer-success-agent",
+              inputs: [
+                "support-conversations",
+                "product-usage",
+                "account-notes",
+                "renewal-timeline",
+              ],
+              desired_outcome: "Strategic customers remain confident and renew",
+            },
+          },
+          {
+            label: "Illustrative example",
+            title: "Traditional threshold alert",
+            value: {
+              trigger: "product_usage_drop",
+              threshold: "20_percent",
+              window: "30_days",
+            },
+          },
+          {
+            label: "Illustrative example",
+            title: "Semantic customer-confidence alert",
+            value: {
+              id: "strategic-customer-confidence-risk",
+              capability: "retain-strategic-customers",
+              condition:
+                "Evidence across recent conversations, usage patterns and account activity suggests that a strategic customer is losing confidence or may not renew",
+              notify: "customer-success-agent",
+              required_action:
+                "Assess the account, produce supporting evidence and recommend the next intervention",
+            },
+          },
+        ],
+      },
+      {
+        heading: "Alerts should be connected to capabilities",
+        paragraphs: [
+          "A semantic alert should not merely produce a notification. It should connect the detected condition to the part of the company responsible for handling it.",
+          "Each alert should answer five questions: what was detected; why it matters; which capability is affected; which agent or person is responsible; and what should happen next.",
+          "This prevents another noisy notification system. Regulatory change should reach governance. Declining customer confidence should reach customer retention. Repeated delivery failure may need platform engineering, programme delivery or organisational design, depending on its cause. The company model provides the routing logic.",
+        ],
+      },
+      {
+        heading: "Semantic alerts need evidence",
+        paragraphs: [
+          "Semantic systems can be uncertain, so an alert should include the evidence that caused it to fire. The receiving agent must be able to inspect that evidence, challenge the interpretation and decide what to do.",
+          "Semantic alerts should support judgement, not hide it. Confidence is useful context, but it does not replace an accountable decision.",
+        ],
+        examples: [
+          {
+            label: "Illustrative example",
+            title: "Delivery-capability drift alert",
+            value: {
+              alert: "Potential delivery capability drift",
+              confidence: 0.81,
+              affected_capability: "reliable-software-delivery",
+              evidence: [
+                "Three teams created separate deployment workflows during the last month",
+                "Two services bypassed the standard release process",
+                "Recent incident reviews mention inconsistent deployment behaviour",
+              ],
+              interpretation: "The shared delivery capability may be fragmenting",
+              recommended_action:
+                "Review whether the central platform still meets team requirements",
+            },
+          },
+        ],
+      },
+      {
+        heading: "Not every alert should interrupt a human",
+        paragraphs: [
+          "Many semantic alerts should first be handled by agents. An agent can gather more evidence, compare the issue with the company model, check whether it happened before, contact another agent, open a review, update a risk register, suggest a change, prepare a plan or resolve a bounded low-risk issue.",
+          "This creates layers of response. A low-confidence signal may be recorded. A repeated pattern may trigger investigation. A high-confidence, high-impact condition may be escalated immediately.",
+          "The goal is not to send more messages to people. It is to make the organisation more aware and more capable of responding.",
+        ],
+      },
+      {
+        heading: "Semantic alert definitions become organisational policy",
+        paragraphs: [
+          "Writing an alert down creates an explicit statement of what the company cares about: customer trust, fragile capabilities, workflows that have lost their purpose, opportunities the organisation cannot yet serve and drift from the declared operating model.",
+          "These definitions are encoded management principles. They make hidden expectations visible and allow them to be reviewed, tested and improved.",
+          "A company can ask whether it monitors the right risks, rewards the right outcomes, routes alerts correctly, gives agents suitable authority, interrupts humans too often and turns alerts into real changes. Semantic alerting therefore becomes part of organisational design.",
+        ],
+      },
+      {
+        heading: "From dashboards to active organisations",
+        paragraphs: [
+          "Most dashboards wait for a person to look at them. Semantic alerts allow the organisation to watch itself.",
+          "This does not require a fully autonomous company. It lets the organisation become more explicit about what matters and more responsive when reality changes.",
+          "A Company as Code system can hold the declared structure of the business. Semantic alerts can compare it with internal events, conversations, operational data, customer behaviour, market changes, regulations, decisions, projects and system activity.",
+          "When the meaning of those signals suggests that something important has changed, the correct capability can be activated.",
+          "That is the shift: from alerts about systems to alerts about meaning; from static company diagrams to executable organisational awareness; from a company that is documented to a company that can notice when it is becoming something different.",
+        ],
+      },
+    ],
+  },
 ];
 
 const articleOrder = [
+  "semantic-alerts",
   "company-as-code",
   "from-ceoclaw-to-omnicede-ui",
   "backstage-platform-engineering-as-a-product",

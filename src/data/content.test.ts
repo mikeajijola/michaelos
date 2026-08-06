@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { registry } from "@/capabilities/registry";
 import {
   aliases,
@@ -39,9 +39,15 @@ describe("real portfolio content", () => {
     expect(recognition[0].title).toContain("innovation endorsements");
   });
 
-  it("keeps all five essays explicitly in development", () => {
-    expect(articles).toHaveLength(5);
-    expect(articles.every((article) => article.status === "draft")).toBe(true);
+  it("publishes Semantic Alerts while keeping the existing essays in development", () => {
+    expect(articles).toHaveLength(6);
+    expect(articles.find((article) => article.slug === "semantic-alerts")?.status)
+      .toBe("published");
+    expect(
+      articles
+        .filter((article) => article.slug !== "semantic-alerts")
+        .every((article) => article.status === "draft"),
+    ).toBe(true);
     expect(articles.every((article) => article.sections.length >= 4)).toBe(true);
   });
 
@@ -115,6 +121,7 @@ describe("real portfolio content", () => {
   it.each([
     ["Show me the article about CEOclaw", "from-ceoclaw-to-omnicede-ui"],
     ["Explain Company as Code", "company-as-code"],
+    ["Explain semantic alerts", "semantic-alerts"],
     [
       "platform engineering Backstage",
       "backstage-platform-engineering-as-a-product",
@@ -142,5 +149,28 @@ describe("real portfolio content", () => {
     const company = articles.find((article) => article.slug === "company-as-code");
     expect(origin?.continuesWith).toContain("company-as-code");
     expect(company?.originArticle).toBe("from-ceoclaw-to-omnicede-ui");
+  });
+
+  it("links Semantic Alerts and Company as Code in both directions", () => {
+    const company = articles.find((article) => article.slug === "company-as-code");
+    const semantic = articles.find((article) => article.slug === "semantic-alerts");
+    expect(company?.relatedArticleIds).toContain("semantic-alerts");
+    expect(semantic?.relatedArticleIds).toContain("company-as-code");
+    expect(semantic?.sources).toContainEqual(
+      expect.objectContaining({ url: "/blog?article=company-as-code" }),
+    );
+  });
+
+  it("opens Semantic Alerts through the shared article capability", async () => {
+    const navigate = vi.fn();
+    const result = await registry.get("article.view")!.execute(
+      { slug: "semantic-alerts" },
+      { navigate } as unknown as CapabilityContext,
+    );
+    expect(navigate).toHaveBeenCalledWith("/blog?article=semantic-alerts");
+    expect(result).toMatchObject({
+      article: { slug: "semantic-alerts", title: "Semantic Alerts" },
+      path: "/blog?article=semantic-alerts",
+    });
   });
 });
