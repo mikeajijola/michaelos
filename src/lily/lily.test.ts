@@ -116,6 +116,23 @@ describe("Lily proposal boundary", () => {
       arguments: {},
     });
   });
+  it.each([
+    ["Go to the next section", "navigation.nextHeading", {}],
+    ["Move to the previous heading", "navigation.previousHeading", {}],
+    ["Take me to the top of the page", "navigation.goTop", {}],
+    ["Skip to the main content", "navigation.goMainContent", {}],
+    [
+      "Jump to the Evidence and references section",
+      "navigation.goHeading",
+      { heading: "evidence and references" },
+    ],
+  ])("recovers reading navigation: %s", (request, capabilityId, args) => {
+    expect(recoverLilyProposal(request as string, [])).toMatchObject({
+      kind: "capability",
+      capabilityId,
+      arguments: args,
+    });
+  });
   it("lists writing before selecting an interesting real article", () => {
     expect(
       recoverLilyProposal("Show me an interesting article from Michael", []),

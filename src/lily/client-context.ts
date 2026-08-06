@@ -48,12 +48,14 @@ export function buildLilyClientContext(input: {
       "article.search or article.list -> article.view using a returned article slug",
       "experience.list -> experience.view using a returned experience id",
       "a retrieval capability -> a grounded final response",
+      "a reading-navigation request -> one navigation heading or page-position capability",
     ],
     decisionPriority: [
       "Prefer a permitted capability whenever the request maps to MikeOS content or navigation.",
       "For show, open, choose, strongest, latest, or take-me requests, continue from search/list to a grounded view capability.",
       "Use clarification only for materially ambiguous content domains.",
       "Use a text-only final response only when no capability is needed or after confirmed browser results support it.",
+      "For next, previous, named-section, page-top, or main-content reading requests, use the matching navigation capability.",
     ],
     proposalContract: {
       oneProposalPerTurn: true,

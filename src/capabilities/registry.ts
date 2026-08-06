@@ -96,6 +96,57 @@ const openExternal = (url: string) => {
   return { url };
 };
 
+const readingHeadings = () =>
+  Array.from(
+    document.querySelectorAll<HTMLElement>(
+      "main h1, main h2, main h3, main h4, main h5, main h6",
+    ),
+  ).filter((heading) => heading.getClientRects().length > 0);
+
+const focusReadingTarget = (target: HTMLElement) => {
+  const hadTabIndex = target.hasAttribute("tabindex");
+  if (!hadTabIndex) target.setAttribute("tabindex", "-1");
+  target.focus({ preventScroll: true });
+  target.scrollIntoView({
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto"
+      : "smooth",
+    block: "start",
+  });
+  if (!hadTabIndex)
+    target.addEventListener("blur", () => target.removeAttribute("tabindex"), {
+      once: true,
+    });
+};
+
+const headingResult = (heading: HTMLElement) => ({
+  heading: heading.textContent?.trim() ?? "Untitled section",
+  level: heading.tagName.toLowerCase(),
+});
+
+const adjacentReadingHeading = (direction: "next" | "previous") => {
+  const headings = readingHeadings();
+  if (!headings.length)
+    throw new CapabilityError(
+      "READING_HEADING_NOT_FOUND",
+      "This page does not contain a readable heading.",
+    );
+  const focusedIndex = headings.indexOf(document.activeElement as HTMLElement);
+  let target: HTMLElement | undefined;
+  if (focusedIndex >= 0) {
+    target = headings[focusedIndex + (direction === "next" ? 1 : -1)];
+  } else if (direction === "next") {
+    target = headings.find((heading) => heading.getBoundingClientRect().top > 72);
+  } else {
+    target = [...headings]
+      .reverse()
+      .find((heading) => heading.getBoundingClientRect().top < 72);
+  }
+  target ??= direction === "next" ? headings.at(-1) : headings[0];
+  focusReadingTarget(target!);
+  return headingResult(target!);
+};
+
 const handlers: Record<string, Handler> = {
   "system.openCommandSurface": async (_, c) => {
     c.surface.open("terminal");
@@ -266,6 +317,46 @@ const handlers: Record<string, Handler> = {
   "navigation.goBack": async (_, c) => {
     c.back();
     return { back: true };
+  },
+  "navigation.nextHeading": async () => adjacentReadingHeading("next"),
+  "navigation.previousHeading": async () =>
+    adjacentReadingHeading("previous"),
+  "navigation.goHeading": async (p) => {
+    const requested = normaliseSearch(p.heading);
+    const target = readingHeadings().find((heading) =>
+      normaliseSearch(heading.textContent).includes(requested),
+    );
+    if (!target)
+      throw new CapabilityError(
+        "READING_HEADING_NOT_FOUND",
+        `I couldn’t find a heading matching “${p.heading}” on this page.`,
+        p.heading,
+        "Ask for the next heading or use a title visible on the current page.",
+      );
+    focusReadingTarget(target);
+    return headingResult(target);
+  },
+  "navigation.goTop": async () => {
+    const target = document.querySelector<HTMLElement>("main h1");
+    if (target) focusReadingTarget(target);
+    else
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+    return target ? headingResult(target) : { position: "top" };
+  },
+  "navigation.goMainContent": async () => {
+    const target = document.querySelector<HTMLElement>("main");
+    if (!target)
+      throw new CapabilityError(
+        "MAIN_CONTENT_NOT_FOUND",
+        "The main reading area is not available on this page.",
+      );
+    focusReadingTarget(target);
+    return { target: "main" };
   },
   "project.list": async (p) => {
     const rows = p.featured ? projects.filter((x) => x.featured) : projects;
@@ -499,6 +590,11 @@ const navigatorIds = new Set([
   "navigation.goBlog",
   "navigation.goCv",
   "navigation.goCapabilities",
+  "navigation.nextHeading",
+  "navigation.previousHeading",
+  "navigation.goHeading",
+  "navigation.goTop",
+  "navigation.goMainContent",
   "project.list",
   "project.search",
   "project.view",
@@ -809,6 +905,46 @@ export const capabilities: CapabilityDefinition[] = [
     "Return to the previous browser history entry.",
     ["NAVIGATION", "BACK"],
     "Go back",
+  ),
+  simple(
+    "navigation.nextHeading",
+    "Go to next heading",
+    "Move reading focus to the next visible heading in the page’s main content.",
+    ["NAVIGATION", "NEXT", "HEADING"],
+    "Move to the next reading heading",
+  ),
+  simple(
+    "navigation.previousHeading",
+    "Go to previous heading",
+    "Move reading focus to the previous visible heading in the page’s main content.",
+    ["NAVIGATION", "PREVIOUS", "HEADING"],
+    "Move to the previous reading heading",
+  ),
+  define(
+    base(
+      "navigation.goHeading",
+      "Go to named heading",
+      "Move reading focus to a visible heading whose title matches the requested text.",
+      "run navigation.goHeading --heading <heading>",
+      ["NAVIGATION", "HEADING", "<heading>", "ENTER"],
+      "Move to a named reading heading",
+      [text("heading", "Visible heading title to find on the current page.")],
+      { heading: "Evidence and references" },
+    ),
+  ),
+  simple(
+    "navigation.goTop",
+    "Go to top of page",
+    "Move reading focus to the page title or the top of the current page.",
+    ["NAVIGATION", "TOP"],
+    "Move to the top of the page",
+  ),
+  simple(
+    "navigation.goMainContent",
+    "Go to main content",
+    "Move focus to the current page’s main reading area.",
+    ["NAVIGATION", "MAIN", "CONTENT"],
+    "Move to the main content",
   ),
   define(
     base(

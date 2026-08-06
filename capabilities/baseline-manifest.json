@@ -2,7 +2,7 @@
   {
     "id": "theme.setMode",
     "schemaVersion": 1,
-    "description": "Switch MichaelOS between its light and dark colour modes.",
+    "description": "Switch MikeOS between its light and dark colour modes.",
     "parameters": [
       {
         "name": "mode",
@@ -22,7 +22,7 @@
       "<mode>",
       "ENTER"
     ],
-    "accessibleLabel": "Set MichaelOS colour mode",
+    "accessibleLabel": "Set MikeOS colour mode",
     "risk": "read",
     "navigatorEnabled": true
   },
@@ -535,6 +535,92 @@
     "accessibleLabel": "Go back",
     "risk": "read",
     "navigatorEnabled": false
+  },
+  {
+    "id": "navigation.nextHeading",
+    "schemaVersion": 1,
+    "description": "Move reading focus to the next visible heading in the page’s main content.",
+    "parameters": [],
+    "cliCommand": "run navigation.nextHeading",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "NEXT",
+      "HEADING",
+      "ENTER"
+    ],
+    "accessibleLabel": "Move to the next reading heading",
+    "risk": "read",
+    "navigatorEnabled": true
+  },
+  {
+    "id": "navigation.previousHeading",
+    "schemaVersion": 1,
+    "description": "Move reading focus to the previous visible heading in the page’s main content.",
+    "parameters": [],
+    "cliCommand": "run navigation.previousHeading",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "PREVIOUS",
+      "HEADING",
+      "ENTER"
+    ],
+    "accessibleLabel": "Move to the previous reading heading",
+    "risk": "read",
+    "navigatorEnabled": true
+  },
+  {
+    "id": "navigation.goHeading",
+    "schemaVersion": 1,
+    "description": "Move reading focus to a visible heading whose title matches the requested text.",
+    "parameters": [
+      {
+        "name": "heading",
+        "description": "Visible heading title to find on the current page.",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "cliCommand": "run navigation.goHeading --heading <heading>",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "HEADING",
+      "<heading>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Move to a named reading heading",
+    "risk": "read",
+    "navigatorEnabled": true
+  },
+  {
+    "id": "navigation.goTop",
+    "schemaVersion": 1,
+    "description": "Move reading focus to the page title or the top of the current page.",
+    "parameters": [],
+    "cliCommand": "run navigation.goTop",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "TOP",
+      "ENTER"
+    ],
+    "accessibleLabel": "Move to the top of the page",
+    "risk": "read",
+    "navigatorEnabled": true
+  },
+  {
+    "id": "navigation.goMainContent",
+    "schemaVersion": 1,
+    "description": "Move focus to the current page’s main reading area.",
+    "parameters": [],
+    "cliCommand": "run navigation.goMainContent",
+    "actionKeyTemplate": [
+      "NAVIGATION",
+      "MAIN",
+      "CONTENT",
+      "ENTER"
+    ],
+    "accessibleLabel": "Move to the main content",
+    "risk": "read",
+    "navigatorEnabled": true
   },
   {
     "id": "project.list",

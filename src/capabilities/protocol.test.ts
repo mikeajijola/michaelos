@@ -76,6 +76,29 @@ describe("capability registry", () => {
       "NAVI VOICE START ENTER",
     );
   });
+  it("exposes reading navigation through canonical CLI and Action Keys", () => {
+    const named = capabilities.find(
+      (entry) => entry.id === "navigation.goHeading",
+    )!;
+    expect(named.navigator.enabled).toBe(true);
+    expect(resolveCli(named, { heading: "Evidence and references" })).toBe(
+      'run navigation.goHeading --heading "Evidence and references"',
+    );
+    expect(
+      resolveTemplate(named.keyboard.template, {
+        heading: "Evidence and references",
+      }),
+    ).toBe("NAVIGATION HEADING Evidence and references ENTER");
+    expect(
+      parseProtocol(
+        "NAVIGATION HEADING Evidence and references ENTER",
+        capabilities,
+      ),
+    ).toMatchObject({
+      capability: { id: "navigation.goHeading" },
+      params: { heading: "Evidence and references" },
+    });
+  });
 });
 
 describe("agent gateway", () => {

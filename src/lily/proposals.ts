@@ -164,6 +164,59 @@ export function recoverLilyProposal(
     .replace(/\s+/g, " ")
     .trim();
 
+  if (/\b(next|following)\s+(heading|section|title)\b/.test(text)) {
+    return {
+      kind: "capability",
+      capabilityId: "navigation.nextHeading",
+      arguments: {},
+      message: "I’ll move to the next heading.",
+      needsAnotherTurn: false,
+    };
+  }
+
+  if (/\b(previous|prior|last)\s+(heading|section|title)\b/.test(text)) {
+    return {
+      kind: "capability",
+      capabilityId: "navigation.previousHeading",
+      arguments: {},
+      message: "I’ll move to the previous heading.",
+      needsAnotherTurn: false,
+    };
+  }
+
+  if (/\b(top|start|beginning)\s+of\s+(the\s+)?page\b/.test(text)) {
+    return {
+      kind: "capability",
+      capabilityId: "navigation.goTop",
+      arguments: {},
+      message: "I’ll move to the top of the page.",
+      needsAnotherTurn: false,
+    };
+  }
+
+  if (/\bmain\s+(content|reading area)\b/.test(text)) {
+    return {
+      kind: "capability",
+      capabilityId: "navigation.goMainContent",
+      arguments: {},
+      message: "I’ll move to the main content.",
+      needsAnotherTurn: false,
+    };
+  }
+
+  const namedHeading = text.match(
+    /\b(?:go|jump|skip|move|take me)\s+to\s+(?:the\s+)?(.+?)\s+(?:heading|section|title)\b/,
+  )?.[1];
+  if (namedHeading) {
+    return {
+      kind: "capability",
+      capabilityId: "navigation.goHeading",
+      arguments: { heading: namedHeading },
+      message: `I’ll move to the ${namedHeading} heading.`,
+      needsAnotherTurn: false,
+    };
+  }
+
   if (/\b(cv|resume|curriculum vitae)\b/.test(text)) {
     if (completedCapabilityIds.includes("cv.view")) {
       return { kind: "final", message: "I opened Mike’s CV." };

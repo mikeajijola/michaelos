@@ -2925,6 +2925,14 @@ html[data-theme="dark"]
 .page-transition {
   animation: michaelos-page-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+main,
+main :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 88px;
+}
+main :is(h1, h2, h3, h4, h5, h6)[tabindex="-1"]:focus {
+  outline: 2px solid var(--highlight);
+  outline-offset: 6px;
+}
 @keyframes michaelos-page-enter {
   from {
     opacity: 0.72;

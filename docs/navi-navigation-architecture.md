@@ -2,6 +2,12 @@
 
 Navi is the conversational navigation agent for MikeOS. She is built with Vercel's eve framework and uses registered capabilities to help visitors move through the website. Every action is validated and executed by MikeOS in the browser.
 
+Reading navigation is capability-backed as well as route navigation. Navi can
+move to the next or previous rendered heading, find a named heading, return to
+the page title, or focus the main content. These capabilities query semantic
+headings in the browser at execution time; the agent does not receive DOM
+access or a duplicated list of article sections.
+
 ## Surfaces and session
 
 The application-shell session provider owns one bounded Navi Session shared by the Navi Landing Prompt, Navi Bubble, Navi Panel, and Navi tab in the Agent Console. The browser persists the latest messages, compact structured result references, presentation state, and eve `SessionState` cursor. Route changes do not remount the provider. Compatibility-named internal modules preserve previously stored sessions without exposing the former product name in the interface.
