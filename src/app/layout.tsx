@@ -8,6 +8,7 @@ import { AgentSurface } from "@/components/agent/AgentSurface";
 import { LilyProvider } from "@/lily/context";
 import { HighlightProvider } from "@/highlight/context";
 import { ThemeProvider } from "@/theme/context";
+import { NaviVoiceProvider } from "@/navi/voice/context";
 import "@xterm/xterm/css/xterm.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -34,12 +35,14 @@ export default function RootLayout({
         <Suspense>
           <CapabilityProvider>
             <LilyProvider>
-              <ThemeProvider>
-                <HighlightProvider>
-                  <SiteShell>{children}</SiteShell>
-                  <AgentSurface />
-                </HighlightProvider>
-              </ThemeProvider>
+              <NaviVoiceProvider>
+                <ThemeProvider>
+                  <HighlightProvider>
+                    <SiteShell>{children}</SiteShell>
+                    <AgentSurface />
+                  </HighlightProvider>
+                </ThemeProvider>
+              </NaviVoiceProvider>
             </LilyProvider>
           </CapabilityProvider>
         </Suspense>

@@ -8,7 +8,7 @@ import { LilyConversation } from "./LilyConversation";
 import { NaviVoiceSurface } from "@/components/navi/NaviVoiceSurface";
 import { NaviFace } from "@/components/navi/NaviFace";
 import { naviFaceState } from "@/navi/voice/face-state";
-import { useNaviVoice } from "@/navi/voice/use-navi-voice";
+import { useNaviVoiceRuntime } from "@/navi/voice/context";
 import type { LilyBubblePosition } from "@/lily/types";
 import { clampBubblePosition, didDrag } from "@/lily/bubble-position";
 import {
@@ -51,19 +51,7 @@ export function LilyCompanion() {
     lily.session.presentation,
     lily.session.activeRequestId,
   );
-  const voice = useNaviVoice(async (request) => {
-    const result = await lily.submit(request, {
-      maxCapabilitySteps: 3,
-      keepPanelOpen: true,
-    });
-    return (
-      result ?? {
-        text: "I’m ready for another request.",
-        trace: [],
-        failed: false,
-      }
-    );
-  });
+  const voice = useNaviVoiceRuntime();
   const voiceMode = voice.state !== "inactive";
   const panelOpen = voiceMode || presentationPanelOpen;
   const save = (next: LilyBubblePosition) => {
