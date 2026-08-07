@@ -54,7 +54,7 @@ export default function Blog({
           <p className="lead">{selected.excerpt}</p>
           {selected.sections.map((section) => (
             <section key={section.heading}>
-              <h3>{section.heading}</h3>
+              {section.heading !== selected.title && <h3>{section.heading}</h3>}
               {section.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -169,7 +169,7 @@ export default function Blog({
                         (a.status === "published" ? "Published" : "In development")}
                     </span>
                     <span>
-                      {a.status === "draft" ? "Draft" : "Published"} · {a.readTime}
+                      {a.status === "draft" ? `Draft · ${a.readTime}` : a.readTime}
                     </span>
                   </div>
                   <h3>{a.title}</h3>
