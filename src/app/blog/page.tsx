@@ -1,12 +1,16 @@
 "use client";
 import { articles } from "@/data/content";
-import { useSearchParams } from "next/navigation";
+import { use } from "react";
 import { CapabilityButton } from "@/components/common/CapabilityInfo";
 import { useHighlight } from "@/highlight/context";
-export default function Blog() {
+export default function Blog({
+  searchParams,
+}: {
+  searchParams: Promise<{ article?: string }>;
+}) {
   const { view, matches } = useHighlight();
-  const query = useSearchParams();
-  const selected = articles.find((article) => article.slug === query.get("article"));
+  const query = use(searchParams);
+  const selected = articles.find((article) => article.slug === query.article);
   return (
     <div className="page-shell">
       <div className="page-head">
@@ -19,6 +23,24 @@ export default function Blog() {
       </div>
       {selected && (
         <article className="detail-banner article-detail">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                headline: selected.title,
+                description: selected.socialDescription ?? selected.excerpt,
+                author: {
+                  "@type": "Person",
+                  name: "Mike Ajijola",
+                  url: "https://mikeajijola.com/",
+                },
+                mainEntityOfPage: `https://mikeajijola.com/blog?article=${selected.slug}`,
+                keywords: selected.tags.join(", "),
+              }).replace(/</g, "\\u003c"),
+            }}
+          />
           <div className="eyebrow">
             {selected.status === "draft"
               ? "In development"
@@ -40,7 +62,7 @@ export default function Blog() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Read the Spotify Backstage case study ↗
+                Read {source.title} ↗
               </a>
             ))}
           {selected.sections.map((section) => (
@@ -49,6 +71,21 @@ export default function Blog() {
               {section.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
+              {section.pullQuote && (
+                <blockquote className="article-pull-quote">
+                  {section.pullQuote}
+                </blockquote>
+              )}
+              {section.items?.length ? (
+                <dl className="article-concept-list">
+                  {section.items.map((item) => (
+                    <div key={item.title}>
+                      <dt>{item.title}</dt>
+                      <dd>{item.body}</dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : null}
               {section.examples?.map((example) => (
                 <figure className="article-schema" key={example.title}>
                   <figcaption>

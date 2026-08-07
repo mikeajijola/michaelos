@@ -232,7 +232,7 @@ export function recoverLilyProposal(
 
   if (
     /\b(article|articles|writing|writings|blog|post|posts)\b/.test(text) ||
-    /\b(company as code|semantic alerts?|ceoclaw|ceo claw)\b/.test(text)
+    /\b(company as code|semantic alerts?|new class of consumer|machine customers?|agentic commerce|ceoclaw|ceo claw)\b/.test(text)
   ) {
     if (completedCapabilityIds.includes("article.view")) {
       const article = references.find(
@@ -273,7 +273,7 @@ export function recoverLilyProposal(
       };
     }
     if (
-      /\b(company as code|semantic alerts?|ceoclaw|ceo claw|lawneeds|law needs|aeroknite|aeronite|backstage|platform engineering|omnicede|omni seed)\b/.test(
+      /\b(company as code|semantic alerts?|new class of consumer|machine customers?|agentic commerce|ceoclaw|ceo claw|lawneeds|law needs|aeroknite|aeronite|backstage|platform engineering|omnicede|omni seed)\b/.test(
         text,
       ) &&
       !completedCapabilityIds.includes("article.search")

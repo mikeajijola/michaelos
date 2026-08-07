@@ -175,6 +175,14 @@ describe("Lily proposal boundary", () => {
       arguments: { query: expect.stringContaining("semantic alerts") },
     });
   });
+  it("searches for the machine-consumer essay through Navi", () => {
+    expect(
+      recoverLilyProposal("Explain AI as a new class of consumer", []),
+    ).toMatchObject({
+      capabilityId: "article.search",
+      arguments: { query: expect.stringContaining("new class of consumer") },
+    });
+  });
   it("resolves the article that follows the CEOclaw origin story", () => {
     expect(
       recoverLilyProposal("Open the article that follows the CEOclaw one", []),

@@ -48,7 +48,14 @@ export type Experience = {
 export type ArticleSection = {
   heading: string;
   paragraphs: string[];
+  pullQuote?: string;
+  items?: ArticleSectionItem[];
   examples?: ArticleExample[];
+};
+
+export type ArticleSectionItem = {
+  title: string;
+  body: string;
 };
 
 export type ArticleExample = {
@@ -75,6 +82,7 @@ export type Article = {
   alternativeTitle?: string;
   excerpt: string;
   summary: string;
+  socialDescription?: string;
   publishedAt?: string;
   status: "draft" | "published";
   readingMinutes?: number;
@@ -176,6 +184,15 @@ export const aliases: Record<string, string[]> = {
     "organisational alerts",
     "organizational alerts",
     "organisational drift",
+  ],
+  "ai-new-class-of-consumer": [
+    "ai consumer",
+    "machine consumer",
+    "machine customer",
+    "machine customers",
+    "agentic commerce",
+    "ai generated demand",
+    "economic capacitance",
   ],
 };
 
@@ -611,7 +628,11 @@ export const articles: Article[] = [
       "Omnicede UI",
     ],
     relatedProjectIds: ["omnicede-ui", "michaelos"],
-    relatedArticleIds: ["from-ceoclaw-to-omnicede-ui", "semantic-alerts"],
+    relatedArticleIds: [
+      "from-ceoclaw-to-omnicede-ui",
+      "semantic-alerts",
+      "ai-new-class-of-consumer",
+    ],
     originArticle: "from-ceoclaw-to-omnicede-ui",
     sources: [
       {
@@ -921,7 +942,7 @@ export const articles: Article[] = [
       "AI strategy",
     ],
     relatedProjectIds: ["omnicede-ui", "michaelos"],
-    relatedArticleIds: ["company-as-code"],
+    relatedArticleIds: ["company-as-code", "ai-new-class-of-consumer"],
     sources: [
       {
         title: "Company as Code",
@@ -1079,9 +1100,185 @@ export const articles: Article[] = [
       },
     ],
   },
+  {
+    id: "ai-new-class-of-consumer",
+    slug: "ai-new-class-of-consumer",
+    title: "AI Becomes a New Class of Consumer",
+    excerpt:
+      "AI’s economic impact may not stop at productivity. What happens when machines develop needs of their own, humans start spending on them, and products, businesses, and infrastructure are redesigned around a new class of consumer?",
+    summary:
+      "A personal exploration of machine customers, AI-generated demand and what changes when machines become important enough to build for.",
+    socialDescription:
+      "What happens when machines stop being just tools and become important enough for markets, products, and infrastructure to be designed around them?",
+    status: "published",
+    readingMinutes: 18,
+    readTime: "18 min",
+    tags: ["AI", "Economics", "Agentic Commerce", "Machine Customers", "Company as Code", "Autonomous Agents"],
+    relatedProjectIds: ["omnicede-ui", "michaelos"],
+    relatedArticleIds: ["company-as-code", "semantic-alerts"],
+    sources: [
+      { title: "When Machines Become Customers", publisher: "Gartner", url: "https://www.gartner.com/en/publications/when-machines-become-customers", relationship: "primary-evidence" },
+      { title: "Visa Intelligent Commerce", publisher: "Visa", url: "https://www.visa.com/en-us/solutions/intelligent-commerce", relationship: "primary-evidence" },
+      { title: "An Economy of AI Agents", publisher: "National Bureau of Economic Research", url: "https://www.nber.org/books-and-chapters/economics-transformative-ai/economy-ai-agents", relationship: "background" },
+      { title: "Rethinking AI Agents: A Principal-Agent Perspective", publisher: "California Management Review", url: "https://cmr.berkeley.edu/assets/documents/pdf/2025-07-rethinking-ai-agents-a-principal-agent-perspective.pdf", relationship: "background" },
+      { title: "Company as Code", publisher: "MikeOS", url: "/blog?article=company-as-code", relationship: "related-work" },
+      { title: "Semantic Alerts", publisher: "MikeOS", url: "/blog?article=semantic-alerts", relationship: "related-work" },
+    ],
+    evidenceNote:
+      "Machine customers, agentic commerce and principal-agent economics are established areas of work. AI-generated demand is used here as a framing term, and economic capacitance is a metaphor rather than established economic terminology. The speculative claims are Mike’s synthesis of those ideas.",
+    sections: [
+      {
+        heading: "AI Becomes a New Class of Consumer",
+        paragraphs: [
+          "The dominant economic story about AI is a productivity story. AI helps people write faster, code faster and automate work. It reduces costs and increases output. That story matters, but it may describe only one part of the change.",
+          "There is another possibility: AI becomes a new class of consumer.",
+          "I do not mean only that an assistant can buy a train ticket for its owner. I mean that machines may develop resource requirements that are native to machines, cause people and organisations to spend money on them, spend within delegated authority, and create demand for products that no human would consume directly.",
+          "If that happens at scale, businesses may start designing products for machines. Digital systems and physical infrastructure may acquire a new kind of ergonomics. The economic effect would come not only from the work AI performs, but from the activity sustained around AI itself.",
+        ],
+        pullQuote: "What are the things no human would ever buy, but a billion AI agents would?",
+      },
+      {
+        heading: "We Already Design the World Around Different Consumers",
+        paragraphs: [
+          "It is tempting to define a consumer as whoever holds the bank account. That is too narrow. An entity can be economically significant even when somebody else controls the money.",
+          "Dogs support markets for food, veterinary care, insurance, toys, hotels, tracking devices and dog doors. The dog does not need a debit card for those markets to exist. People allocate resources because the dog has needs and because they care about it.",
+          "Children are an even stronger example. They influence enormous amounts of spending and infrastructure design while rarely controlling most of the money spent on them. Schools, products, entertainment and whole categories of safety regulation exist because children exist as a distinct class of user.",
+          "An entity can be economically significant because resources are spent by it, spent on it, or spent because it exists. AI can fit all three conditions without requiring independent legal personhood or an unrestricted bank account.",
+        ],
+      },
+      {
+        heading: "Not Everything Is About Productivity",
+        paragraphs: [
+          "Consumer demand is not always supported by a spreadsheet showing measurable return on investment. People carry extraordinary amounts of compute in their pockets and use it for messaging, photographs, music, games, social media, memes and general banter. Then they buy a newer and more powerful phone.",
+          "Sometimes the purchase improves work. Sometimes the screen is nicer, the camera is better or the device simply feels more desirable. People do not need an enterprise productivity case for every improvement they want.",
+          "The same may become true of AI. People may pay for more memory, a better voice, a warmer personality, richer context, greater autonomy, an avatar, a persistent world, access to other agents, richer senses or a robot body. They may simply want the AI in their life to be more capable, persistent or enjoyable.",
+        ],
+        pullQuote: "“I just want mine to be better” can be enough to create a market.",
+      },
+      {
+        heading: "Four Different Kinds of AI Consumption",
+        paragraphs: ["Separating four consumption modes helps avoid treating every agent transaction as the same phenomenon."],
+        items: [
+          { title: "1. Human buys for human", body: "Normal consumption. A person buys food, clothes, software or travel for themselves." },
+          { title: "2. AI buys for human", body: "A person asks an agent to organise a holiday; the agent researches and purchases flights and hotels. The AI acts as buyer, but the underlying demand remains human." },
+          { title: "3. Human buys for AI", body: "A person buys extra memory, tokens, a better model, an avatar, specialist tools or physical embodiment for an AI. As with children, pets or hobbies, the person may value the relationship without expecting a financial return." },
+          { title: "4. AI buys for AI", body: "An AI identifies its own requirement for compute, storage, specialist data, another agent, verification, lower latency, sensors, energy, repairs or temporary embodiment and allocates delegated resources towards it." },
+        ],
+      },
+      {
+        heading: "AI-Mediated Demand vs AI-Generated Demand",
+        paragraphs: [
+          "AI-mediated demand begins with something a human already wants. ‘Buy me the 09:30 train to London’ delegates discovery and transaction, but does not create the desire to travel.",
+          "AI-generated demand begins with a broader goal. Imagine telling an agent: ‘You have £50,000. Improve our engineering organisation.’ The agent may decide it needs cloud compute, software, specialist models, contractors, data, legal advice, training, other agents and security tooling. Those purchases were not individually specified. They emerged from the planning process.",
+          "I use AI-generated demand as a framing term, not as a claim to have invented a new branch of economics. Economists would describe much of it as derived demand: demand for inputs created by demand for an outcome. What changes is the identity of the planner and the possibility that some requirements are intelligible mainly to machines.",
+          "Delegation still matters. The machine acts within authority granted by a person or organisation. The principal-agent problem does not disappear because the agent is software; goals, constraints, approvals and accountability become more important as discretion grows.",
+        ],
+      },
+      {
+        heading: "What Would a Billion AI Agents Buy?",
+        paragraphs: ["Machine consumers may create markets for things humans do not naturally think of as products. Some already exist as technical services, but autonomous buyers could package, price and exchange them in more granular ways."],
+        pullQuote: "What are the things no human would ever buy, but a billion AI agents would?",
+        items: [
+          { title: "Context capacity", body: "Persistent memory and context for maintaining goals, relationships, state and history." },
+          { title: "Freshness guarantees", body: "Data guaranteed to be no older than a specified threshold." },
+          { title: "Inference guarantees", body: "Reserved model capacity at a required intelligence, reliability or latency level." },
+          { title: "Capability access", body: "Temporary use of a specialist tool or another agent." },
+          { title: "Machine identity and reputation", body: "Credentials proving who an agent is, what it may do and whether it has performed similar work successfully." },
+          { title: "Verification and provenance", body: "Independent validation plus evidence of where information came from." },
+          { title: "Semantic translation", body: "Mappings between concepts, schemas, policies or ontologies used by different organisations." },
+          { title: "Machine-readable authority", body: "A precise, computable answer to: ‘Am I allowed to do this?’" },
+          { title: "Uncertainty reduction", body: "Additional reasoning or independent analysis before an expensive commitment." },
+          { title: "Simulation time", body: "Exploring thousands of possible futures before acting in the real world." },
+          { title: "Latency", body: "Lower response time purchased as a resource in its own right." },
+          { title: "Sensor access", body: "Temporary access to cameras, satellites, lidar or industrial telemetry." },
+          { title: "Physical embodiment", body: "Short-term use of a robot arm, drone, autonomous vehicle or other physical system." },
+        ],
+      },
+      {
+        heading: "Every Consumer Has Its Own Ergonomics",
+        paragraphs: [
+          "An important class of user eventually changes the environment around it. We adapt homes for dogs, design public spaces around children and build accessibility features for different human needs. Machines can create the same pressure.",
+          "Self-driving cars currently use roads designed for humans. They interpret traffic lights, signs, lane markings, visual signals, gestures and safety margins based on human reaction time. A road designed from scratch for autonomous vehicles could transmit rules digitally, let vehicles negotiate intersections directly and coordinate routes without relying so heavily on signs.",
+          "A machine-native environment may remove the interface layer that existed only to make the system legible to us.",
+        ],
+        pullQuote: "A traffic light is, in a sense, a graphical user interface for a road.",
+      },
+      {
+        heading: "The Same Thing Applies to the Web",
+        paragraphs: [
+          "An AI browsing a normal website is often one machine pretending to be a human in order to communicate with another machine. It reads a visual interface, finds buttons designed for a finger or mouse, fills in human-facing forms and parses prose. That feels transitional.",
+          "APIs are more natural for machines, but they are not necessarily the final machine-native interface. APIs were largely designed by and for human programmers.",
+          "A machine-facing company might state its capabilities, products, prices, constraints, guarantees, policies, authority boundaries and transaction methods directly. The machine should not have to reverse-engineer those facts from a visual sales page.",
+        ],
+        pullQuote: "A consumer becomes first-class when the environment is intentionally designed around its needs rather than forcing it through an interface designed for somebody else.",
+      },
+      {
+        heading: "The Machine Customer Is Not Entirely New",
+        paragraphs: [
+          "Machines becoming customers is not a new idea, and I do not want to pretend otherwise. Gartner has developed its machine-customer work since 2015. Don Scheibenreif and Mark Raskino’s When Machines Become Customers examines non-human customers and how organisations may sell to them.",
+          "Agentic commerce, AI shopping and procurement agents, delegated payments, machine-to-machine transactions, autonomous economic agents and principal-agent economics all cover parts of this territory. Visa’s current work is explicitly concerned with AI-assisted and AI-initiated purchases, authentication, limits and human control.",
+          "Hadfield and Koh’s NBER chapter asks how AI agents may interact with people and each other, shape markets and organisations, and what institutions functioning markets would require. Jarrahi and Ritala use principal-agent theory to frame AI autonomy as guided delegation rather than unconstrained independence.",
+          "My contribution is a different synthesis: what changes when machines become an intended class of user, when people spend on them, when machine-native needs develop, and when businesses and infrastructure begin to be redesigned around them?",
+        ],
+      },
+      {
+        heading: "Economic Capacitance",
+        paragraphs: [
+          "I use economic capacitance as a metaphor for the amount of economic activity an entity has the potential to sustain around itself. It is not established economic terminology and should not be mistaken for a formula.",
+          "The idea includes money an entity can direct, money others spend on it, demand created because it operates, demand created because others care about it, and activity that accumulates around it over time.",
+          "A disposable agent with no authority and no persistent relationship may sustain almost nothing. An enterprise agent directing a procurement budget may have enormous influence. A persistent personal AI that attracts years of spending has a different kind of value.",
+          "Customer lifetime value is a closer analogy than market capitalisation. LTV asks how much value a customer generates over a relationship. The broader question is: what is the lifetime economic footprint of an entity? A child can have little direct purchasing authority and still cause substantial lifetime spending. An enterprise agent may direct outbound spending; a companion AI may attract years of inbound spending; an advanced machine actor could eventually do both.",
+        ],
+      },
+      {
+        heading: "This Does Not Automatically Make the Economy Bigger",
+        paragraphs: [
+          "More agents do not automatically mean more GDP, wealth or welfare. If AI replaces £100,000 of labour and consumes £5,000 of compute, calling it a new consumer does not magically create £105,000 of new value.",
+          "If an agent purchases something a human was already going to buy, demand may simply have been rerouted. Machine-to-machine activity may remain inside a firm. Digital goods can have very low marginal cost. Purchasing power could also become concentrated in a small number of platforms.",
+          "The stronger claim is conditional. AI may create additional activity when it unlocks work that was previously too expensive, lowers transaction costs enough to create a market, develops machine-native requirements, causes people to spend specifically on machines, creates new infrastructure needs or enables new forms of machine-to-machine trade.",
+        ],
+      },
+      {
+        heading: "Physical AI Makes It Easier to See",
+        paragraphs: [
+          "Robots make machine consumption tangible. They use electricity, charging infrastructure, replacement parts, servicing, storage, connectivity, physical access, insurance, maintenance and navigation services.",
+          "Buildings may acquire robot charging bays, machine pickup areas, automated loading zones and robot-accessible doors. Logistics infrastructure may be rebuilt around autonomous movement rather than human handling.",
+          "First-class consumers eventually leave physical evidence in the environment. We may recognise machine consumers when we can point to infrastructure built specifically because they exist.",
+        ],
+        pullQuote: "The machine equivalent of the dog door.",
+      },
+      {
+        heading: "Businesses May Need Two Surfaces",
+        paragraphs: [
+          "Businesses may need a human-facing surface optimised for branding, visuals, emotion, persuasion and experience, alongside a machine-facing surface optimised for structured product information, pricing, availability, permissions, contracts, capabilities, provenance, identity, policies and guarantees.",
+          "Search engines were an early precedent. SEO pushed companies to become legible to machines because machines influenced discovery. Agentic systems go further: the machine may discover, compare, evaluate, select, purchase and transact.",
+          "A business will need to become not only searchable by machines, but legible and actionable to them. The two surfaces should expose the same underlying truth rather than becoming conflicting catalogues.",
+        ],
+      },
+      {
+        heading: "This Is Where Company as Code Appears",
+        paragraphs: [
+          "If AI becomes a machine-native consumer, businesses may also need to become machine-native participants. An agent must understand not only what a company sells, but what it can actually do, who may commit it, which policies and contractual conditions apply, what evidence supports a claim, what the agent may do and what happens when something goes wrong.",
+          "Today that information is fragmented across websites, PDFs, contracts, databases, APIs, policies, internal tools and people’s heads.",
+          "The Company as Code article develops a model in which organisational capabilities, work products, authority, controls and evidence become explicit. Capabilities as Code, Policy as Code, Authority as Code, Legal as Code, Provenance as Code and Company as Code need not mean literal source code or YAML. The deeper principle is that important organisational facts become structured, addressable, versionable, machine-readable and computable.",
+          "Semantic Alerts adds the monitoring side: how a machine-readable organisation might notice meaningful change, detect drift and activate the responsible capability.",
+        ],
+      },
+      {
+        heading: "The Next Consumer Might Not Be Human",
+        paragraphs: [
+          "The current AI economy mostly sells intelligence to humans. A machine-consumer economy may also include people buying things for machines, machines buying things for people, machines buying things for themselves and companies building products primarily because machines need them.",
+          "Different consumers create different markets. A dog does not understand why humans need LinkedIn. Humans may not intuitively understand why an autonomous agent would pay for a reputation graph, twenty milliseconds of lower latency, ontology translation, context memory, verification or twelve seconds of access to a robot arm. That does not make those products economically meaningless.",
+          "The interesting economic question is not only how much work AI can do for us. It is what happens when machines themselves become important enough to build for.",
+        ],
+        pullQuote: "What happens when machines themselves become important enough to build for?",
+      },
+    ],
+  },
 ];
 
 const articleOrder = [
+  "ai-new-class-of-consumer",
   "semantic-alerts",
   "company-as-code",
   "from-ceoclaw-to-omnicede-ui",

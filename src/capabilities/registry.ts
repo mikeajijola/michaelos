@@ -437,6 +437,13 @@ const handlers: Record<string, Handler> = {
           x.excerpt,
           x.tags.join(" "),
           x.sections.map((section) => section.heading).join(" "),
+          x.sections
+            .flatMap((section) => [
+              ...section.paragraphs,
+              section.pullQuote ?? "",
+              ...(section.items?.flatMap((item) => [item.title, item.body]) ?? []),
+            ])
+            .join(" "),
           entityAliases(x.slug).join(" "),
           x.slug.includes("ceoclaw") ? entityAliases("ceoclaw").join(" ") : "",
         ],

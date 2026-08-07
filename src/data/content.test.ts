@@ -39,13 +39,22 @@ describe("real portfolio content", () => {
     expect(recognition[0].title).toContain("innovation endorsements");
   });
 
-  it("publishes Semantic Alerts while keeping the existing essays in development", () => {
-    expect(articles).toHaveLength(6);
+  it("publishes the two finished essays while keeping the existing essays in development", () => {
+    expect(articles).toHaveLength(7);
     expect(articles.find((article) => article.slug === "semantic-alerts")?.status)
       .toBe("published");
     expect(
+      articles.find((article) => article.slug === "ai-new-class-of-consumer")
+        ?.status,
+    ).toBe("published");
+    expect(
       articles
-        .filter((article) => article.slug !== "semantic-alerts")
+        .filter(
+          (article) =>
+            !["semantic-alerts", "ai-new-class-of-consumer"].includes(
+              article.slug,
+            ),
+        )
         .every((article) => article.status === "draft"),
     ).toBe(true);
     expect(articles.every((article) => article.sections.length >= 4)).toBe(true);
@@ -122,6 +131,7 @@ describe("real portfolio content", () => {
     ["Show me the article about CEOclaw", "from-ceoclaw-to-omnicede-ui"],
     ["Explain Company as Code", "company-as-code"],
     ["Explain semantic alerts", "semantic-alerts"],
+    ["AI as a machine customer", "ai-new-class-of-consumer"],
     [
       "platform engineering Backstage",
       "backstage-platform-engineering-as-a-product",
@@ -172,5 +182,65 @@ describe("real portfolio content", () => {
       article: { slug: "semantic-alerts", title: "Semantic Alerts" },
       path: "/blog?article=semantic-alerts",
     });
+  });
+
+  it("links the consumer essay to Company as Code and Semantic Alerts", () => {
+    const article = articles.find(
+      (candidate) => candidate.slug === "ai-new-class-of-consumer",
+    );
+    expect(article?.relatedArticleIds).toEqual(
+      expect.arrayContaining(["company-as-code", "semantic-alerts"]),
+    );
+    expect(article?.sections.map((section) => section.heading)).toContain(
+      "This Is Where Company as Code Appears",
+    );
+    expect(article?.sources.map((source) => source.publisher)).toEqual(
+      expect.arrayContaining([
+        "Gartner",
+        "Visa",
+        "National Bureau of Economic Research",
+        "California Management Review",
+      ]),
+    );
+  });
+
+  it("opens the consumer essay through the shared article capability", async () => {
+    const navigate = vi.fn();
+    const result = await registry.get("article.view")!.execute(
+      { slug: "ai-new-class-of-consumer" },
+      { navigate } as unknown as CapabilityContext,
+    );
+    expect(navigate).toHaveBeenCalledWith(
+      "/blog?article=ai-new-class-of-consumer",
+    );
+    expect(result).toMatchObject({
+      article: { title: "AI Becomes a New Class of Consumer" },
+    });
+  });
+
+  it("searches article body, pull quotes, and structured concept lists", async () => {
+    for (const query of [
+      "traffic light graphical user interface",
+      "billion AI agents",
+      "machine-readable authority",
+    ]) {
+      const result = (await registry.get("article.search")!.execute(
+        { query },
+        context,
+      )) as { articles: typeof articles };
+      expect(result.articles.map((article) => article.slug)).toContain(
+        "ai-new-class-of-consumer",
+      );
+    }
+  });
+
+  it("filters the consumer essay through the shared tag capability", async () => {
+    const result = (await registry.get("article.filterByTag")!.execute(
+      { tag: "Machine Customers" },
+      context,
+    )) as { articles: typeof articles };
+    expect(result.articles.map((article) => article.slug)).toContain(
+      "ai-new-class-of-consumer",
+    );
   });
 });
