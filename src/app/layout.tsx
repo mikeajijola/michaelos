@@ -9,6 +9,7 @@ import { LilyProvider } from "@/lily/context";
 import { HighlightProvider } from "@/highlight/context";
 import { ThemeProvider } from "@/theme/context";
 import { NaviVoiceProvider } from "@/navi/voice/context";
+import { THEME_STORAGE_KEY } from "@/theme/mode";
 import "@xterm/xterm/css/xterm.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -30,7 +31,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      data-theme="dark"
+      style={{ colorScheme: "dark" }}
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{const mode=localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});if(mode==="light"||mode==="dark"){document.documentElement.dataset.theme=mode;document.documentElement.style.colorScheme=mode}}catch{}`,
+          }}
+        />
+      </head>
       <body>
         <Suspense>
           <CapabilityProvider>

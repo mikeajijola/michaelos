@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { nextThemeMode, parseThemeMode } from "./mode";
+import { DEFAULT_THEME_MODE, nextThemeMode, parseThemeMode } from "./mode";
 
 describe("colour mode", () => {
+  it("defaults new visits to dark mode", () => {
+    expect(DEFAULT_THEME_MODE).toBe("dark");
+  });
   it("accepts only supported persisted values", () => {
     expect(parseThemeMode("light")).toBe("light");
     expect(parseThemeMode("dark")).toBe("dark");

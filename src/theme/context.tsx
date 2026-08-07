@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import {
+  DEFAULT_THEME_MODE,
   parseThemeMode,
   THEME_STORAGE_KEY,
   type ThemeMode,
@@ -27,7 +28,7 @@ function applyTheme(mode: ThemeMode) {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>("light");
+  const [mode, setModeState] = useState<ThemeMode>(DEFAULT_THEME_MODE);
 
   const setMode = useCallback((next: ThemeMode) => {
     applyTheme(next);
@@ -37,11 +38,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = parseThemeMode(localStorage.getItem(THEME_STORAGE_KEY));
-    const initial =
-      stored ??
-      (window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light");
+    const initial = stored ?? DEFAULT_THEME_MODE;
     setMode(initial);
 
     const handleThemeControl = (event: Event) => {
