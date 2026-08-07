@@ -52,19 +52,6 @@ export default function Blog({
             <p className="professional-headline">{selected.alternativeTitle}</p>
           )}
           <p className="lead">{selected.excerpt}</p>
-          {selected.sources
-            .filter((source) => source.relationship === "primary-evidence")
-            .map((source) => (
-              <a
-                className="primary-evidence-link"
-                href={source.url}
-                key={source.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Read {source.title} ↗
-              </a>
-            ))}
           {selected.sections.map((section) => (
             <section key={section.heading}>
               <h3>{section.heading}</h3>

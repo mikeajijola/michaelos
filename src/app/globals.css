@@ -1288,15 +1288,6 @@ time,
   padding-bottom: 10px;
   border-bottom: 1px solid #343740;
 }
-.primary-evidence-link {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  margin-top: 12px;
-  border-bottom: 1px solid currentColor;
-  color: white;
-  font-weight: 700;
-}
 .article-pull-quote {
   margin: 26px 0;
   padding: 16px 0 16px 20px;
