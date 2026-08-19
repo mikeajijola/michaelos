@@ -2686,8 +2686,8 @@ time,
   min-height: 40px;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 8px 10px;
+  gap: 8px;
+  padding: 7px 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
@@ -2695,6 +2695,44 @@ time,
   cursor: pointer;
   font-size: 13px;
   font-weight: 650;
+}
+.theme-toggle-label {
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1;
+}
+.theme-toggle[aria-checked="false"] .theme-toggle-label:first-child,
+.theme-toggle[aria-checked="true"] .theme-toggle-label:last-child {
+  color: var(--text);
+}
+.theme-toggle-track {
+  width: 38px;
+  height: 22px;
+  position: relative;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-soft);
+  transition: background 160ms ease, border-color 160ms ease;
+}
+.theme-toggle-thumb {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 24%);
+  transition: transform 180ms ease;
+}
+.theme-toggle[aria-checked="true"] .theme-toggle-track {
+  border-color: var(--text-muted);
+  background: var(--text);
+}
+.theme-toggle[aria-checked="true"] .theme-toggle-thumb {
+  background: var(--background);
+  transform: translateX(16px);
 }
 .theme-toggle:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--text) 28%, transparent);
@@ -2754,7 +2792,7 @@ html[data-theme="dark"] .global-inspector pre {
   .brand-cluster {
     gap: 5px;
   }
-  .theme-toggle span:last-child {
+  .theme-toggle-label {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -2763,7 +2801,7 @@ html[data-theme="dark"] .global-inspector pre {
     white-space: nowrap;
   }
   .theme-toggle {
-    width: 40px;
+    width: 58px;
     justify-content: center;
     padding: 0;
   }

@@ -140,6 +140,8 @@ export function CapabilityButton({
   children,
   className = "",
   buttonClassName = "",
+  buttonRole,
+  ariaChecked,
 }: {
   capabilityId: string;
   params?: Record<string, unknown>;
@@ -147,6 +149,8 @@ export function CapabilityButton({
   children: React.ReactNode;
   className?: string;
   buttonClassName?: string;
+  buttonRole?: React.AriaRole;
+  ariaChecked?: boolean;
 }) {
   const { execute, selectElement } = useCapabilities();
   const selected = {
@@ -160,6 +164,8 @@ export function CapabilityButton({
     <span className={`cap-control ${className}`}>
       <button
         className={buttonClassName}
+        role={buttonRole}
+        aria-checked={ariaChecked}
         data-capability-id={capabilityId}
         data-capability-params={JSON.stringify(params)}
         aria-label={label}

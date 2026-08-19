@@ -32,12 +32,21 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <CapabilityButton
               capabilityId="theme.setMode"
               params={{ mode: targetMode }}
-              label={`Switch to ${targetMode} mode`}
+              label={`${mode === "dark" ? "Dark" : "Light"} mode on. Switch to ${targetMode} mode`}
               className="theme-capability"
               buttonClassName="theme-toggle"
+              buttonRole="switch"
+              ariaChecked={mode === "dark"}
             >
-              <span aria-hidden="true">{mode === "dark" ? "☀" : "◐"}</span>
-              <span>{mode === "dark" ? "Light" : "Dark"}</span>
+              <span className="theme-toggle-label" aria-hidden="true">
+                Light
+              </span>
+              <span className="theme-toggle-track" aria-hidden="true">
+                <span className="theme-toggle-thumb" />
+              </span>
+              <span className="theme-toggle-label" aria-hidden="true">
+                Dark
+              </span>
             </CapabilityButton>
           </div>
           <nav className="links" aria-label="Primary navigation">
