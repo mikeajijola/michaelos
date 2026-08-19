@@ -278,7 +278,7 @@ export class GeminiLiveNaviAdapter implements NaviRealtimeAdapter {
     args: Record<string, unknown> = {},
   ) {
     if (
-      name !== "submit_navigation_request" ||
+      name !== "submit_mikeos_request" ||
       typeof args.request !== "string" ||
       !args.request.trim()
     ) {

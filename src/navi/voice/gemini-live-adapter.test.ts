@@ -173,7 +173,7 @@ describe("Gemini Live Navi adapter", () => {
         functionCalls: [
           {
             id: "call-1",
-            name: "submit_navigation_request",
+            name: "submit_mikeos_request",
             args: { request: "Open my CV" },
           },
         ],

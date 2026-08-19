@@ -14,6 +14,12 @@ Vercel AI Gateway added beta realtime support through AI SDK 7 in June 2026, but
 4. The browser connects directly to Gemini Live with the ephemeral token.
 5. The only exposed realtime tool submits natural language back to the browser Navi controller. The existing controller and shared executor remain authoritative.
 
+The realtime model is an audio input/output layer, not a second capability
+resolver. Its `submit_mikeos_request` tool forwards the visitor's complete
+wording to the shared controller. The controller then gives eve the complete
+registry-derived capability map, validates the proposal and executes it in the
+browser. Voice Mode is therefore not limited to navigation or retrieval.
+
 Official references:
 
 - [Vercel AI Gateway realtime announcement](https://vercel.com/changelog/realtime-voice-speech-and-transcription-now-supported-on-ai-gateway)

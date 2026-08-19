@@ -9,6 +9,7 @@ import {
 } from "./types";
 import {
   DEFAULT_NAVI_REALTIME_MODEL,
+  NAVI_REALTIME_SYSTEM_INSTRUCTION,
   NAVI_REALTIME_TOOL,
 } from "./config";
 import { naviFaceState } from "./face-state";
@@ -73,12 +74,24 @@ describe("Navi Voice Mode contract", () => {
   });
 
   it("exposes one bounded request tool rather than browser capabilities", () => {
-    expect(NAVI_REALTIME_TOOL.name).toBe("submit_navigation_request");
+    expect(NAVI_REALTIME_TOOL.name).toBe("submit_mikeos_request");
     expect(NAVI_REALTIME_TOOL.parametersJsonSchema.required).toEqual([
       "request",
     ]);
     expect(JSON.stringify(NAVI_REALTIME_TOOL)).not.toMatch(
       /sqlite|dom|navigateBrowser|executeCode/i,
+    );
+  });
+
+  it("hands every website request to the full capability controller", () => {
+    expect(NAVI_REALTIME_SYSTEM_INSTRUCTION).toContain(
+      "every other registered website capability",
+    );
+    expect(NAVI_REALTIME_SYSTEM_INSTRUCTION).toContain(
+      "not limited to navigation or retrieval",
+    );
+    expect(NAVI_REALTIME_TOOL.description).toContain(
+      "full registry-derived capability map",
     );
   });
 
