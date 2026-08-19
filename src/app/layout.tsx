@@ -23,6 +23,16 @@ export const metadata: Metadata = {
     "Mike Ajijola — Enterprise Solutions Architect, AI Strategist and Platform Leader",
   description:
     "Mike Ajijola designs enterprise platforms, AI adoption strategies and capability-led operating systems for large organisations and emerging ventures.",
+  icons: {
+    icon: [
+      {
+        url: "/images/michael_portrait.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/images/michael_portrait.svg",
+    apple: "/images/mike-ajijola-profile.png",
+  },
 };
 
 export default function RootLayout({
