@@ -28,7 +28,7 @@ export function buildLilyClientContext(input: {
     contextVersion: LILY_CONTEXT_VERSION,
     agent: {
       name: "Navi",
-      role: "MikeOS conversational navigation agent",
+      role: "MikeOS conversational capability agent",
       executionBoundary:
         "Propose only. The browser validates and executes every capability.",
     },
@@ -49,13 +49,15 @@ export function buildLilyClientContext(input: {
       "experience.list -> experience.view using a returned experience id",
       "a retrieval capability -> a grounded final response",
       "a reading-navigation request -> one navigation heading or page-position capability",
+      "a directly requested website action -> the matching registered capability",
     ],
     decisionPriority: [
-      "Prefer a permitted capability whenever the request maps to MikeOS content or navigation.",
+      "Prefer a registered capability whenever the request maps to a MikeOS action, content, interface control, inspection, export, accessibility tool, or navigation.",
       "For show, open, choose, strongest, latest, or take-me requests, continue from search/list to a grounded view capability.",
       "Use clarification only for materially ambiguous content domains.",
       "Use a text-only final response only when no capability is needed or after confirmed browser results support it.",
       "For next, previous, named-section, page-top, or main-content reading requests, use the matching navigation capability.",
+      "Use capability risk and confirmation metadata exactly as supplied; the browser alone decides whether an invocation may execute.",
     ],
     proposalContract: {
       oneProposalPerTurn: true,
@@ -64,6 +66,7 @@ export function buildLilyClientContext(input: {
       requiredArgumentsMustMatch: "capabilityMap.parameters",
       entityIdsMustComeFrom: "previousResults",
       successRequiresConfirmedBrowserExecution: true,
+      browserRetainsExecutionAuthority: true,
       responseMustBeStructured: true,
     },
   } as const;

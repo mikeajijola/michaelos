@@ -5,12 +5,7 @@ import type { LilyProposal, LilyResultReference } from "./types";
 
 export const LILY_CAPABILITY_IDS = new Set(
   capabilities
-    .filter(
-      (item) =>
-        item.navigator.enabled &&
-        item.risk !== "write" &&
-        item.risk !== "destructive",
-    )
+    .filter((item) => item.navigator.enabled)
     .map((item) => item.id),
 );
 export function lilyCapabilityShortlist() {
@@ -22,6 +17,8 @@ export function lilyCapabilityShortlist() {
       namespace: item.id.split(".")[0],
       title: item.title,
       description: item.description,
+      risk: item.risk,
+      requiresConfirmation: item.requiresConfirmation ?? false,
       aliases: item.aliases ?? [],
       parameters: item.params.map((param) => ({
         name: param.name,
@@ -111,14 +108,8 @@ export function validateLilyProposal(
       "Navi proposed a capability outside the permitted shortlist.",
     );
   const capability = registry.get(proposal.capabilityId);
-  if (
-    !capability ||
-    capability.risk === "write" ||
-    capability.risk === "destructive"
-  )
-    throw new Error(
-      "Navi proposed a capability that is not safe for navigation.",
-    );
+  if (!capability)
+    throw new Error("Navi proposed a capability that is not registered.");
   const args = validateParams(capability, proposal.arguments ?? {});
   if (
     proposal.capabilityId === "project.view" ||

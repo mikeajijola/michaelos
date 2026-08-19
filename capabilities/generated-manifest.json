@@ -39,7 +39,7 @@
     ],
     "accessibleLabel": "Open Navi",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navi.close",
@@ -54,7 +54,7 @@
     ],
     "accessibleLabel": "Close Navi",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navi.clearConversation",
@@ -69,7 +69,7 @@
     ],
     "accessibleLabel": "Clear Navi conversation",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navi.resetPosition",
@@ -85,7 +85,7 @@
     ],
     "accessibleLabel": "Reset Navi position",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navi.openConsole",
@@ -101,7 +101,7 @@
     ],
     "accessibleLabel": "Open full Agent Console",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navi.startVoice",
@@ -117,7 +117,7 @@
     ],
     "accessibleLabel": "Start Navi Voice Mode",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navi.endVoice",
@@ -133,7 +133,7 @@
     ],
     "accessibleLabel": "End Navi Voice Mode",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.openCommandSurface",
@@ -149,7 +149,7 @@
     ],
     "accessibleLabel": "Open agent capability console",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.closeCommandSurface",
@@ -165,7 +165,7 @@
     ],
     "accessibleLabel": "Close agent capability console",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.minimiseCommandSurface",
@@ -181,7 +181,7 @@
     ],
     "accessibleLabel": "Minimise agent capability console",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.restoreCommandSurface",
@@ -197,7 +197,7 @@
     ],
     "accessibleLabel": "Restore agent capability console",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.toggleCommandSurface",
@@ -213,7 +213,7 @@
     ],
     "accessibleLabel": "Toggle agent capability console",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.openTerminal",
@@ -229,7 +229,7 @@
     ],
     "accessibleLabel": "Open Agent CLI",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.openAiConsole",
@@ -245,7 +245,7 @@
     ],
     "accessibleLabel": "Open Navi in the Agent Console",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.openInspector",
@@ -261,7 +261,7 @@
     ],
     "accessibleLabel": "Open capability inspector",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.openHistory",
@@ -277,7 +277,7 @@
     ],
     "accessibleLabel": "Open capability execution history",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.openActionKeyMode",
@@ -294,7 +294,7 @@
     ],
     "accessibleLabel": "Open Action Key Mode",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.closeActionKeyMode",
@@ -311,7 +311,7 @@
     ],
     "accessibleLabel": "Close Action Key Mode",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.getApplicationInfo",
@@ -326,7 +326,7 @@
     ],
     "accessibleLabel": "Get application information",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.auditCapabilities",
@@ -342,7 +342,7 @@
     ],
     "accessibleLabel": "Audit registered capabilities",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.getCapabilityDelta",
@@ -358,7 +358,7 @@
     ],
     "accessibleLabel": "Compare capabilities with the accepted baseline",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.reportCapabilityIssue",
@@ -412,7 +412,7 @@
     ],
     "accessibleLabel": "Report a local capability issue",
     "risk": "write",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "system.exportCapabilityReports",
@@ -429,7 +429,7 @@
     ],
     "accessibleLabel": "Export local capability reports",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.goHome",
@@ -534,7 +534,7 @@
     ],
     "accessibleLabel": "Go back",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "navigation.nextHeading",
@@ -711,7 +711,7 @@
     ],
     "accessibleLabel": "Filter portfolio projects",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "project.openExternal",
@@ -735,7 +735,7 @@
     ],
     "accessibleLabel": "Open project external link",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "experience.list",
@@ -881,7 +881,7 @@
     ],
     "accessibleLabel": "Filter articles by tag",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "article.openExternal",
@@ -905,7 +905,7 @@
     ],
     "accessibleLabel": "Open external article",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "skill.list",
@@ -967,7 +967,7 @@
     ],
     "accessibleLabel": "Filter skills by category",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "cv.view",
@@ -1036,7 +1036,7 @@
     ],
     "accessibleLabel": "Print or export curriculum vitae as PDF",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "inspector.getLastExecution",
@@ -1089,7 +1089,7 @@
     ],
     "accessibleLabel": "Filter capability history",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "accessibility.describeElement",
@@ -1104,7 +1104,7 @@
     ],
     "accessibleLabel": "Describe selected interface element",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "accessibility.listPageActions",
@@ -1120,7 +1120,7 @@
     ],
     "accessibleLabel": "List accessible page actions",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "accessibility.moveFocus",
@@ -1147,7 +1147,7 @@
     ],
     "accessibleLabel": "Move focus between page actions",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   },
   {
     "id": "accessibility.activateFocused",
@@ -1162,6 +1162,6 @@
     ],
     "accessibleLabel": "Activate focused page action",
     "risk": "read",
-    "navigatorEnabled": false
+    "navigatorEnabled": true
   }
 ]

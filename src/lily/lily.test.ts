@@ -5,6 +5,7 @@ import { capabilityTraceFromExecution } from "./capability-trace";
 import { buildLilyClientContext } from "./client-context";
 import {
   LILY_CAPABILITY_IDS,
+  lilyCapabilityShortlist,
   compactReferences,
   normaliseLilyProposal,
   preferCapabilityProposal,
@@ -21,14 +22,37 @@ import {
 } from "./presentation";
 
 describe("Lily proposal boundary", () => {
-  it("derives the shortlist from navigator-enabled, non-mutating registry entries", () => {
-    expect(LILY_CAPABILITY_IDS.has("project.search")).toBe(true);
-    expect(LILY_CAPABILITY_IDS.has("system.reportCapabilityIssue")).toBe(false);
+  it("exposes every registered website capability to eve", () => {
+    expect([...LILY_CAPABILITY_IDS].sort()).toEqual(
+      capabilities.map((item) => item.id).sort(),
+    );
+    expect(LILY_CAPABILITY_IDS.has("system.reportCapabilityIssue")).toBe(true);
+    expect(LILY_CAPABILITY_IDS.has("navi.startVoice")).toBe(true);
+    expect(LILY_CAPABILITY_IDS.has("accessibility.activateFocused")).toBe(true);
+  });
+  it("includes browser-governance metadata in the eve capability map", () => {
     expect(
-      [...LILY_CAPABILITY_IDS].every(
-        (id) => capabilities.find((item) => item.id === id)?.navigator.enabled,
+      lilyCapabilityShortlist().find(
+        (item) => item.id === "system.reportCapabilityIssue",
       ),
-    ).toBe(true);
+    ).toMatchObject({ risk: "write", requiresConfirmation: false });
+  });
+  it("accepts registered write capability proposals for browser validation", () => {
+    expect(
+      validateLilyProposal(
+        {
+          kind: "capability",
+          capabilityId: "system.reportCapabilityIssue",
+          arguments: {
+            reportType: "qa",
+            severity: "warning",
+            details: "Navi found a capability issue.",
+          },
+          message: "I’ll record that issue.",
+        },
+        [],
+      ),
+    ).toMatchObject({ capabilityId: "system.reportCapabilityIssue" });
   });
   it("rejects invented capabilities and ungrounded entity slugs", () => {
     expect(() =>
@@ -252,7 +276,7 @@ describe("Lily proposal boundary", () => {
 });
 
 describe("Lily Gemini client context", () => {
-  it("sends a complete safe capability map on every turn", () => {
+  it("sends the complete governed capability map on every turn", () => {
     const context = buildLilyClientContext({
       request: "Does he have anything on platform engineering?",
       session: { currentRoute: "/capabilities" },
@@ -276,7 +300,8 @@ describe("Lily Gemini client context", () => {
       context.capabilityMap.some(
         (item) => item.id === "system.reportCapabilityIssue",
       ),
-    ).toBe(false);
+    ).toBe(true);
+    expect(context.capabilityMap).toHaveLength(capabilities.length);
     expect(context.proposalContract.capabilityIdsMustComeFrom).toBe(
       "capabilityMap",
     );

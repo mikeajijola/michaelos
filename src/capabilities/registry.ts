@@ -589,36 +589,10 @@ const handlers: Record<string, Handler> = {
 type Spec = Omit<CapabilityDefinition, "execute" | "examples"> & {
   example?: Record<string, unknown>;
 };
-const navigatorIds = new Set([
-  "theme.setMode",
-  "navigation.goHome",
-  "navigation.goProjects",
-  "navigation.goExperience",
-  "navigation.goBlog",
-  "navigation.goCv",
-  "navigation.goCapabilities",
-  "navigation.nextHeading",
-  "navigation.previousHeading",
-  "navigation.goHeading",
-  "navigation.goTop",
-  "navigation.goMainContent",
-  "project.list",
-  "project.search",
-  "project.view",
-  "experience.list",
-  "experience.filter",
-  "experience.view",
-  "article.list",
-  "article.search",
-  "article.view",
-  "skill.list",
-  "skill.search",
-  "cv.view",
-  "cv.navigateSection",
-  "cv.exportJson",
-  "inspector.getLastExecution",
-  "inspector.listHistory",
-]);
+// Navi is a client of the complete capability registry. Keeping this derived
+// from the handlers prevents the conversational interface from drifting into
+// a second, incomplete capability list as the website evolves.
+const navigatorIds = new Set(Object.keys(handlers));
 const define = (spec: Spec): CapabilityDefinition => ({
   ...spec,
   examples: [
