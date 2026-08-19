@@ -307,6 +307,19 @@ describe("Lily Gemini client context", () => {
     );
   });
 
+  it("identifies Navi as a full website capability agent", () => {
+    const context = buildLilyClientContext({
+      request: "What can you do?",
+      session: { currentRoute: "/" },
+      conversation: [],
+      previousResults: [],
+      completedExecutions: [],
+    });
+    expect(context.contextVersion).toBe(2);
+    expect(context.agent.role).toContain("capability agent");
+    expect(context.decisionPriority.join(" ")).toContain("interface control");
+  });
+
   it("carries grounded references and confirmed browser executions after a capability turn", () => {
     const reference = {
       kind: "project" as const,

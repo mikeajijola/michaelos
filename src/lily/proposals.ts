@@ -390,7 +390,7 @@ export function recoverLilyProposal(
     return {
       kind: "final",
       message:
-        "You can explore Mike’s projects, experience, writing, skills and CV. Ask me to open a section or find something specific.",
+        "I can use every registered MikeOS capability. That includes finding and opening Mike’s projects, experience and writing; changing the theme; filtering content; exporting the CV; opening Action Keys or the Agent Console; inspecting execution history; controlling voice mode; and using accessibility actions. Tell me what you want the website to do.",
     };
   }
 

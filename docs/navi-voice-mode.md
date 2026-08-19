@@ -1,6 +1,6 @@
 # Navi Voice Mode
 
-Navi Voice Mode is another input client of the shared Navi controller. It does not execute capabilities inside a remote model. A realtime voice turn submits the visitor's complete request to the browser-owned controller, which validates and executes only registry-approved, read-only `navigator` capabilities. Text and voice therefore share the same conversation, structured references, execution history and Capability Trace.
+Navi Voice Mode is another input client of the shared Navi controller. It does not execute capabilities inside a remote model. A realtime voice turn submits the visitor's complete request to the browser-owned controller, which validates and executes registered capabilities locally with their risk and confirmation metadata. Text and voice therefore share the same capability map, conversation, structured references, execution history and Capability Trace.
 
 ## Provider boundary
 

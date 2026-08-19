@@ -1,6 +1,6 @@
 # Navi navigation architecture
 
-Navi is the conversational navigation agent for MikeOS. She is built with Vercel's eve framework and uses registered capabilities to help visitors move through the website. Every action is validated and executed by MikeOS in the browser.
+Navi is the conversational capability agent for MikeOS. She is built with Vercel's eve framework and can propose every registered website capability. Every action is validated and executed by MikeOS in the browser.
 
 Reading navigation is capability-backed as well as route navigation. Navi can
 move to the next or previous rendered heading, find a named heading, return to
@@ -16,8 +16,8 @@ The presentation states are landing idle/resolving/navigating, morphing to the B
 
 ## Proposal and execution boundary
 
-1. The browser derives a safe capability shortlist from `navigator.enabled` registry metadata.
-2. The Navi Controller sends the visitor request, current route, compact prior references, and shortlist to the eve agent.
+1. The browser derives the complete capability map from `navigator.enabled` registry metadata.
+2. The Navi Controller sends the visitor request, current route, compact prior references, and capability map to the eve agent.
 3. eve returns schema-constrained output: one capability proposal, a clarification, or a final response.
 4. The browser validates the proposal's ID, parameters, risk, and any entity reference.
 5. The shared executor runs an accepted action with stored caller `navigator`.
@@ -34,4 +34,4 @@ No provider secret is stored in the repository. `agent/agent.ts` configures the 
 
 ## Capability exposure
 
-The registry remains the single list. Navi receives only entries whose registry definition has `navigator.enabled`, excluding write and destructive risks. The browser validates again immediately before execution. Navi never treats a proposal as a completed action.
+The registry remains the single list and every registered website capability is navigator-enabled. Navi receives each entry's parameters, examples, risk and confirmation metadata. The browser validates again immediately before execution and remains responsible for any required confirmation. Navi never treats a proposal as a completed action.

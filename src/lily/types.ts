@@ -57,6 +57,7 @@ export type LilySession = {
   currentEntity?: { type: string; id: string };
   previousResults: LilyResultReference[];
   activeRequestId?: string;
+  eveContextVersion?: number;
   eveSession?: {
     continuationToken?: string;
     sessionId?: string;

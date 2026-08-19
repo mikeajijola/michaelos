@@ -14,6 +14,7 @@ import { useCapabilities } from "@/capabilities/context";
 import { capabilityTraceFromExecution } from "./capability-trace";
 import {
   buildLilyClientContext,
+  LILY_CONTEXT_VERSION,
   type LilyConfirmedExecutionContext,
 } from "./client-context";
 import {
@@ -75,6 +76,7 @@ function fresh(route = "/"): LilySession {
     presentation: route === "/" ? "landing-idle" : "bubble-collapsed",
     currentRoute: route,
     previousResults: [],
+    eveContextVersion: LILY_CONTEXT_VERSION,
     createdAt,
     updatedAt: createdAt,
   };
@@ -100,12 +102,18 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const saved = loadLilySession();
     if (saved) {
+      const resumeEveSession =
+        saved.eveContextVersion === LILY_CONTEXT_VERSION;
       setSession({
         ...saved,
+        eveContextVersion: LILY_CONTEXT_VERSION,
+        eveSession: resumeEveSession ? saved.eveSession : undefined,
         currentRoute: pathname,
         presentation: restoredLilyPresentation(pathname, saved.presentation),
       });
-      remote.current = new Client({ host: "" }).session(saved.eveSession);
+      remote.current = new Client({ host: "" }).session(
+        resumeEveSession ? saved.eveSession : undefined,
+      );
     } else remote.current = new Client({ host: "" }).session();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -166,7 +174,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
           createMessage("user", text),
           createMessage(
             "lily",
-            "Consulting the permitted MikeOS capabilities…",
+            "Consulting the registered MikeOS capabilities…",
             { id: requestId, status: "pending" },
           ),
         ],
@@ -249,6 +257,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
           }
           update((current) => ({
             ...current,
+            eveContextVersion: LILY_CONTEXT_VERSION,
             eveSession: remote.current?.state,
           }));
           if (proposal.kind === "clarification") {
@@ -298,7 +307,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
               error: execution.error,
             },
             instruction:
-              "Use only this confirmed browser result. Propose one next permitted capability or return a final response.",
+              "Use only this confirmed browser result. Propose one next registered capability or return a final response.",
           });
           if (execution.status === "failure") {
             failed = true;

@@ -1,7 +1,7 @@
 import { lilyCapabilityShortlist } from "./proposals";
 import type { LilyResultReference, LilySession } from "./types";
 
-export const LILY_CONTEXT_VERSION = 1;
+export const LILY_CONTEXT_VERSION = 2;
 
 export type LilyConfirmedExecutionContext = {
   capabilityId: string;
