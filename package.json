@@ -7,6 +7,7 @@
     "build": "eve build && next build",
     "capabilities:baseline": "tsx scripts/generate-capability-baseline.ts",
     "capabilities:manifest": "tsx scripts/generate-capability-manifest.ts",
+    "capabilities:check": "tsx scripts/generate-capability-manifest.ts --check",
     "test": "vitest run",
     "start": "next start",
     "lint": "next lint"

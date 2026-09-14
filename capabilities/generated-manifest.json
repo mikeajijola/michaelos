@@ -361,6 +361,22 @@
     "navigatorEnabled": true
   },
   {
+    "id": "system.getCapabilityConformance",
+    "schemaVersion": 1,
+    "description": "Report the exact revision, manifest digest, audit evidence, and freshness of the published capability contract.",
+    "parameters": [],
+    "cliCommand": "run system.getCapabilityConformance",
+    "actionKeyTemplate": [
+      "SYSTEM",
+      "CAPABILITY",
+      "CONFORMANCE",
+      "ENTER"
+    ],
+    "accessibleLabel": "Get current capability conformance",
+    "risk": "read",
+    "navigatorEnabled": true
+  },
+  {
     "id": "system.reportCapabilityIssue",
     "schemaVersion": 1,
     "description": "Store a capability issue locally in browser SQLite.",

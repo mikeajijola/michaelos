@@ -7,6 +7,11 @@ import {
   getCapabilityDelta,
 } from "./governance";
 import {
+  createCapabilityConformance,
+  digestCapabilityManifest,
+  evaluateCapabilityConformance,
+} from "./conformance";
+import {
   advanceGateway,
   AGENT_GATEWAY_CODES,
   isActionKeyModeShortcut,
@@ -205,6 +210,38 @@ describe("Action Key history compatibility", () => {
 });
 
 describe("capability governance", () => {
+  it("reproduces deterministic manifest digests", async () => {
+    const manifest = generateCapabilityManifest(capabilities);
+    expect(await digestCapabilityManifest(manifest)).toBe(
+      await digestCapabilityManifest(structuredClone(manifest)),
+    );
+  });
+
+  it("classifies current, stale, and indeterminate conformance", async () => {
+    const entries = generateCapabilityManifest(capabilities);
+    const artifact = await createCapabilityConformance({
+      revision: "abc123",
+      entries,
+      audit: auditCapabilities(capabilities),
+      timestamp: "2026-09-14T00:00:00.000Z",
+    });
+    await expect(
+      evaluateCapabilityConformance(artifact, { revision: "abc123", entries }),
+    ).resolves.toMatchObject({ freshness: { state: "current", reason: null } });
+    await expect(
+      evaluateCapabilityConformance(artifact, { revision: "older", entries }),
+    ).resolves.toMatchObject({ freshness: { state: "stale", reason: "SUBJECT_REVISION_MISMATCH" } });
+    await expect(
+      evaluateCapabilityConformance(artifact, { entries }),
+    ).resolves.toMatchObject({ freshness: { state: "indeterminate", reason: "SUBJECT_REVISION_UNAVAILABLE" } });
+    await expect(
+      evaluateCapabilityConformance(artifact, {
+        revision: "abc123",
+        entries: entries.slice(1),
+      }),
+    ).resolves.toMatchObject({ freshness: { state: "stale", reason: "MANIFEST_DIGEST_MISMATCH" } });
+  });
+
   it("audits the live registry and generates its manifest", () => {
     const audit = auditCapabilities(capabilities);
     expect(audit).toMatchObject({

@@ -21,6 +21,9 @@ import {
   getCapabilityDelta,
 } from "./governance";
 import baselineManifest from "../../capabilities/baseline-manifest.json";
+import conformanceArtifact from "../../capabilities/conformance.json";
+import { evaluateCapabilityConformance } from "./conformance";
+import type { CapabilityConformanceEnvelope } from "./types";
 
 type Handler = (
   params: Record<string, unknown>,
@@ -250,6 +253,14 @@ const handlers: Record<string, Handler> = {
     getCapabilityDelta(
       generateCapabilityManifest(capabilities),
       baselineManifest as unknown as CapabilityManifestEntry[],
+    ),
+  "system.getCapabilityConformance": async () =>
+    evaluateCapabilityConformance(
+      conformanceArtifact as CapabilityConformanceEnvelope,
+      {
+        revision: process.env.NEXT_PUBLIC_MIKEOS_REVISION,
+        entries: generateCapabilityManifest(capabilities),
+      },
     ),
   "system.reportCapabilityIssue": async (p, c) => {
     const report = {
@@ -811,6 +822,13 @@ export const capabilities: CapabilityDefinition[] = [
     "Compare the current generated manifest with the accepted baseline.",
     ["SYSTEM", "CAPABILITY", "DELTA"],
     "Compare capabilities with the accepted baseline",
+  ),
+  simple(
+    "system.getCapabilityConformance",
+    "Get capability conformance",
+    "Report the exact revision, manifest digest, audit evidence, and freshness of the published capability contract.",
+    ["SYSTEM", "CAPABILITY", "CONFORMANCE"],
+    "Get current capability conformance",
   ),
   define({
     ...base(

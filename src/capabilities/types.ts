@@ -83,6 +83,28 @@ export type CapabilityManifestEntry = {
   risk: Risk;
   navigatorEnabled: boolean;
 };
+export type CapabilityFreshness = "current" | "stale" | "indeterminate";
+export type CapabilityFreshnessReason =
+  | "SUBJECT_REVISION_UNAVAILABLE"
+  | "SUBJECT_REVISION_MISMATCH"
+  | "MANIFEST_DIGEST_MISMATCH";
+export type CapabilityConformanceEnvelope = {
+  schemaVersion: 1;
+  tool: { name: "michaelos-capability-conformance"; version: "1.0.0" };
+  repository: "mikeajijola/michaelos";
+  subject: { revision: string };
+  manifest: {
+    schemaVersion: 1;
+    algorithm: "sha256";
+    digest: string;
+    path: "capabilities/generated-manifest.json";
+  };
+  generatedAt: string;
+  testedAt: string;
+  audit: import("./governance").CapabilityAudit;
+  evidence: { kind: "test" | "build" | "ci"; reference: string }[];
+  freshness: { state: CapabilityFreshness; reason: CapabilityFreshnessReason | null };
+};
 export type CapabilityChange = {
   id: string;
   fields: string[];
