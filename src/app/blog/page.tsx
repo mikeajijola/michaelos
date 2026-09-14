@@ -84,6 +84,53 @@ export default function Blog({
                   </pre>
                 </figure>
               ))}
+              {section.comparison && (
+                <div className="article-table-wrap">
+                  <table className="article-comparison">
+                    <caption>{section.comparison.caption}</caption>
+                    <thead>
+                      <tr>
+                        {section.comparison.columns.map((column) => (
+                          <th scope="col" key={column}>
+                            {column}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {section.comparison.rows.map((row) => (
+                        <tr key={row[0]}>
+                          {row.map((cell, index) =>
+                            index === 0 ? (
+                              <th scope="row" key={cell}>
+                                {cell}
+                              </th>
+                            ) : (
+                              <td key={cell}>{cell}</td>
+                            ),
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+              {section.process && (
+                <figure
+                  className="article-process"
+                  aria-label={section.process.label}
+                >
+                  <figcaption>{section.process.label}</figcaption>
+                  <ol>
+                    {section.process.steps.map((step) => (
+                      <li key={step.name}>
+                        <strong>{step.name}</strong>
+                        <span>{step.detail}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </figure>
+              )}
             </section>
           ))}
           {selected.relatedArticleIds?.length ? (

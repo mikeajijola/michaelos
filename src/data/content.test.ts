@@ -39,8 +39,8 @@ describe("real portfolio content", () => {
     expect(recognition[0].title).toContain("innovation endorsements");
   });
 
-  it("publishes the two finished essays while keeping the existing essays in development", () => {
-    expect(articles).toHaveLength(7);
+  it("publishes the finished essays while keeping the existing essays in development", () => {
+    expect(articles).toHaveLength(8);
     expect(articles.find((article) => article.slug === "semantic-alerts")?.status)
       .toBe("published");
     expect(
@@ -48,12 +48,19 @@ describe("real portfolio content", () => {
         ?.status,
     ).toBe("published");
     expect(
+      articles.find(
+        (article) => article.slug === "lean-as-an-omniform-for-mathematics",
+      )?.status,
+    ).toBe("published");
+    expect(
       articles
         .filter(
           (article) =>
-            !["semantic-alerts", "ai-new-class-of-consumer"].includes(
-              article.slug,
-            ),
+            ![
+              "semantic-alerts",
+              "ai-new-class-of-consumer",
+              "lean-as-an-omniform-for-mathematics",
+            ].includes(article.slug),
         )
         .every((article) => article.status === "draft"),
     ).toBe(true);
