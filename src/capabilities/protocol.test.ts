@@ -242,6 +242,22 @@ describe("capability governance", () => {
     ).resolves.toMatchObject({ freshness: { state: "stale", reason: "MANIFEST_DIGEST_MISMATCH" } });
   });
 
+  it("generates an indeterminate envelope when revision evidence is unavailable", async () => {
+    const envelope = await createCapabilityConformance({
+      revision: null,
+      entries: generateCapabilityManifest(capabilities),
+      audit: auditCapabilities(capabilities),
+      timestamp: "2026-09-14T00:00:00.000Z",
+    });
+    expect(envelope).toMatchObject({
+      subject: { revision: null },
+      freshness: {
+        state: "indeterminate",
+        reason: "SUBJECT_REVISION_UNAVAILABLE",
+      },
+    });
+  });
+
   it("audits the live registry and generates its manifest", () => {
     const audit = auditCapabilities(capabilities);
     expect(audit).toMatchObject({

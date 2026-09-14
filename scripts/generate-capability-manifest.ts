@@ -1,39 +1,41 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { dirname } from "node:path";
 import { capabilities } from "../src/capabilities/registry";
 import { auditCapabilities, generateCapabilityManifest } from "../src/capabilities/governance";
 import { createCapabilityConformance } from "../src/capabilities/conformance";
 
-const revision = () => process.env.MIKEOS_REVISION || process.env.GITHUB_SHA || process.env.VERCEL_GIT_COMMIT_SHA || execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+const gitHead = () => execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+const suppliedRevision = () => process.env.MIKEOS_REVISION || process.env.GITHUB_SHA || process.env.VERCEL_GIT_COMMIT_SHA;
 
 async function main() {
+  const check = process.argv.includes("--check");
+  const requireExactRevision = process.argv.includes("--require-exact-revision") || Boolean(process.env.CI);
+  const outputArg = process.argv.find((argument) => argument.startsWith("--output="));
+  const artifactPath = outputArg?.slice("--output=".length) ||
+    (process.env.CI ? "capabilities/conformance.json" : undefined);
+  const head = gitHead();
+  const provided = suppliedRevision();
+  if (requireExactRevision && !provided) throw new Error("MIKEOS_REVISION, GITHUB_SHA, or VERCEL_GIT_COMMIT_SHA is required");
+  if (provided && provided !== head) throw new Error(`Supplied revision ${provided} does not match checked-out HEAD ${head}`);
+  const revision = provided ?? head;
   const entries = generateCapabilityManifest(capabilities);
   const envelope = await createCapabilityConformance({
-    revision: revision(), entries, audit: auditCapabilities(capabilities),
+    revision, entries, audit: auditCapabilities(capabilities),
     evidence: process.env.CI_EVIDENCE_URL
       ? [{ kind: "ci", reference: process.env.CI_EVIDENCE_URL }]
       : [],
   });
   await mkdir("capabilities", { recursive: true });
-  const outputs = {
-    "capabilities/generated-manifest.json": `${JSON.stringify(entries, null, 2)}\n`,
-    "capabilities/conformance.json": `${JSON.stringify(envelope, null, 2)}\n`,
-  };
-  if (process.argv.includes("--check")) {
-    for (const [path, content] of Object.entries(outputs)) {
-      const current = JSON.parse(await readFile(path, "utf8"));
-      const expected = JSON.parse(content);
-      if (path.endsWith("conformance.json")) {
-        expected.generatedAt = current.generatedAt;
-        expected.testedAt = current.testedAt;
-      }
-      if (JSON.stringify(current) !== JSON.stringify(expected)) throw new Error(`${path} is stale for ${envelope.subject.revision}`);
-    }
-    console.log(`Capability conformance is current for ${envelope.subject.revision} (${envelope.manifest.digest})`);
-    return;
+  if (check) {
+    const current = JSON.parse(await readFile("capabilities/generated-manifest.json", "utf8"));
+    if (JSON.stringify(current) !== JSON.stringify(entries)) throw new Error("capabilities/generated-manifest.json is stale");
+  } else await writeFile("capabilities/generated-manifest.json", `${JSON.stringify(entries, null, 2)}\n`);
+  if (artifactPath) {
+    await mkdir(dirname(artifactPath), { recursive: true });
+    await writeFile(artifactPath, `${JSON.stringify(envelope, null, 2)}\n`);
   }
-  for (const [path, content] of Object.entries(outputs)) await writeFile(path, content);
-  console.log(`Wrote ${entries.length} capabilities for ${envelope.subject.revision} (${envelope.manifest.digest})`);
+  console.log(JSON.stringify(envelope));
 }
 
 void main();

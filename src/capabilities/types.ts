@@ -92,7 +92,7 @@ export type CapabilityConformanceEnvelope = {
   schemaVersion: 1;
   tool: { name: "michaelos-capability-conformance"; version: "1.0.0" };
   repository: "mikeajijola/michaelos";
-  subject: { revision: string };
+  subject: { revision: string | null };
   manifest: {
     schemaVersion: 1;
     algorithm: "sha256";

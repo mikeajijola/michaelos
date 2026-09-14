@@ -21,9 +21,7 @@ import {
   getCapabilityDelta,
 } from "./governance";
 import baselineManifest from "../../capabilities/baseline-manifest.json";
-import conformanceArtifact from "../../capabilities/conformance.json";
-import { evaluateCapabilityConformance } from "./conformance";
-import type { CapabilityConformanceEnvelope } from "./types";
+import { createCapabilityConformance } from "./conformance";
 
 type Handler = (
   params: Record<string, unknown>,
@@ -255,13 +253,15 @@ const handlers: Record<string, Handler> = {
       baselineManifest as unknown as CapabilityManifestEntry[],
     ),
   "system.getCapabilityConformance": async () =>
-    evaluateCapabilityConformance(
-      conformanceArtifact as CapabilityConformanceEnvelope,
-      {
-        revision: process.env.NEXT_PUBLIC_MIKEOS_REVISION,
-        entries: generateCapabilityManifest(capabilities),
-      },
-    ),
+    createCapabilityConformance({
+      revision: process.env.NEXT_PUBLIC_MIKEOS_REVISION || null,
+      entries: generateCapabilityManifest(capabilities),
+      audit: auditCapabilities(capabilities),
+      timestamp: process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP,
+      evidence: process.env.NEXT_PUBLIC_MIKEOS_CI_EVIDENCE_URL
+        ? [{ kind: "ci", reference: process.env.NEXT_PUBLIC_MIKEOS_CI_EVIDENCE_URL }]
+        : [],
+    }),
   "system.reportCapabilityIssue": async (p, c) => {
     const report = {
       id: `report_${crypto.randomUUID()}`,

@@ -12,7 +12,7 @@
 - Bubble ratio clamping and six-pixel drag threshold
 - Legacy Action Key history compatibility
 
-Run `npm test`, `npx tsc --noEmit`, `npm run capabilities:check`, and `npm run build` before release. The tested commit and deterministic manifest digest are machine-readable in `capabilities/conformance.json`; CI should set `MIKEOS_REVISION` (or provide `GITHUB_SHA`) to the exact commit under test before generating and checking it.
+Run `npm test`, `npx tsc --noEmit`, `npm run capabilities:check`, and `npm run build` before release. In CI, the build's manifest check requires `MIKEOS_REVISION`, `GITHUB_SHA`, or `VERCEL_GIT_COMMIT_SHA`, rejects a revision that differs from checked-out HEAD, and emits `capabilities/conformance.json` for publication. `npm run capabilities:ci` provides the same enforcement explicitly. The artifact is generated after checkout and ignored by Git because a committed artifact cannot contain the hash of the commit that contains it without becoming self-referential and stale.
 
 Local and deployed builds bind the runtime projection to `MIKEOS_REVISION`, `GITHUB_SHA`, or `VERCEL_GIT_COMMIT_SHA`, falling back to the checked-out Git HEAD at build time. A browser artifact without revision evidence reports `indeterminate`; a revision or digest mismatch reports `stale`. `capabilities/baseline-manifest.json` remains historical and is used only by the delta capability.
 

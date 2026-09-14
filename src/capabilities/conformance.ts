@@ -30,18 +30,18 @@ export async function digestCapabilityManifest(entries: CapabilityManifestEntry[
 }
 
 export async function createCapabilityConformance(input: {
-  revision: string;
+  revision?: string | null;
   entries: CapabilityManifestEntry[];
   audit: CapabilityAudit;
   timestamp?: string;
   evidence?: CapabilityConformanceEnvelope["evidence"];
 }): Promise<CapabilityConformanceEnvelope> {
   const timestamp = input.timestamp ?? new Date().toISOString();
-  return {
+  const envelope: CapabilityConformanceEnvelope = {
     schemaVersion: 1,
     tool: CONFORMANCE_TOOL,
     repository: "mikeajijola/michaelos",
-    subject: { revision: input.revision },
+    subject: { revision: input.revision ?? null },
     manifest: {
       schemaVersion: 1,
       algorithm: "sha256",
@@ -52,8 +52,11 @@ export async function createCapabilityConformance(input: {
     testedAt: timestamp,
     audit: input.audit,
     evidence: input.evidence ?? [],
-    freshness: { state: "current", reason: null },
+    freshness: input.revision
+      ? { state: "current", reason: null }
+      : { state: "indeterminate", reason: "SUBJECT_REVISION_UNAVAILABLE" },
   };
+  return envelope;
 }
 
 export async function evaluateCapabilityConformance(

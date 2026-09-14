@@ -181,7 +181,7 @@ function GovernanceWorkbench() {
         <h2>Current conformance</h2>
         <p>
           {conformance
-            ? `${conformance.freshness.state}: ${conformance.subject.revision.slice(0, 12)} · ${conformance.manifest.digest.slice(0, 12)}`
+            ? `${conformance.freshness.state}: ${conformance.subject.revision?.slice(0, 12) ?? "revision unavailable"} · ${conformance.manifest.digest.slice(0, 12)}`
             : "Verify the published manifest against this exact build revision."}
         </p>
         <button

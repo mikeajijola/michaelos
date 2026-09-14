@@ -10,11 +10,16 @@ const gitRevision = () => {
   }
 };
 const revision = process.env.MIKEOS_REVISION || process.env.GITHUB_SHA || process.env.VERCEL_GIT_COMMIT_SHA || gitRevision();
+const conformanceTimestamp = process.env.MIKEOS_CONFORMANCE_TIMESTAMP || new Date().toISOString();
 
 const nextConfig: NextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
-  env: { NEXT_PUBLIC_MIKEOS_REVISION: revision },
+  env: {
+    NEXT_PUBLIC_MIKEOS_REVISION: revision,
+    NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP: conformanceTimestamp,
+    NEXT_PUBLIC_MIKEOS_CI_EVIDENCE_URL: process.env.CI_EVIDENCE_URL || "",
+  },
 };
 
 export default withEve(nextConfig);
