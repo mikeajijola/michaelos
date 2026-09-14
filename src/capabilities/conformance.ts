@@ -10,6 +10,78 @@ export const CONFORMANCE_TOOL = {
   version: "1.0.0" as const,
 };
 
+const freshnessReasons = new Set<CapabilityFreshnessReason>([
+  "SUBJECT_REVISION_UNAVAILABLE",
+  "WORKTREE_DIRTY",
+  "CONFORMANCE_ARTIFACT_INVALID",
+  "SUBJECT_REVISION_MISMATCH",
+  "MANIFEST_DIGEST_MISMATCH",
+]);
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
+/** Validate the serialized build artifact before it crosses into runtime. */
+export function isCapabilityConformanceEnvelope(
+  value: unknown,
+): value is CapabilityConformanceEnvelope {
+  if (!isRecord(value) || value.schemaVersion !== 1) return false;
+  const { tool, subject, manifest, audit, freshness } = value;
+  if (
+    value.repository !== "mikeajijola/michaelos" ||
+    !isRecord(tool) ||
+    tool.name !== CONFORMANCE_TOOL.name ||
+    tool.version !== CONFORMANCE_TOOL.version ||
+    !isRecord(subject) ||
+    !(subject.revision === null ||
+      (typeof subject.revision === "string" && subject.revision.length > 0)) ||
+    !isRecord(manifest) ||
+    manifest.schemaVersion !== 1 ||
+    manifest.algorithm !== "sha256" ||
+    typeof manifest.digest !== "string" ||
+    !/^[0-9a-f]{64}$/.test(manifest.digest) ||
+    manifest.path !== "capabilities/generated-manifest.json" ||
+    typeof value.generatedAt !== "string" ||
+    Number.isNaN(Date.parse(value.generatedAt)) ||
+    !(value.testedAt === null ||
+      (typeof value.testedAt === "string" && !Number.isNaN(Date.parse(value.testedAt)))) ||
+    !Array.isArray(value.evidence) ||
+    !isRecord(audit) ||
+    (audit.status !== "pass" && audit.status !== "fail") ||
+    !isRecord(audit.summary) ||
+    !Number.isInteger(audit.summary.registered) ||
+    !Number.isInteger(audit.summary.errors) ||
+    !Number.isInteger(audit.summary.warnings) ||
+    !Array.isArray(audit.issues) ||
+    !isRecord(freshness) ||
+    !["current", "stale", "indeterminate"].includes(String(freshness.state)) ||
+    !(freshness.reason === null ||
+      (typeof freshness.reason === "string" &&
+        freshnessReasons.has(freshness.reason as CapabilityFreshnessReason)))
+  ) return false;
+
+  if (!value.evidence.every((item) =>
+    isRecord(item) &&
+    ["test", "build", "ci"].includes(String(item.kind)) &&
+    typeof item.reference === "string" && item.reference.length > 0
+  )) return false;
+  if (!audit.issues.every((issue) =>
+    isRecord(issue) &&
+    typeof issue.code === "string" &&
+    (issue.severity === "error" || issue.severity === "warning") &&
+    typeof issue.message === "string" &&
+    (issue.capabilityId === undefined || typeof issue.capabilityId === "string")
+  )) return false;
+  const errors = audit.issues.filter((issue) => issue.severity === "error").length;
+  const warnings = audit.issues.length - errors;
+  if (audit.summary.errors !== errors || audit.summary.warnings !== warnings ||
+      audit.status !== (errors === 0 ? "pass" : "fail")) return false;
+  if ((value.testedAt !== null && value.evidence.length === 0) ||
+      (freshness.state === "current" && freshness.reason !== null) ||
+      (freshness.state !== "current" && freshness.reason === null)) return false;
+  return true;
+}
+
 export function canonicalize(value: unknown): string {
   if (value === null || typeof value !== "object")
     return JSON.stringify(value) ?? "null";
@@ -31,7 +103,7 @@ export async function digestCapabilityManifest(entries: CapabilityManifestEntry[
 
 export async function createCapabilityConformance(input: {
   revision?: string | null;
-  indeterminateReason?: Extract<CapabilityFreshnessReason, "SUBJECT_REVISION_UNAVAILABLE" | "WORKTREE_DIRTY">;
+  indeterminateReason?: Extract<CapabilityFreshnessReason, "SUBJECT_REVISION_UNAVAILABLE" | "WORKTREE_DIRTY" | "CONFORMANCE_ARTIFACT_INVALID">;
   entries: CapabilityManifestEntry[];
   audit: CapabilityAudit;
   timestamp?: string;
@@ -72,7 +144,8 @@ export async function evaluateCapabilityConformance(
   observed: {
     revision?: string | null;
     entries: CapabilityManifestEntry[];
-    indeterminateReason?: Extract<CapabilityFreshnessReason, "SUBJECT_REVISION_UNAVAILABLE" | "WORKTREE_DIRTY">;
+    audit?: CapabilityAudit;
+    indeterminateReason?: Extract<CapabilityFreshnessReason, "SUBJECT_REVISION_UNAVAILABLE" | "WORKTREE_DIRTY" | "CONFORMANCE_ARTIFACT_INVALID">;
   },
 ): Promise<CapabilityConformanceEnvelope> {
   let reason: CapabilityFreshnessReason | null = null;
@@ -89,12 +162,14 @@ export async function evaluateCapabilityConformance(
     artifact.manifest.digest
   )
     reason = "MANIFEST_DIGEST_MISMATCH";
+  else if (observed.audit && canonicalize(observed.audit) !== canonicalize(artifact.audit))
+    reason = "CONFORMANCE_ARTIFACT_INVALID";
   return {
     ...artifact,
     freshness: reason
       ? {
           state:
-            reason === "SUBJECT_REVISION_UNAVAILABLE" || reason === "WORKTREE_DIRTY"
+            reason === "SUBJECT_REVISION_UNAVAILABLE" || reason === "WORKTREE_DIRTY" || reason === "CONFORMANCE_ARTIFACT_INVALID"
               ? "indeterminate"
               : "stale",
           reason,

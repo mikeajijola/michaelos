@@ -276,6 +276,71 @@ describe("capability governance", () => {
     }
   });
 
+  it.each([
+    ["malformed JSON", "{"],
+    ["wrong repository", JSON.stringify({ repository: "attacker/example" })],
+    ["invalid audit", JSON.stringify({ audit: { status: "pass" } })],
+  ])("reports an indeterminate result for a %s runtime artifact", async (_label, serialized) => {
+    const previousRevision = process.env.NEXT_PUBLIC_MIKEOS_REVISION;
+    const previousArtifact = process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+    process.env.NEXT_PUBLIC_MIKEOS_REVISION = "runtime-revision";
+    process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT = serialized;
+    try {
+      const capability = capabilities.find(
+        ({ id }) => id === "system.getCapabilityConformance",
+      );
+      if (!capability) throw new Error("conformance capability is not registered");
+      await expect(capability.execute({}, {} as never)).resolves.toMatchObject({
+        subject: { revision: null },
+        freshness: {
+          state: "indeterminate",
+          reason: "CONFORMANCE_ARTIFACT_INVALID",
+        },
+      });
+    } finally {
+      if (previousRevision === undefined)
+        delete process.env.NEXT_PUBLIC_MIKEOS_REVISION;
+      else process.env.NEXT_PUBLIC_MIKEOS_REVISION = previousRevision;
+      if (previousArtifact === undefined)
+        delete process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+      else process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT = previousArtifact;
+    }
+  });
+
+  it("rejects a contract-shaped artifact with a tampered audit result", async () => {
+    const entries = generateCapabilityManifest(capabilities);
+    const artifact = await createCapabilityConformance({
+      revision: "runtime-revision",
+      entries,
+      audit: auditCapabilities(capabilities),
+      timestamp: "2026-09-14T00:00:00.000Z",
+    });
+    artifact.audit.summary.registered += 1;
+    const previousRevision = process.env.NEXT_PUBLIC_MIKEOS_REVISION;
+    const previousArtifact = process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+    process.env.NEXT_PUBLIC_MIKEOS_REVISION = "runtime-revision";
+    process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT = JSON.stringify(artifact);
+    try {
+      const capability = capabilities.find(
+        ({ id }) => id === "system.getCapabilityConformance",
+      );
+      if (!capability) throw new Error("conformance capability is not registered");
+      await expect(capability.execute({}, {} as never)).resolves.toMatchObject({
+        freshness: {
+          state: "indeterminate",
+          reason: "CONFORMANCE_ARTIFACT_INVALID",
+        },
+      });
+    } finally {
+      if (previousRevision === undefined)
+        delete process.env.NEXT_PUBLIC_MIKEOS_REVISION;
+      else process.env.NEXT_PUBLIC_MIKEOS_REVISION = previousRevision;
+      if (previousArtifact === undefined)
+        delete process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+      else process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT = previousArtifact;
+    }
+  });
+
   it("generates an indeterminate envelope when revision evidence is unavailable", async () => {
     const envelope = await createCapabilityConformance({
       revision: null,
