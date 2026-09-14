@@ -51,6 +51,19 @@ export type ArticleSection = {
   pullQuote?: string;
   items?: ArticleSectionItem[];
   examples?: ArticleExample[];
+  comparison?: ArticleComparison;
+  process?: ArticleProcess;
+};
+
+export type ArticleComparison = {
+  caption: string;
+  columns: [string, string, string];
+  rows: Array<[string, string, string]>;
+};
+
+export type ArticleProcess = {
+  label: string;
+  steps: Array<{ name: string; detail: string }>;
 };
 
 export type ArticleSectionItem = {
@@ -193,6 +206,13 @@ export const aliases: Record<string, string[]> = {
     "agentic commerce",
     "ai generated demand",
     "economic capacitance",
+  ],
+  "lean-as-an-omniform-for-mathematics": [
+    "lean theorem prover",
+    "omniform",
+    "omniseed",
+    "formal verification",
+    "proof search",
   ],
 };
 
@@ -394,6 +414,132 @@ export const experience: Experience[] = [
 ];
 
 export const articles: Article[] = [
+  {
+    id: "lean-as-an-omniform-for-mathematics",
+    slug: "lean-as-an-omniform-for-mathematics",
+    title: "Lean as an Omniform for mathematics",
+    alternativeTitle:
+      "What a theorem prover can teach us about declaring, searching and verifying work",
+    excerpt:
+      "Lean turns a mathematical claim into a precise target, helps us search for a proof and accepts only evidence its small kernel can check. That feels remarkably close to the shape I want from Omniform—provided we respect where the analogy ends.",
+    summary:
+      "A careful analogy between Lean’s proof loop and Omniform’s evidence-relative model for work in an open world.",
+    socialDescription:
+      "Lean offers a useful analogy for Omniform: declare a desired state, search and act, observe evidence, verify conformance, then commit or reconcile.",
+    publishedAt: "14 September 2026",
+    status: "published",
+    readingMinutes: 9,
+    readTime: "9 min",
+    tags: [
+      "Lean",
+      "Omniform",
+      "OmniSeed",
+      "Formal verification",
+      "Agentic systems",
+    ],
+    relatedProjectIds: ["omnicede-ui", "michaelos"],
+    relatedArticleIds: ["company-as-code", "semantic-alerts"],
+    sources: [
+      {
+        title: "The Lean Language Reference",
+        publisher: "Lean",
+        url: "https://lean-lang.org/doc/reference/latest/",
+        relationship: "background",
+      },
+      {
+        title: "Tactic Proofs",
+        publisher: "Lean Language Reference",
+        url: "https://lean-lang.org/doc/reference/latest/Tactic-Proofs/",
+        relationship: "background",
+      },
+      {
+        title: "Validating a Lean Proof",
+        publisher: "Lean Language Reference",
+        url: "https://lean-lang.org/doc/reference/latest/ValidatingProofs/",
+        relationship: "background",
+      },
+      {
+        title: "Company as Code",
+        publisher: "MikeOS",
+        url: "/blog?article=company-as-code",
+        relationship: "related-work",
+      },
+    ],
+    evidenceNote:
+      "Lean descriptions are grounded in the official language reference. The mappings to Omniform and OmniSeed are an explanatory analogy, not claims about Lean’s own architecture or terminology.",
+    sections: [
+      {
+        heading: "A thought that would not leave me alone",
+        paragraphs: [
+          "I have been thinking about Lean, the interactive theorem prover, as something like an Omniform for mathematics. Not because mathematics and organisations are the same kind of thing. They are emphatically not. But because Lean gives a very clean shape to a problem I keep returning to: how do we move from a declared intention to evidence that the intention has actually been satisfied?",
+          "In plain language, Lean lets you state a mathematical claim precisely and then asks you to supply a proof. You can write that proof directly or use tactics—small programs that help construct it. Either way, Lean produces a proof term, and a deliberately small trusted kernel checks that the term has the required type under the definitions, rules and axioms in scope.",
+          "That separation is the interesting part. The machinery that searches can be inventive and complicated. The thing that decides whether the result conforms can remain small and strict.",
+        ],
+        pullQuote:
+          "Search may be expansive. Acceptance should be explainable.",
+      },
+      {
+        heading: "The analogy, compactly",
+        paragraphs: [
+          "Here is the correspondence I find useful. These are not fixed Omniform primitives, and I am not proposing that we rename Lean concepts and declare the design complete. It is an analogy—a thinking tool for seeing similar responsibilities across two very different systems.",
+        ],
+        comparison: {
+          caption: "A working analogy between Lean and Omniform",
+          columns: ["Lean", "Omniform analogy", "Shared question"],
+          rows: [
+            ["Theorem statement", "Desired state", "What must be true when the work is done?"],
+            ["Types", "Schemas", "What shape must a valid result have?"],
+            ["Axioms and type rules", "Invariants and policy", "Which rules bound what may count?"],
+            ["Tactics", "Capabilities and providers", "Which available moves can advance the state?"],
+            ["Proof search", "Agent search and reconciliation", "How might we find a path from here to there?"],
+            ["Errors and unsolved goals", "Discrepancies", "Where does observed reality fail the declaration?"],
+            ["Proof objects", "Auditable evidence", "What inspectable object supports acceptance?"],
+            ["Kernel", "Conformance and evaluation", "What checks the result against the declared rules?"],
+          ],
+        },
+      },
+      {
+        heading: "From declaration to reconciliation",
+        paragraphs: [
+          "The loop I see is simple enough to hold in your head. Declare the state you want. Search for a route and use permitted capabilities to act. Observe what the world now says. Verify the resulting evidence against the declaration. If it conforms, commit the new state and its evidence; if it does not, make the discrepancy visible and reconcile it.",
+        ],
+        process: {
+          label: "Omniform conformance loop",
+          steps: [
+            { name: "Declare", detail: "State the desired outcome and constraints." },
+            { name: "Search / Act", detail: "Find a route and invoke permitted providers." },
+            { name: "Observe", detail: "Collect the resulting state and evidence." },
+            { name: "Verify", detail: "Evaluate evidence against the declaration." },
+            { name: "Commit or Reconcile", detail: "Accept the state, or expose and resolve discrepancies." },
+          ],
+        },
+      },
+      {
+        heading: "Where OmniSeed fits",
+        paragraphs: [
+          "This gives me a clearer way to separate the parts of OmniSeed. Agents search: they form plans, explore alternatives and decide what might move the work forward. Providers act: they expose the bounded capabilities that can read or change something in the world. Omniform declares and evaluates: it says what should be true and tests the available evidence for conformance. OmniSeed coordinates the loop: context, sequencing, permissions, observations, retries and escalation.",
+          "The distinction matters because an agent sounding confident is not verification. A provider returning success is not necessarily evidence that the desired state exists. Coordination is the work of carrying the declaration through action and observation until evaluation can say either ‘this conforms’ or ‘here is the discrepancy.’",
+        ],
+      },
+      {
+        heading: "The boundary is the point",
+        paragraphs: [
+          "This is where the analogy must stop being comfortable. Lean proves within a closed formal system. The theorem statement, definitions, imported results, axioms and type rules establish the formal world in which the proof is checked. Kernel acceptance tells us that a proof term follows those rules. It does not, by itself, tell us that the formal statement perfectly represents the informal idea we had in mind.",
+          "Omniform operates in an open, changing world. A customer record can be stale. A supplier can change its terms. A policy can be superseded. An API can report success before a downstream process completes. Evidence is partial, sourced, time-bound and sometimes contradictory. Omniform therefore cannot promise mathematical truth about the world. It can establish evidence-relative conformance: given this declaration, these observations, these policies and this moment, the available evidence does or does not support acceptance.",
+          "That is a weaker claim than proof, but it is a much more honest one for organisational systems. It also makes provenance, freshness, uncertainty and the right to reopen a committed conclusion part of the design rather than awkward exceptions.",
+        ],
+        pullQuote:
+          "Lean checks a proof inside a formal world. Omniform checks evidence about a world that keeps moving.",
+      },
+      {
+        heading: "What I am carrying forward",
+        paragraphs: [
+          "The lesson I take from Lean is not that an organisation can become a theorem. It is that search and judgement can be separated without divorcing them. We can let agents explore, let providers perform real work and still require an inspectable basis for acceptance.",
+          "Omniform, in this framing, is less a form to fill in than a declared contract with an evaluator. OmniSeed is the system that keeps the contract, action and evidence in conversation. The result is not certainty. It is a disciplined answer to a practical question: what do we believe now, why do we believe it, and what should happen when reality disagrees?",
+        ],
+      },
+    ],
+  },
   {
     id: "lawneeds-from-need-to-innovation",
     slug: "lawneeds-from-need-to-innovation",

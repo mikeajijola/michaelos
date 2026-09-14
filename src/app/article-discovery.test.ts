@@ -9,6 +9,16 @@ describe("article discovery", () => {
     });
   });
 
+  it("includes the Lean and Omniform essay in discovery feeds", async () => {
+    expect(sitemap()).toContainEqual({
+      url: "https://mikeajijola.com/blog?article=lean-as-an-omniform-for-mathematics",
+    });
+    const response = rss();
+    const body = await response.text();
+    expect(body).toContain("Lean as an Omniform for mathematics");
+    expect(body).toContain("lean-as-an-omniform-for-mathematics");
+  });
+
   it("includes published articles in RSS", async () => {
     const response = rss();
     const body = await response.text();
