@@ -86,6 +86,7 @@ export type CapabilityManifestEntry = {
 export type CapabilityFreshness = "current" | "stale" | "indeterminate";
 export type CapabilityFreshnessReason =
   | "SUBJECT_REVISION_UNAVAILABLE"
+  | "WORKTREE_DIRTY"
   | "SUBJECT_REVISION_MISMATCH"
   | "MANIFEST_DIGEST_MISMATCH";
 export type CapabilityConformanceEnvelope = {

@@ -21,7 +21,11 @@ import {
   getCapabilityDelta,
 } from "./governance";
 import baselineManifest from "../../capabilities/baseline-manifest.json";
-import { createCapabilityConformance } from "./conformance";
+import generatedManifest from "../../capabilities/generated-manifest.json";
+import {
+  createCapabilityConformance,
+  evaluateCapabilityConformance,
+} from "./conformance";
 
 type Handler = (
   params: Record<string, unknown>,
@@ -252,16 +256,31 @@ const handlers: Record<string, Handler> = {
       generateCapabilityManifest(capabilities),
       baselineManifest as unknown as CapabilityManifestEntry[],
     ),
-  "system.getCapabilityConformance": async () =>
-    createCapabilityConformance({
-      revision: process.env.NEXT_PUBLIC_MIKEOS_REVISION || null,
-      entries: generateCapabilityManifest(capabilities),
+  "system.getCapabilityConformance": async () => {
+    const revision = process.env.NEXT_PUBLIC_MIKEOS_REVISION || null;
+    const publishedEntries = generatedManifest as unknown as CapabilityManifestEntry[];
+    const artifact = await createCapabilityConformance({
+      revision,
+      indeterminateReason:
+        process.env.NEXT_PUBLIC_MIKEOS_REVISION_REASON === "WORKTREE_DIRTY"
+          ? "WORKTREE_DIRTY"
+          : undefined,
+      entries: publishedEntries,
       audit: auditCapabilities(capabilities),
       timestamp: process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP,
       evidence: process.env.NEXT_PUBLIC_MIKEOS_CI_EVIDENCE_URL
         ? [{ kind: "ci", reference: process.env.NEXT_PUBLIC_MIKEOS_CI_EVIDENCE_URL }]
         : [],
-    }),
+    });
+    return evaluateCapabilityConformance(artifact, {
+      revision,
+      indeterminateReason:
+        process.env.NEXT_PUBLIC_MIKEOS_REVISION_REASON === "WORKTREE_DIRTY"
+          ? "WORKTREE_DIRTY"
+          : undefined,
+      entries: generateCapabilityManifest(capabilities),
+    });
+  },
   "system.reportCapabilityIssue": async (p, c) => {
     const report = {
       id: `report_${crypto.randomUUID()}`,

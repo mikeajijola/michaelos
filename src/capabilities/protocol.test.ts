@@ -258,6 +258,20 @@ describe("capability governance", () => {
     });
   });
 
+  it("distinguishes an uncommitted worktree from missing revision evidence", async () => {
+    const envelope = await createCapabilityConformance({
+      revision: null,
+      indeterminateReason: "WORKTREE_DIRTY",
+      entries: generateCapabilityManifest(capabilities),
+      audit: auditCapabilities(capabilities),
+      timestamp: "2026-09-14T00:00:00.000Z",
+    });
+    expect(envelope.freshness).toEqual({
+      state: "indeterminate",
+      reason: "WORKTREE_DIRTY",
+    });
+  });
+
   it("audits the live registry and generates its manifest", () => {
     const audit = auditCapabilities(capabilities);
     expect(audit).toMatchObject({

@@ -5,7 +5,13 @@ import { capabilities } from "../src/capabilities/registry";
 import { auditCapabilities, generateCapabilityManifest } from "../src/capabilities/governance";
 import { createCapabilityConformance } from "../src/capabilities/conformance";
 
-const gitHead = () => execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+const git = (args: string[]) => {
+  try {
+    return execFileSync("git", args, { encoding: "utf8" }).trim();
+  } catch {
+    return null;
+  }
+};
 const suppliedRevision = () => process.env.MIKEOS_REVISION || process.env.GITHUB_SHA || process.env.VERCEL_GIT_COMMIT_SHA;
 
 async function main() {
@@ -14,14 +20,21 @@ async function main() {
   const outputArg = process.argv.find((argument) => argument.startsWith("--output="));
   const artifactPath = outputArg?.slice("--output=".length) ||
     (process.env.CI ? "capabilities/conformance.json" : undefined);
-  const head = gitHead();
+  const head = git(["rev-parse", "HEAD"]);
+  const worktreeStatus = git(["status", "--porcelain"]);
+  const worktreeDirty = worktreeStatus !== null && worktreeStatus !== "";
   const provided = suppliedRevision();
   if (requireExactRevision && !provided) throw new Error("MIKEOS_REVISION, GITHUB_SHA, or VERCEL_GIT_COMMIT_SHA is required");
+  if (requireExactRevision && !head) throw new Error("Checked-out Git HEAD is required for exact revision verification");
+  if (requireExactRevision && worktreeDirty) throw new Error("Working tree must be clean for exact revision verification");
   if (provided && provided !== head) throw new Error(`Supplied revision ${provided} does not match checked-out HEAD ${head}`);
-  const revision = provided ?? head;
+  const revision = worktreeDirty ? null : provided ?? head;
   const entries = generateCapabilityManifest(capabilities);
   const envelope = await createCapabilityConformance({
-    revision, entries, audit: auditCapabilities(capabilities),
+    revision,
+    indeterminateReason: worktreeDirty ? "WORKTREE_DIRTY" : undefined,
+    entries,
+    audit: auditCapabilities(capabilities),
     evidence: process.env.CI_EVIDENCE_URL
       ? [{ kind: "ci", reference: process.env.CI_EVIDENCE_URL }]
       : [],

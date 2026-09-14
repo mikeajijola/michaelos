@@ -31,6 +31,7 @@ export async function digestCapabilityManifest(entries: CapabilityManifestEntry[
 
 export async function createCapabilityConformance(input: {
   revision?: string | null;
+  indeterminateReason?: Extract<CapabilityFreshnessReason, "SUBJECT_REVISION_UNAVAILABLE" | "WORKTREE_DIRTY">;
   entries: CapabilityManifestEntry[];
   audit: CapabilityAudit;
   timestamp?: string;
@@ -54,17 +55,30 @@ export async function createCapabilityConformance(input: {
     evidence: input.evidence ?? [],
     freshness: input.revision
       ? { state: "current", reason: null }
-      : { state: "indeterminate", reason: "SUBJECT_REVISION_UNAVAILABLE" },
+      : {
+          state: "indeterminate",
+          reason: input.indeterminateReason ?? "SUBJECT_REVISION_UNAVAILABLE",
+        },
   };
   return envelope;
 }
 
 export async function evaluateCapabilityConformance(
   artifact: CapabilityConformanceEnvelope,
-  observed: { revision?: string | null; entries: CapabilityManifestEntry[] },
+  observed: {
+    revision?: string | null;
+    entries: CapabilityManifestEntry[];
+    indeterminateReason?: Extract<CapabilityFreshnessReason, "SUBJECT_REVISION_UNAVAILABLE" | "WORKTREE_DIRTY">;
+  },
 ): Promise<CapabilityConformanceEnvelope> {
   let reason: CapabilityFreshnessReason | null = null;
-  if (!observed.revision) reason = "SUBJECT_REVISION_UNAVAILABLE";
+  if (!observed.revision)
+    reason =
+      observed.indeterminateReason ??
+      (artifact.freshness.state === "indeterminate"
+        ? artifact.freshness.reason
+        : null) ??
+      "SUBJECT_REVISION_UNAVAILABLE";
   else if (observed.revision !== artifact.subject.revision) reason = "SUBJECT_REVISION_MISMATCH";
   else if (
     (await digestCapabilityManifest(observed.entries)) !==
