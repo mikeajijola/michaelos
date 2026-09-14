@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "eve build && next build",
+    "build": "npm run capabilities:check && eve build && next build",
     "capabilities:baseline": "tsx scripts/generate-capability-baseline.ts",
     "capabilities:manifest": "tsx scripts/generate-capability-manifest.ts",
+    "capabilities:check": "tsx scripts/generate-capability-manifest.ts --check",
+    "capabilities:ci": "tsx scripts/generate-capability-manifest.ts --check --require-exact-revision --output=capabilities/conformance.json",
     "test": "vitest run",
     "start": "next start",
     "lint": "next lint"

@@ -4,6 +4,7 @@ import { capabilities, registry } from "@/capabilities/registry";
 import { resolveCli, resolveTemplate } from "@/capabilities/protocol";
 import { useCapabilities } from "@/capabilities/context";
 import { ExecutionInspector } from "@/components/agent/AgentSurface";
+import type { CapabilityConformanceEnvelope } from "@/capabilities/types";
 
 export function ArchitectureWorkbench() {
   const runtime = useCapabilities();
@@ -159,15 +160,37 @@ function GovernanceWorkbench() {
   const { execute } = useCapabilities();
   const [output, setOutput] = useState<unknown>(null);
   const [details, setDetails] = useState("");
+  const [conformance, setConformance] =
+    useState<CapabilityConformanceEnvelope | null>(null);
   const run = async (id: string, params: Record<string, unknown> = {}) => {
     const event = await execute(id, params, "ui");
     setOutput(event.result ?? event.error);
+  };
+  const showConformance = async () => {
+    const event = await execute("system.getCapabilityConformance", {}, "ui");
+    const value = event.result as CapabilityConformanceEnvelope | null;
+    setConformance(value);
+    setOutput(value ?? event.error);
   };
   return (
     <section
       className="governance-workbench"
       aria-label="Capability governance"
     >
+      <div aria-live="polite">
+        <h2>Current conformance</h2>
+        <p>
+          {conformance
+            ? `${conformance.freshness.state}: ${conformance.subject.revision?.slice(0, 12) ?? "revision unavailable"} · ${conformance.manifest.digest.slice(0, 12)}`
+            : "Verify the published manifest against this exact build revision."}
+        </p>
+        <button
+          data-capability-id="system.getCapabilityConformance"
+          onClick={() => void showConformance()}
+        >
+          View capability conformance
+        </button>
+      </div>
       <div>
         <h2>Capability Health</h2>
         <p>Validate the live registry and all invocation mappings.</p>

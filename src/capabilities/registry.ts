@@ -21,6 +21,13 @@ import {
   getCapabilityDelta,
 } from "./governance";
 import baselineManifest from "../../capabilities/baseline-manifest.json";
+import generatedManifest from "../../capabilities/generated-manifest.json";
+import {
+  createCapabilityConformance,
+  digestCapabilityManifest,
+  evaluateCapabilityConformance,
+  isCapabilityConformanceEnvelope,
+} from "./conformance";
 
 type Handler = (
   params: Record<string, unknown>,
@@ -251,6 +258,59 @@ const handlers: Record<string, Handler> = {
       generateCapabilityManifest(capabilities),
       baselineManifest as unknown as CapabilityManifestEntry[],
     ),
+  "system.getCapabilityConformance": async () => {
+    const revision = process.env.NEXT_PUBLIC_MIKEOS_REVISION || null;
+    const serializedArtifact =
+      process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+    if (!serializedArtifact) {
+      const publishedEntries = generatedManifest as unknown as CapabilityManifestEntry[];
+      return {
+        schemaVersion: 1,
+        tool: { name: "michaelos-capability-conformance", version: "1.0.0" },
+        repository: "mikeajijola/michaelos",
+        subject: { revision: null },
+        manifest: {
+          schemaVersion: 1,
+          algorithm: "sha256",
+          digest: await digestCapabilityManifest(publishedEntries),
+          path: "capabilities/generated-manifest.json",
+        },
+        generatedAt:
+          process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP ??
+          new Date(0).toISOString(),
+        testedAt: null,
+        audit: auditCapabilities(capabilities),
+        evidence: [],
+        freshness: { state: "indeterminate", reason: "SUBJECT_REVISION_UNAVAILABLE" },
+      } satisfies CapabilityConformanceEnvelope;
+    }
+    let artifact: unknown;
+    try {
+      artifact = JSON.parse(serializedArtifact);
+    } catch {
+      artifact = null;
+    }
+    if (!isCapabilityConformanceEnvelope(artifact)) {
+      return createCapabilityConformance({
+        revision: null,
+        indeterminateReason: "CONFORMANCE_ARTIFACT_INVALID",
+        entries: generateCapabilityManifest(capabilities),
+        audit: auditCapabilities(capabilities),
+        timestamp:
+          process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP ??
+          new Date(0).toISOString(),
+      });
+    }
+    return evaluateCapabilityConformance(artifact, {
+      revision,
+      indeterminateReason:
+        process.env.NEXT_PUBLIC_MIKEOS_REVISION_REASON === "WORKTREE_DIRTY"
+          ? "WORKTREE_DIRTY"
+          : undefined,
+      entries: generateCapabilityManifest(capabilities),
+      audit: auditCapabilities(capabilities),
+    });
+  },
   "system.reportCapabilityIssue": async (p, c) => {
     const report = {
       id: `report_${crypto.randomUUID()}`,
@@ -811,6 +871,13 @@ export const capabilities: CapabilityDefinition[] = [
     "Compare the current generated manifest with the accepted baseline.",
     ["SYSTEM", "CAPABILITY", "DELTA"],
     "Compare capabilities with the accepted baseline",
+  ),
+  simple(
+    "system.getCapabilityConformance",
+    "Get capability conformance",
+    "Report the exact revision, manifest digest, audit evidence, and freshness of the published capability contract.",
+    ["SYSTEM", "CAPABILITY", "CONFORMANCE"],
+    "Get current capability conformance",
   ),
   define({
     ...base(
