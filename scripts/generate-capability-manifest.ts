@@ -19,7 +19,7 @@ async function main() {
   const requireExactRevision = process.argv.includes("--require-exact-revision") || Boolean(process.env.CI);
   const outputArg = process.argv.find((argument) => argument.startsWith("--output="));
   const artifactPath = outputArg?.slice("--output=".length) ||
-    (process.env.CI ? "capabilities/conformance.json" : undefined);
+    "capabilities/conformance.json";
   const head = git(["rev-parse", "HEAD"]);
   const worktreeStatus = git(["status", "--porcelain"]);
   const worktreeDirty = worktreeStatus !== null && worktreeStatus !== "";
@@ -35,6 +35,7 @@ async function main() {
     indeterminateReason: worktreeDirty ? "WORKTREE_DIRTY" : undefined,
     entries,
     audit: auditCapabilities(capabilities),
+    testedAt: process.env.MIKEOS_TESTED_AT || null,
     evidence: process.env.CI_EVIDENCE_URL
       ? [{ kind: "ci", reference: process.env.CI_EVIDENCE_URL }]
       : [],

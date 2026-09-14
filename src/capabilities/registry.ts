@@ -23,7 +23,7 @@ import {
 import baselineManifest from "../../capabilities/baseline-manifest.json";
 import generatedManifest from "../../capabilities/generated-manifest.json";
 import {
-  createCapabilityConformance,
+  digestCapabilityManifest,
   evaluateCapabilityConformance,
 } from "./conformance";
 
@@ -258,20 +258,31 @@ const handlers: Record<string, Handler> = {
     ),
   "system.getCapabilityConformance": async () => {
     const revision = process.env.NEXT_PUBLIC_MIKEOS_REVISION || null;
-    const publishedEntries = generatedManifest as unknown as CapabilityManifestEntry[];
-    const artifact = await createCapabilityConformance({
-      revision,
-      indeterminateReason:
-        process.env.NEXT_PUBLIC_MIKEOS_REVISION_REASON === "WORKTREE_DIRTY"
-          ? "WORKTREE_DIRTY"
-          : undefined,
-      entries: publishedEntries,
-      audit: auditCapabilities(capabilities),
-      timestamp: process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP,
-      evidence: process.env.NEXT_PUBLIC_MIKEOS_CI_EVIDENCE_URL
-        ? [{ kind: "ci", reference: process.env.NEXT_PUBLIC_MIKEOS_CI_EVIDENCE_URL }]
-        : [],
-    });
+    const serializedArtifact =
+      process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+    if (!serializedArtifact) {
+      const publishedEntries = generatedManifest as unknown as CapabilityManifestEntry[];
+      return {
+        schemaVersion: 1,
+        tool: { name: "michaelos-capability-conformance", version: "1.0.0" },
+        repository: "mikeajijola/michaelos",
+        subject: { revision: null },
+        manifest: {
+          schemaVersion: 1,
+          algorithm: "sha256",
+          digest: await digestCapabilityManifest(publishedEntries),
+          path: "capabilities/generated-manifest.json",
+        },
+        generatedAt:
+          process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP ??
+          new Date(0).toISOString(),
+        testedAt: null,
+        audit: auditCapabilities(capabilities),
+        evidence: [],
+        freshness: { state: "indeterminate", reason: "SUBJECT_REVISION_UNAVAILABLE" },
+      } satisfies CapabilityConformanceEnvelope;
+    }
+    const artifact = JSON.parse(serializedArtifact) as CapabilityConformanceEnvelope;
     return evaluateCapabilityConformance(artifact, {
       revision,
       indeterminateReason:

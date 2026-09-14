@@ -242,6 +242,40 @@ describe("capability governance", () => {
     ).resolves.toMatchObject({ freshness: { state: "stale", reason: "MANIFEST_DIGEST_MISMATCH" } });
   });
 
+  it("detects when the published runtime artifact names an older revision", async () => {
+    const entries = generateCapabilityManifest(capabilities);
+    const artifact = await createCapabilityConformance({
+      revision: "published-revision",
+      entries,
+      audit: auditCapabilities(capabilities),
+      timestamp: "2026-09-14T00:00:00.000Z",
+    });
+    const previousRevision = process.env.NEXT_PUBLIC_MIKEOS_REVISION;
+    const previousArtifact = process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+    process.env.NEXT_PUBLIC_MIKEOS_REVISION = "runtime-revision";
+    process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT = JSON.stringify(artifact);
+    try {
+      const capability = capabilities.find(
+        ({ id }) => id === "system.getCapabilityConformance",
+      );
+      if (!capability) throw new Error("conformance capability is not registered");
+      await expect(capability.execute({}, {} as never)).resolves.toMatchObject({
+        subject: { revision: "published-revision" },
+        freshness: {
+          state: "stale",
+          reason: "SUBJECT_REVISION_MISMATCH",
+        },
+      });
+    } finally {
+      if (previousRevision === undefined)
+        delete process.env.NEXT_PUBLIC_MIKEOS_REVISION;
+      else process.env.NEXT_PUBLIC_MIKEOS_REVISION = previousRevision;
+      if (previousArtifact === undefined)
+        delete process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+      else process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT = previousArtifact;
+    }
+  });
+
   it("generates an indeterminate envelope when revision evidence is unavailable", async () => {
     const envelope = await createCapabilityConformance({
       revision: null,
@@ -270,6 +304,33 @@ describe("capability governance", () => {
       state: "indeterminate",
       reason: "WORKTREE_DIRTY",
     });
+    await expect(
+      evaluateCapabilityConformance(envelope, {
+        entries: generateCapabilityManifest(capabilities),
+        indeterminateReason: "WORKTREE_DIRTY",
+      }),
+    ).resolves.toMatchObject({
+      freshness: { state: "indeterminate", reason: "WORKTREE_DIRTY" },
+    });
+  });
+
+  it("does not claim test evidence unless tests were observed", async () => {
+    const envelope = await createCapabilityConformance({
+      revision: "abc123",
+      entries: generateCapabilityManifest(capabilities),
+      audit: auditCapabilities(capabilities),
+      timestamp: "2026-09-14T00:00:00.000Z",
+    });
+    expect(envelope.testedAt).toBeNull();
+    expect(envelope.evidence).toEqual([]);
+    await expect(
+      createCapabilityConformance({
+        revision: "abc123",
+        entries: generateCapabilityManifest(capabilities),
+        audit: auditCapabilities(capabilities),
+        testedAt: "2026-09-14T00:00:00.000Z",
+      }),
+    ).rejects.toThrow("testedAt requires");
   });
 
   it("audits the live registry and generates its manifest", () => {

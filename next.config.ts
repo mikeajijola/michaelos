@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { withEve } from "eve/next";
 import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 
 const gitSubject = () => {
   try {
@@ -19,6 +20,13 @@ const localSubject = gitSubject();
 const revision = localSubject.reason === "WORKTREE_DIRTY" ? "" : suppliedRevision || localSubject.revision;
 const revisionReason = revision ? "" : localSubject.reason;
 const conformanceTimestamp = process.env.MIKEOS_CONFORMANCE_TIMESTAMP || new Date().toISOString();
+const conformanceArtifact = () => {
+  try {
+    return readFileSync("capabilities/conformance.json", "utf8");
+  } catch {
+    return "";
+  }
+};
 
 const nextConfig: NextConfig = {
   images: { unoptimized: true },
@@ -28,6 +36,7 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_MIKEOS_REVISION_REASON: revisionReason,
     NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP: conformanceTimestamp,
     NEXT_PUBLIC_MIKEOS_CI_EVIDENCE_URL: process.env.CI_EVIDENCE_URL || "",
+    NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT: conformanceArtifact(),
   },
 };
 

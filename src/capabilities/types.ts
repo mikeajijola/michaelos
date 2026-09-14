@@ -101,7 +101,7 @@ export type CapabilityConformanceEnvelope = {
     path: "capabilities/generated-manifest.json";
   };
   generatedAt: string;
-  testedAt: string;
+  testedAt: string | null;
   audit: import("./governance").CapabilityAudit;
   evidence: { kind: "test" | "build" | "ci"; reference: string }[];
   freshness: { state: CapabilityFreshness; reason: CapabilityFreshnessReason | null };

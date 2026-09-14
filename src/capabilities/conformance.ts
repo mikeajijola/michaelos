@@ -35,9 +35,13 @@ export async function createCapabilityConformance(input: {
   entries: CapabilityManifestEntry[];
   audit: CapabilityAudit;
   timestamp?: string;
+  testedAt?: string | null;
   evidence?: CapabilityConformanceEnvelope["evidence"];
 }): Promise<CapabilityConformanceEnvelope> {
   const timestamp = input.timestamp ?? new Date().toISOString();
+  const evidence = input.evidence ?? [];
+  if (input.testedAt && evidence.length === 0)
+    throw new Error("testedAt requires a test, build, or CI evidence reference");
   const envelope: CapabilityConformanceEnvelope = {
     schemaVersion: 1,
     tool: CONFORMANCE_TOOL,
@@ -50,9 +54,9 @@ export async function createCapabilityConformance(input: {
       path: "capabilities/generated-manifest.json",
     },
     generatedAt: timestamp,
-    testedAt: timestamp,
+    testedAt: input.testedAt ?? null,
     audit: input.audit,
-    evidence: input.evidence ?? [],
+    evidence,
     freshness: input.revision
       ? { state: "current", reason: null }
       : {
@@ -88,7 +92,13 @@ export async function evaluateCapabilityConformance(
   return {
     ...artifact,
     freshness: reason
-      ? { state: reason === "SUBJECT_REVISION_UNAVAILABLE" ? "indeterminate" : "stale", reason }
+      ? {
+          state:
+            reason === "SUBJECT_REVISION_UNAVAILABLE" || reason === "WORKTREE_DIRTY"
+              ? "indeterminate"
+              : "stale",
+          reason,
+        }
       : { state: "current", reason: null },
   };
 }
