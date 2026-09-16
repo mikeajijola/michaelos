@@ -30,6 +30,7 @@ describe("capability registry", () => {
       expect(item.cli.command).toBeTruthy();
       expect(item.keyboard.template.at(-1)).toBe("ENTER");
       expect(item.accessibility.label).toBeTruthy();
+      expect(item.evidence.description).toBeTruthy();
       expect(item.examples.length).toBeGreaterThan(0);
     }
   });
@@ -199,6 +200,9 @@ describe("Action Key history compatibility", () => {
     ]);
     expect(event.resolvedActionKeys).toBe("PROJECT VIEW nexus-backstage ENTER");
     expect(event.resolvedProtocol).toBe("PROJECT VIEW nexus-backstage ENTER");
+    expect(event.executionStatus).toBe("failure");
+    expect(event.effectStatus).toBe("indeterminate");
+    expect(event.evidence[0].kind).toBe("legacy");
   });
 
   it("keeps a current Action Key value when both fields exist", () => {
@@ -210,6 +214,17 @@ describe("Action Key history compatibility", () => {
 });
 
 describe("capability governance", () => {
+  it("publishes and audits evidence semantics for every capability", () => {
+    const manifest = generateCapabilityManifest(capabilities);
+    expect(manifest.every((entry) => entry.evidence.description.length > 0)).toBe(true);
+    expect(manifest.find((entry) => entry.id === "accessibility.moveFocus")?.evidence.mode).toBe("postcondition");
+    expect(auditCapabilities(capabilities)).toMatchObject({ status: "pass", summary: { errors: 0 } });
+    const withoutEvidence = { ...capabilities[0], evidence: undefined };
+    expect(auditCapabilities([withoutEvidence as never]).issues).toContainEqual(
+      expect.objectContaining({ code: "INVALID_EVIDENCE_CONTRACT" }),
+    );
+  });
+
   it("reproduces deterministic manifest digests", async () => {
     const manifest = generateCapabilityManifest(capabilities);
     expect(await digestCapabilityManifest(manifest)).toBe(

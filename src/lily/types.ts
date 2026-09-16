@@ -24,6 +24,8 @@ export type CapabilityTraceEntry = {
   actionKeys: string | null;
   cliCommand: string | null;
   status: "success" | "error";
+  effectStatus: CapabilityExecution["effectStatus"];
+  evidenceSummary: string[];
   durationMs?: number;
   resultSummary?: string;
   errorMessage?: string;

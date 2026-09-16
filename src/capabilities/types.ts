@@ -15,6 +15,25 @@ export type CapabilityExample = {
   description: string;
   params: Record<string, unknown>;
 };
+export type CapabilityEffectStatus = "observed" | "requested" | "indeterminate";
+export type CapabilityEvidence = {
+  kind: "return-value" | "postcondition" | "request" | "legacy";
+  summary: string;
+  details?: unknown;
+};
+export type CapabilityEvidenceResult = {
+  effectStatus: CapabilityEffectStatus;
+  evidence: CapabilityEvidence[];
+};
+export type CapabilityEvidenceContract = {
+  mode: "return-value" | "postcondition" | "request";
+  description: string;
+  observe?: (
+    result: unknown,
+    params: Record<string, unknown>,
+    context: CapabilityContext,
+  ) => CapabilityEvidenceResult | Promise<CapabilityEvidenceResult>;
+};
 export type AppData = {
   projects: Project[];
   experience: Experience[];
@@ -69,6 +88,7 @@ export type CapabilityDefinition<
   navigator: { enabled: boolean };
   accessibility: { label: string; description?: string };
   risk: Risk;
+  evidence: CapabilityEvidenceContract;
   requiresConfirmation?: boolean;
   execute: (params: TParams, context: CapabilityContext) => Promise<TResult>;
 };
@@ -82,6 +102,7 @@ export type CapabilityManifestEntry = {
   accessibleLabel: string | null;
   risk: Risk;
   navigatorEnabled: boolean;
+  evidence: Omit<CapabilityEvidenceContract, "observe">;
 };
 export type CapabilityFreshness = "current" | "stale" | "indeterminate";
 export type CapabilityFreshnessReason =
@@ -133,6 +154,11 @@ export type CapabilityExecution = {
   caller: Caller;
   params: Record<string, unknown>;
   status: "success" | "failure";
+  /** Compatibility alias remains `status`; this names handler completion explicitly. */
+  executionStatus: "success" | "failure";
+  effectStatus: CapabilityEffectStatus;
+  evidence: CapabilityEvidence[];
+  observedAt: string | null;
   result: unknown | null;
   error: CapabilityErrorShape | null;
   durationMs: number;

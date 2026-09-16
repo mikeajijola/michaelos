@@ -303,6 +303,8 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
               capabilityId: execution.capabilityId,
               arguments: execution.params,
               status: execution.status,
+              effectStatus: execution.effectStatus,
+              evidence: execution.evidence,
               result: execution.status === "success" ? execution.result : null,
               error: execution.error,
             },
@@ -318,7 +320,9 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
           // and list results remain eligible for one grounded follow-up so a
           // search-then-open plan cannot stop before the destination opens.
           if (isNaviNavigationCapability(execution.capabilityId)) {
-            finalText = proposal.message;
+            finalText = execution.effectStatus === "observed"
+              ? proposal.message
+              : `I requested ${execution.capabilityId}, but the resulting state was not observed.`;
             break;
           }
           if (!proposal.needsAnotherTurn && !found.length) {
@@ -328,7 +332,9 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
         }
         if (!finalText)
           finalText = trace.length
-            ? "I completed the confirmed browser action."
+            ? (trace.every((entry) => entry.effectStatus === "observed")
+                ? "I completed the observed browser action."
+                : "I requested the browser action, but its resulting state was not observed.")
             : "I couldn’t map that request to an available action.";
       } catch (error) {
         failed = true;
@@ -337,6 +343,7 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
       const navigated = trace.some(
         (entry) =>
           entry.status === "success" &&
+          entry.effectStatus === "observed" &&
           isNaviNavigationCapability(entry.capabilityId),
       );
       update((current) => ({

@@ -24,7 +24,11 @@
     ],
     "accessibleLabel": "Set MikeOS colour mode",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navi.open",
@@ -39,7 +43,11 @@
     ],
     "accessibleLabel": "Open Navi",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navi.close",
@@ -54,7 +62,11 @@
     ],
     "accessibleLabel": "Close Navi",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navi.clearConversation",
@@ -69,7 +81,11 @@
     ],
     "accessibleLabel": "Clear Navi conversation",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navi.resetPosition",
@@ -85,7 +101,11 @@
     ],
     "accessibleLabel": "Reset Navi position",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navi.openConsole",
@@ -101,7 +121,11 @@
     ],
     "accessibleLabel": "Open full Agent Console",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navi.startVoice",
@@ -117,7 +141,11 @@
     ],
     "accessibleLabel": "Start Navi Voice Mode",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navi.endVoice",
@@ -133,7 +161,11 @@
     ],
     "accessibleLabel": "End Navi Voice Mode",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.openCommandSurface",
@@ -149,7 +181,11 @@
     ],
     "accessibleLabel": "Open agent capability console",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.closeCommandSurface",
@@ -165,7 +201,11 @@
     ],
     "accessibleLabel": "Close agent capability console",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.minimiseCommandSurface",
@@ -181,7 +221,11 @@
     ],
     "accessibleLabel": "Minimise agent capability console",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.restoreCommandSurface",
@@ -197,7 +241,11 @@
     ],
     "accessibleLabel": "Restore agent capability console",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.toggleCommandSurface",
@@ -213,7 +261,11 @@
     ],
     "accessibleLabel": "Toggle agent capability console",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.openTerminal",
@@ -229,7 +281,11 @@
     ],
     "accessibleLabel": "Open Agent CLI",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.openAiConsole",
@@ -245,7 +301,11 @@
     ],
     "accessibleLabel": "Open Navi in the Agent Console",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.openInspector",
@@ -261,7 +321,11 @@
     ],
     "accessibleLabel": "Open capability inspector",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.openHistory",
@@ -277,7 +341,11 @@
     ],
     "accessibleLabel": "Open capability execution history",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.openActionKeyMode",
@@ -294,7 +362,11 @@
     ],
     "accessibleLabel": "Open Action Key Mode",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.closeActionKeyMode",
@@ -311,7 +383,11 @@
     ],
     "accessibleLabel": "Close Action Key Mode",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.getApplicationInfo",
@@ -326,7 +402,11 @@
     ],
     "accessibleLabel": "Get application information",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "system.auditCapabilities",
@@ -342,7 +422,11 @@
     ],
     "accessibleLabel": "Audit registered capabilities",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "system.getCapabilityDelta",
@@ -358,7 +442,11 @@
     ],
     "accessibleLabel": "Compare capabilities with the accepted baseline",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "system.getCapabilityConformance",
@@ -374,7 +462,11 @@
     ],
     "accessibleLabel": "Get current capability conformance",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "system.reportCapabilityIssue",
@@ -428,7 +520,11 @@
     ],
     "accessibleLabel": "Report a local capability issue",
     "risk": "write",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "system.exportCapabilityReports",
@@ -445,7 +541,11 @@
     ],
     "accessibleLabel": "Export local capability reports",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "navigation.goHome",
@@ -460,7 +560,11 @@
     ],
     "accessibleLabel": "Open Home",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goProjects",
@@ -475,7 +579,11 @@
     ],
     "accessibleLabel": "Open Projects",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goExperience",
@@ -490,7 +598,11 @@
     ],
     "accessibleLabel": "Open Experience",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goBlog",
@@ -505,7 +617,11 @@
     ],
     "accessibleLabel": "Open Blog",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goCv",
@@ -520,7 +636,11 @@
     ],
     "accessibleLabel": "Open Cv",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goCapabilities",
@@ -535,7 +655,11 @@
     ],
     "accessibleLabel": "Open Capabilities",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goBack",
@@ -550,7 +674,11 @@
     ],
     "accessibleLabel": "Go back",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.nextHeading",
@@ -566,7 +694,11 @@
     ],
     "accessibleLabel": "Move to the next reading heading",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.previousHeading",
@@ -582,7 +714,11 @@
     ],
     "accessibleLabel": "Move to the previous reading heading",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goHeading",
@@ -605,7 +741,11 @@
     ],
     "accessibleLabel": "Move to a named reading heading",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goTop",
@@ -620,7 +760,11 @@
     ],
     "accessibleLabel": "Move to the top of the page",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "navigation.goMainContent",
@@ -636,7 +780,11 @@
     ],
     "accessibleLabel": "Move to the main content",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "project.list",
@@ -658,7 +806,11 @@
     ],
     "accessibleLabel": "List portfolio projects",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "project.search",
@@ -681,7 +833,11 @@
     ],
     "accessibleLabel": "Search portfolio projects",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "project.view",
@@ -704,7 +860,11 @@
     ],
     "accessibleLabel": "Open project details",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "project.filter",
@@ -727,7 +887,11 @@
     ],
     "accessibleLabel": "Filter portfolio projects",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "project.openExternal",
@@ -751,7 +915,11 @@
     ],
     "accessibleLabel": "Open project external link",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "experience.list",
@@ -766,7 +934,11 @@
     ],
     "accessibleLabel": "List professional experience",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "experience.view",
@@ -789,7 +961,11 @@
     ],
     "accessibleLabel": "View experience details",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "experience.filter",
@@ -812,7 +988,11 @@
     ],
     "accessibleLabel": "Filter professional experience",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "article.list",
@@ -827,7 +1007,11 @@
     ],
     "accessibleLabel": "List available articles",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "article.search",
@@ -850,7 +1034,11 @@
     ],
     "accessibleLabel": "Search available articles",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "article.view",
@@ -873,7 +1061,11 @@
     ],
     "accessibleLabel": "Open article",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "article.filterByTag",
@@ -897,7 +1089,11 @@
     ],
     "accessibleLabel": "Filter articles by tag",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "article.openExternal",
@@ -921,7 +1117,11 @@
     ],
     "accessibleLabel": "Open external article",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "skill.list",
@@ -936,7 +1136,11 @@
     ],
     "accessibleLabel": "List skills",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "skill.search",
@@ -959,7 +1163,11 @@
     ],
     "accessibleLabel": "Search skills",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "skill.filterByCategory",
@@ -983,7 +1191,11 @@
     ],
     "accessibleLabel": "Filter skills by category",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "cv.view",
@@ -998,7 +1210,11 @@
     ],
     "accessibleLabel": "View curriculum vitae",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "cv.navigateSection",
@@ -1021,7 +1237,11 @@
     ],
     "accessibleLabel": "Navigate CV section",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "cv.exportJson",
@@ -1037,7 +1257,11 @@
     ],
     "accessibleLabel": "Export CV as JSON",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "cv.print",
@@ -1052,7 +1276,11 @@
     ],
     "accessibleLabel": "Print or export curriculum vitae as PDF",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   },
   {
     "id": "inspector.getLastExecution",
@@ -1067,7 +1295,11 @@
     ],
     "accessibleLabel": "Get latest capability execution",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "inspector.listHistory",
@@ -1082,7 +1314,11 @@
     ],
     "accessibleLabel": "List capability history",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "inspector.filterHistory",
@@ -1105,7 +1341,11 @@
     ],
     "accessibleLabel": "Filter capability history",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "accessibility.describeElement",
@@ -1120,7 +1360,11 @@
     ],
     "accessibleLabel": "Describe selected interface element",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "accessibility.listPageActions",
@@ -1136,7 +1380,11 @@
     ],
     "accessibleLabel": "List accessible page actions",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
   },
   {
     "id": "accessibility.moveFocus",
@@ -1163,7 +1411,11 @@
     ],
     "accessibleLabel": "Move focus between page actions",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "postcondition",
+      "description": "The focused capability control is observed after the handler completes."
+    }
   },
   {
     "id": "accessibility.activateFocused",
@@ -1178,6 +1430,10 @@
     ],
     "accessibleLabel": "Activate focused page action",
     "risk": "read",
-    "navigatorEnabled": true
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "request",
+      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+    }
   }
 ]

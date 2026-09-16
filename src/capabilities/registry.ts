@@ -653,6 +653,20 @@ type Spec = Omit<CapabilityDefinition, "execute" | "examples"> & {
 // from the handlers prevents the conversational interface from drifting into
 // a second, incomplete capability list as the website evolves.
 const navigatorIds = new Set(Object.keys(handlers));
+const requestedEffectIds = new Set([
+  "theme.setMode", "navi.open", "navi.close", "navi.clearConversation",
+  "navi.resetPosition", "navi.openConsole", "navi.startVoice", "navi.endVoice",
+  "system.openCommandSurface", "system.closeCommandSurface", "system.minimiseCommandSurface",
+  "system.restoreCommandSurface", "system.toggleCommandSurface", "system.openTerminal",
+  "system.openAiConsole", "system.openInspector", "system.openHistory",
+  "system.openActionKeyMode", "system.closeActionKeyMode", "system.reportCapabilityIssue",
+  "navigation.goHome", "navigation.goProjects", "navigation.goExperience", "navigation.goBlog",
+  "navigation.goCv", "navigation.goCapabilities", "navigation.goBack", "navigation.nextHeading",
+  "navigation.previousHeading", "navigation.goHeading", "navigation.goTop", "navigation.goMainContent",
+  "project.view", "project.openExternal", "article.view", "article.openExternal", "cv.view",
+  "cv.navigateSection", "cv.exportJson", "cv.print",
+  "accessibility.activateFocused",
+]);
 const define = (spec: Spec): CapabilityDefinition => ({
   ...spec,
   examples: [
@@ -683,6 +697,21 @@ const base = (
   navigator: { enabled: navigatorIds.has(id) },
   accessibility: { label: accessibility },
   risk: "read",
+  evidence: id === "accessibility.moveFocus"
+    ? {
+        mode: "postcondition",
+        description: "The focused capability control is observed after the handler completes.",
+        observe: (result) => {
+          const expected = (result as { focused?: string } | null)?.focused;
+          const actual = (document.activeElement as HTMLElement | null)?.dataset.capabilityId;
+          return expected && actual === expected
+            ? { effectStatus: "observed", evidence: [{ kind: "postcondition", summary: "Focus moved to the requested capability control.", details: { expected, actual } }] }
+            : { effectStatus: "indeterminate", evidence: [{ kind: "postcondition", summary: "The requested focus target could not be observed.", details: { expected, actual } }] };
+        },
+      }
+    : requestedEffectIds.has(id)
+      ? { mode: "request", description: "The handler proves that the effect was requested, not that the resulting state was observed." }
+      : { mode: "return-value", description: "The returned data is the observed outcome of this read operation." },
   params,
   example,
 });

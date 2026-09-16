@@ -220,7 +220,7 @@ function ExecutionHistory() {
               {item.caller} · {new Date(item.timestamp).toLocaleString()}
             </small>
           </span>
-          <b className={item.status}>{item.status}</b>
+          <b className={item.status}>{item.status} · {item.effectStatus}</b>
         </button>
       ))}
     </div>
@@ -252,6 +252,12 @@ export function ExecutionInspector({ compact = false }: { compact?: boolean }) {
         </dd>
         <dt>Status</dt>
         <dd className={last.status}>{last.status}</dd>
+        <dt>Effect</dt>
+        <dd>{last.effectStatus}</dd>
+        <dt>Evidence</dt>
+        <dd>{last.evidence.map((item) => item.summary).join("; ") || "No effect evidence captured"}</dd>
+        <dt>Observed</dt>
+        <dd>{last.observedAt ? new Date(last.observedAt).toLocaleString() : "Not observed"}</dd>
         <dt>Parameters</dt>
         <dd>
           <code>{JSON.stringify(last.params)}</code>

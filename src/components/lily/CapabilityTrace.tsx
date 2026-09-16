@@ -55,6 +55,10 @@ export function CapabilityTrace({
                     ? `Success${entry.durationMs ? ` · ${entry.durationMs} ms` : ""}`
                     : `Error${entry.errorMessage ? ` · ${entry.errorMessage}` : ""}`}
                 </dd>
+                <dt>Effect</dt>
+                <dd>{entry.effectStatus}</dd>
+                <dt>Evidence</dt>
+                <dd>{entry.evidenceSummary.join("; ") || "No effect evidence captured"}</dd>
               </dl>
               <div className="trace-actions">
                 <button
