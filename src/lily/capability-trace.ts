@@ -16,6 +16,8 @@ export function capabilityTraceFromExecution(
     actionKeys: invocation.actionKeys,
     cliCommand: invocation.cliCommand,
     status: execution.status === "success" ? "success" : "error",
+    effectStatus: execution.effectStatus,
+    evidenceSummary: execution.evidence.map((item) => item.summary),
     durationMs: execution.durationMs,
     resultSummary: summariseResult(execution.result),
     errorMessage: execution.error?.message,

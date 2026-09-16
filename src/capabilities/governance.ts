@@ -18,6 +18,10 @@ export function capabilityToManifestEntry(capability: CapabilityDefinition): Cap
     accessibleLabel: capability.accessibility.label || null,
     risk: capability.risk,
     navigatorEnabled: capability.navigator.enabled,
+    evidence: {
+      mode: capability.evidence.mode,
+      description: capability.evidence.description,
+    },
   };
 }
 
@@ -75,6 +79,8 @@ export function auditCapabilities(definitions: CapabilityDefinition[], uiCapabil
     if (!Number.isInteger(capability.schemaVersion) || capability.schemaVersion < 1) report("INVALID_SCHEMA_VERSION", "error", "schemaVersion must be a positive integer.", capability.id);
     if (!risks.has(capability.risk)) report("INVALID_RISK", "error", `Risk ${String(capability.risk)} is unsupported.`, capability.id);
     if (!capability.accessibility.label.trim()) report("MISSING_ACCESSIBLE_LABEL", "error", "Accessible label is required.", capability.id);
+    if (!capability.evidence || !["return-value", "postcondition", "request"].includes(capability.evidence.mode) || !capability.evidence.description?.trim()) report("INVALID_EVIDENCE_CONTRACT", "error", "A supported evidence mode and description are required.", capability.id);
+    if (capability.evidence?.mode === "postcondition" && typeof capability.evidence.observe !== "function") report("MISSING_EVIDENCE_OBSERVER", "error", "Postcondition evidence requires an observer.", capability.id);
     if (capability.cli.enabled && !capability.cli.command.trim()) report("MISSING_CLI_MAPPING", "error", "CLI is enabled without a command.", capability.id);
     if (capability.actionKeys.enabled && !capability.actionKeys.sequence.length) report("MISSING_ACTION_KEYS", "error", "Action Keys are enabled without a sequence.", capability.id);
     if (capability.navigator.enabled && capability.risk === "destructive" && !capability.requiresConfirmation) report("NAVIGATOR_CONFIRMATION_REQUIRED", "error", "Destructive Navi capabilities require confirmation metadata.", capability.id);
