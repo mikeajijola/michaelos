@@ -5,7 +5,7 @@ import { resolveCli, resolveTemplate } from "@/capabilities/protocol";
 import { useCapabilities } from "@/capabilities/context";
 import { ExecutionInspector } from "@/components/agent/AgentSurface";
 import type { CapabilityConformanceEnvelope } from "@/capabilities/types";
-import { presentCapabilityConformance } from "@/capabilities/presentation";
+import { ConformanceStatus } from "./ConformanceStatus";
 
 export function ArchitectureWorkbench() {
   const runtime = useCapabilities();
@@ -173,21 +173,13 @@ function GovernanceWorkbench() {
     setConformance(value);
     setOutput(value ?? event.error);
   };
-  const conformanceView = conformance
-    ? presentCapabilityConformance(conformance)
-    : null;
   return (
     <section
       className="governance-workbench"
       aria-label="Capability governance"
     >
-      <div aria-live="polite" role="status" data-conformance-state={conformanceView?.status}>
-        <h2>Current conformance</h2>
-        <p>
-          {conformanceView
-            ? `${conformanceView.status}: revision ${conformanceView.revision} · manifest ${conformanceView.digest} · reason ${conformanceView.reason}`
-            : "Verify the published manifest against this exact build revision."}
-        </p>
+      <div>
+        <ConformanceStatus conformance={conformance} />
         <button
           data-capability-id="system.getCapabilityConformance"
           onClick={() => void showConformance()}

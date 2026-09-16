@@ -725,7 +725,7 @@ const postconditionEvidence = (id: string): CapabilityDefinition["evidence"] | n
         : indeterminate("The requested Agent Console client was not observed.", { expected, actual });
     },
   };
-  if (["system.closeCommandSurface", "system.minimiseCommandSurface"].includes(id)) return {
+  if (id === "system.closeCommandSurface") return {
     mode: "postcondition",
     description: "The Agent Console closed state is observed after execution.",
     observe: async (_result, _params, context) => {
@@ -733,6 +733,27 @@ const postconditionEvidence = (id: string): CapabilityDefinition["evidence"] | n
       return !(actual as { open: boolean }).open
         ? observed("The Agent Console is closed.", actual)
         : indeterminate("The Agent Console remained open.", actual);
+    },
+  };
+  if (id === "system.minimiseCommandSurface") return {
+    mode: "postcondition",
+    description: "The Agent Console minimised state is observed after execution.",
+    observe: async (_result, _params, context) => {
+      const actual = await observeUntil(
+        () => context.surface.getState(),
+        value => (value as { open: boolean; minimised: boolean }).open
+          && (value as { open: boolean; minimised: boolean }).minimised,
+      );
+      const state = actual as { open: boolean; minimised: boolean };
+      return state.open && state.minimised
+        ? observed("The Agent Console is minimised.", {
+            expected: { open: true, minimised: true },
+            actual,
+          })
+        : indeterminate("The Agent Console minimised state was not observed.", {
+            expected: { open: true, minimised: true },
+            actual,
+          });
     },
   };
   if (id === "system.restoreCommandSurface") return {

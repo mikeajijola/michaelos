@@ -23,6 +23,7 @@ import {
   formatCapabilityConformance,
   presentCapabilityConformance,
 } from "./presentation";
+import { runCommand } from "@/terminal/commands";
 
 describe("capability registry", () => {
   it("has unique, complete definitions", () => {
@@ -293,6 +294,69 @@ describe("capability governance", () => {
       if (originalDocument === undefined) delete (globalThis as { document?: Document }).document;
       else Object.defineProperty(globalThis, "document", { configurable: true, value: originalDocument });
     }
+  });
+
+  it("proves minimisation only when the console remains open and minimised", async () => {
+    const minimise = capabilities.find(
+      ({ id }) => id === "system.minimiseCommandSurface",
+    )!;
+    const context = (state: { open: boolean; minimised: boolean }) => ({
+      surface: { getState: () => ({ ...state, tab: "terminal" as const }) },
+    });
+
+    await expect(minimise.evidence.observe!(null, {}, context({
+      open: true,
+      minimised: true,
+    }) as never)).resolves.toMatchObject({
+      effectStatus: "observed",
+      evidence: [{ details: { expected: { open: true, minimised: true } } }],
+    });
+    await expect(minimise.evidence.observe!(null, {}, context({
+      open: false,
+      minimised: false,
+    }) as never)).resolves.toMatchObject({
+      effectStatus: "indeterminate",
+    });
+    await expect(minimise.evidence.observe!(null, {}, context({
+      open: true,
+      minimised: false,
+    }) as never)).resolves.toMatchObject({
+      effectStatus: "indeterminate",
+    });
+  });
+
+  it("returns the canonical execution outcome from the CLI run surface", async () => {
+    const event = {
+      executionId: "exec_test",
+      capabilityId: "system.getCapabilityConformance",
+      caller: "terminal" as const,
+      params: {},
+      status: "success" as const,
+      executionStatus: "success" as const,
+      effectStatus: "observed" as const,
+      evidence: [{ kind: "return-value" as const, summary: "Envelope returned." }],
+      observedAt: "2026-09-14T00:00:00.000Z",
+      result: { freshness: { state: "current" } },
+      error: null,
+      durationMs: 1,
+      timestamp: "2026-09-14T00:00:00.000Z",
+      resolvedCli: "run system.getCapabilityConformance",
+      resolvedActionKeys: "SYSTEM CAPABILITY CONFORMANCE ENTER",
+      accessibilityLabel: "Get current capability conformance",
+      confirmationStatus: "not-required" as const,
+    };
+    const output = await runCommand(
+      "run system.getCapabilityConformance --json",
+      { caller: "terminal", execute: async () => event, history: [], clear: () => {} },
+    );
+
+    expect(JSON.parse(output)).toMatchObject({
+      executionStatus: "success",
+      effectStatus: "observed",
+      evidence: event.evidence,
+      observedAt: event.observedAt,
+      data: event.result,
+    });
   });
 
   it("classifies current, stale, and indeterminate conformance", async () => {

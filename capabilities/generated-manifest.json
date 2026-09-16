@@ -224,7 +224,7 @@
     "navigatorEnabled": true,
     "evidence": {
       "mode": "postcondition",
-      "description": "The Agent Console open state and selected client are observed after execution."
+      "description": "The Agent Console minimised state is observed after execution."
     }
   },
   {
