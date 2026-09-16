@@ -9,6 +9,7 @@
     "capabilities:manifest": "tsx scripts/generate-capability-manifest.ts",
     "capabilities:check": "tsx scripts/generate-capability-manifest.ts --check",
     "capabilities:ci": "tsx scripts/generate-capability-manifest.ts --check --require-exact-revision --output=capabilities/conformance.json",
+    "test:e2e": "playwright test",
     "test": "vitest run",
     "start": "next start",
     "lint": "next lint"
@@ -26,6 +27,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.3",
     "@types/react-dom": "^19.0.2",
