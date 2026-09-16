@@ -26,8 +26,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The document colour mode is observed after the theme request."
     }
   },
   {
@@ -45,8 +45,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The compact Navi panel presence is observed after execution."
     }
   },
   {
@@ -64,8 +64,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The compact Navi panel presence is observed after execution."
     }
   },
   {
@@ -83,8 +83,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console open state and selected client are observed after execution."
     }
   },
   {
@@ -103,8 +103,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console open state and selected client are observed after execution."
     }
   },
   {
@@ -123,8 +123,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console closed state is observed after execution."
     }
   },
   {
@@ -143,8 +143,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console closed state is observed after execution."
     }
   },
   {
@@ -163,8 +163,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console restored state is observed after execution."
     }
   },
   {
@@ -183,8 +183,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The resulting Agent Console state is observed after execution."
     }
   },
   {
@@ -203,8 +203,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console open state and selected client are observed after execution."
     }
   },
   {
@@ -223,8 +223,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console open state and selected client are observed after execution."
     }
   },
   {
@@ -243,8 +243,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console open state and selected client are observed after execution."
     }
   },
   {
@@ -263,8 +263,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Agent Console open state and selected client are observed after execution."
     }
   },
   {
@@ -283,8 +283,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Action Key dialog presence is observed after execution."
     }
   },
   {
@@ -303,8 +303,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The Action Key dialog presence is observed after execution."
     }
   },
   {
@@ -323,8 +323,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -343,8 +343,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -364,8 +364,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -385,8 +385,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -522,8 +522,8 @@
     "risk": "write",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The persisted capability report is read back from the local database."
     }
   },
   {
@@ -562,8 +562,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -581,8 +581,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -600,8 +600,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "A browser route change is observed after back navigation."
     }
   },
   {
@@ -619,8 +619,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The requested reading target is observed as document focus."
     }
   },
   {
@@ -638,8 +638,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The requested reading target is observed as document focus."
     }
   },
   {
@@ -657,8 +657,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The requested reading target is observed as document focus."
     }
   },
   {
@@ -676,8 +676,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The requested reading target is observed as document focus."
     }
   },
   {
@@ -696,8 +696,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The requested reading target is observed as document focus."
     }
   },
   {
@@ -716,8 +716,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -808,8 +808,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "return-value",
-      "description": "The returned data is the observed outcome of this read operation."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -862,8 +862,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -917,8 +917,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {
@@ -1063,8 +1063,8 @@
     "risk": "read",
     "navigatorEnabled": true,
     "evidence": {
-      "mode": "request",
-      "description": "The handler proves that the effect was requested, not that the resulting state was observed."
+      "mode": "postcondition",
+      "description": "The browser route is observed after navigation completes."
     }
   },
   {

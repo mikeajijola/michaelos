@@ -11,6 +11,8 @@ import {
 import { usePathname } from "next/navigation";
 import { Client, type ClientSession } from "eve/client";
 import { useCapabilities } from "@/capabilities/context";
+import { formatCapabilityConformance } from "@/capabilities/presentation";
+import type { CapabilityConformanceEnvelope } from "@/capabilities/types";
 import { capabilityTraceFromExecution } from "./capability-trace";
 import {
   buildLilyClientContext,
@@ -298,6 +300,15 @@ export function LilyProvider({ children }: { children: React.ReactNode }) {
             returnedReferences: found,
             errorMessage: execution.error?.message,
           });
+          if (
+            execution.capabilityId === "system.getCapabilityConformance" &&
+            execution.status === "success"
+          ) {
+            finalText = formatCapabilityConformance(
+              execution.result as CapabilityConformanceEnvelope,
+            );
+            break;
+          }
           prompt = JSON.stringify({
             browserExecution: {
               capabilityId: execution.capabilityId,

@@ -48,6 +48,7 @@ export type SurfaceController = {
   restore: () => void;
   toggle: () => void;
   selectTab: (tab: SurfaceTab) => void;
+  getState: () => { open: boolean; minimised: boolean; tab: SurfaceTab };
 };
 export type SelectedControl = {
   text: string;
@@ -70,6 +71,7 @@ export type CapabilityContext = {
   database: CapabilityDatabase;
   getHistory: () => CapabilityExecution[];
   getSelectedControl: () => SelectedControl | null;
+  getLocation: () => string;
 };
 export type CapabilityDefinition<
   TParams extends Record<string, unknown> = Record<string, unknown>,

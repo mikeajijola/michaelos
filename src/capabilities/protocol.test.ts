@@ -19,6 +19,10 @@ import {
   resolveCli,
   resolveTemplate,
 } from "./protocol";
+import {
+  formatCapabilityConformance,
+  presentCapabilityConformance,
+} from "./presentation";
 
 describe("capability registry", () => {
   it("has unique, complete definitions", () => {
@@ -218,6 +222,18 @@ describe("capability governance", () => {
     const manifest = generateCapabilityManifest(capabilities);
     expect(manifest.every((entry) => entry.evidence.description.length > 0)).toBe(true);
     expect(manifest.find((entry) => entry.id === "accessibility.moveFocus")?.evidence.mode).toBe("postcondition");
+    for (const id of [
+      "theme.setMode",
+      "navigation.goCapabilities",
+      "system.openInspector",
+      "system.openActionKeyMode",
+      "navi.open",
+      "system.reportCapabilityIssue",
+    ]) {
+      expect(manifest.find((entry) => entry.id === id)?.evidence.mode).toBe(
+        "postcondition",
+      );
+    }
     expect(auditCapabilities(capabilities)).toMatchObject({ status: "pass", summary: { errors: 0 } });
     const withoutEvidence = { ...capabilities[0], evidence: undefined };
     expect(auditCapabilities([withoutEvidence as never]).issues).toContainEqual(
@@ -230,6 +246,53 @@ describe("capability governance", () => {
     expect(await digestCapabilityManifest(manifest)).toBe(
       await digestCapabilityManifest(structuredClone(manifest)),
     );
+  });
+
+  it("uses one lossless human projection for every conformance surface", async () => {
+    const envelope = await createCapabilityConformance({
+      revision: "0123456789abcdef",
+      entries: generateCapabilityManifest(capabilities),
+      audit: auditCapabilities(capabilities),
+      timestamp: "2026-09-14T00:00:00.000Z",
+    });
+    const view = presentCapabilityConformance(envelope);
+    expect(view).toEqual({
+      status: "current",
+      revision: "0123456789abcdef",
+      digest: envelope.manifest.digest,
+      reason: "none",
+    });
+    expect(JSON.stringify(envelope)).toContain(view.revision);
+    expect(JSON.stringify(envelope)).toContain(view.digest);
+    const naviText = formatCapabilityConformance(envelope);
+    expect(naviText).toContain(view.status);
+    expect(naviText).toContain(view.revision);
+    expect(naviText).toContain(view.digest);
+    expect(naviText).toContain(view.reason);
+  });
+
+  it("observes theme and Agent Console postconditions instead of upgrading requests", async () => {
+    const theme = capabilities.find(({ id }) => id === "theme.setMode")!;
+    const inspector = capabilities.find(({ id }) => id === "system.openInspector")!;
+    const originalDocument = globalThis.document;
+    Object.defineProperty(globalThis, "document", {
+      configurable: true,
+      value: { documentElement: { dataset: { theme: "dark" } } },
+    });
+    try {
+      await expect(theme.evidence.observe!(null, { mode: "dark" }, {} as never))
+        .resolves.toMatchObject({ effectStatus: "observed" });
+      await expect(theme.evidence.observe!(null, { mode: "light" }, {} as never))
+        .resolves.toMatchObject({ effectStatus: "indeterminate" });
+      const context = {
+        surface: { getState: () => ({ open: true, minimised: false, tab: "inspector" }) },
+      };
+      await expect(inspector.evidence.observe!(null, {}, context as never))
+        .resolves.toMatchObject({ effectStatus: "observed" });
+    } finally {
+      if (originalDocument === undefined) delete (globalThis as { document?: Document }).document;
+      else Object.defineProperty(globalThis, "document", { configurable: true, value: originalDocument });
+    }
   });
 
   it("classifies current, stale, and indeterminate conformance", async () => {
