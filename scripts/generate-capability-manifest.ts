@@ -14,9 +14,15 @@ const git = (args: string[]) => {
 };
 const trackedWorktreeDirty = () => {
   try {
-    execFileSync("git", ["diff-index", "--quiet", "HEAD", "--"], {
-      stdio: "ignore",
-    });
+    // Hosting installers may normalize lockfile metadata after resolving the
+    // exact committed dependency graph. That does not mutate application or
+    // capability source, so keep the source-integrity check scoped to every
+    // tracked path except the installer-owned lockfile.
+    execFileSync(
+      "git",
+      ["diff-index", "--quiet", "HEAD", "--", ".", ":(exclude)package-lock.json"],
+      { stdio: "ignore" },
+    );
     return false;
   } catch {
     return true;

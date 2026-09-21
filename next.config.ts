@@ -5,9 +5,11 @@ import { readFileSync } from "node:fs";
 
 const gitSubject = () => {
   try {
-    execFileSync("git", ["diff-index", "--quiet", "HEAD", "--"], {
-      stdio: "ignore",
-    });
+    execFileSync(
+      "git",
+      ["diff-index", "--quiet", "HEAD", "--", ".", ":(exclude)package-lock.json"],
+      { stdio: "ignore" },
+    );
     return {
       revision: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
       reason: "",
