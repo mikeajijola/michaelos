@@ -1,0 +1,5988 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "src/capabilities/registry.ts",
+  "matrix": [
+    {
+      "capabilityId": "accessibility.activateFocused",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "accessibility.describeElement",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "accessibility.listPageActions",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "accessibility.moveFocus",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Focus direction.\",\"name\":\"direction\",\"required\":true,\"type\":\"enum\",\"values\":[\"next\",\"previous\"]}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "article.filterByTag",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Article tag.\",\"name\":\"tag\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "article.list",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "article.openExternal",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Article slug.\",\"name\":\"slug\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "article.search",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Words to search for.\",\"name\":\"query\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "article.view",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"The article slug.\",\"name\":\"slug\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "cv.exportJson",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "cv.navigateSection",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"CV section ID.\",\"name\":\"section\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "cv.print",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "cv.view",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "experience.filter",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Filter text.\",\"name\":\"query\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "experience.list",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "experience.view",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Experience record ID.\",\"name\":\"id\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "inspector.filterHistory",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Filter text.\",\"name\":\"query\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "inspector.getLastExecution",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "inspector.listHistory",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "knowledge.search",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Cross-domain knowledge query.\",\"name\":\"query\",\"required\":true,\"type\":\"string\"},{\"default\":\"all\",\"description\":\"Optional knowledge kind filter.\",\"name\":\"kind\",\"required\":false,\"type\":\"enum\",\"values\":[\"all\",\"project\",\"article\",\"experience\",\"education\",\"skill\",\"recognition\",\"profile\"]},{\"default\":8,\"description\":\"Maximum result count.\",\"name\":\"limit\",\"required\":false,\"type\":\"number\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navi.clearConversation",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navi.close",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navi.endVoice",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navi.open",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navi.openConsole",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navi.resetPosition",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navi.startVoice",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goBack",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goBlog",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goCapabilities",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goCv",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goExperience",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goHeading",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Visible heading title to find on the current page.\",\"name\":\"heading\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goHome",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goMainContent",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goProjects",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.goTop",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.nextHeading",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "navigation.previousHeading",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "project.filter",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Technology or status.\",\"name\":\"value\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "project.list",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Only featured projects.\",\"name\":\"featured\",\"required\":false,\"type\":\"boolean\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "project.openExternal",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"The project slug.\",\"name\":\"slug\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "project.search",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Words to search for.\",\"name\":\"query\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "project.view",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"The unique project slug.\",\"name\":\"slug\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "skill.filterByCategory",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Skill category.\",\"name\":\"category\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "skill.list",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "skill.search",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Words to search for.\",\"name\":\"query\",\"required\":true,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.auditCapabilities",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.closeActionKeyMode",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.closeCommandSurface",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.exportCapabilityReports",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.getApplicationInfo",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.getCapabilityConformance",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.getCapabilityDelta",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.minimiseCommandSurface",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.openActionKeyMode",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.openAiConsole",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.openCommandSurface",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.openHistory",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.openInspector",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.openTerminal",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.reportCapabilityIssue",
+      "schemaVersion": 1,
+      "risk": "write",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Related capability ID, when known.\",\"name\":\"capabilityId\",\"required\":false,\"type\":\"string\"},{\"description\":\"Type of capability or QA issue.\",\"name\":\"reportType\",\"required\":true,\"type\":\"string\"},{\"description\":\"Issue severity.\",\"name\":\"severity\",\"required\":true,\"type\":\"enum\",\"values\":[\"info\",\"warning\",\"error\"]},{\"description\":\"Human-readable issue details.\",\"name\":\"details\",\"required\":true,\"type\":\"string\"},{\"description\":\"Route where the issue occurred.\",\"name\":\"route\",\"required\":false,\"type\":\"string\"}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.restoreCommandSurface",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "system.toggleCommandSurface",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    },
+    {
+      "capabilityId": "theme.setMode",
+      "schemaVersion": 1,
+      "risk": "read",
+      "requiresConfirmation": false,
+      "parameterContract": "[{\"description\":\"Colour mode to apply.\",\"name\":\"mode\",\"required\":true,\"type\":\"enum\",\"values\":[\"light\",\"dark\"]}]",
+      "interfaces": [
+        {
+          "interface": "ui",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "terminal",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "agent",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": "Machine protocol shares the canonical CLI adapter; browser execution is not applicable."
+        },
+        {
+          "interface": "navigator",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "hotkey",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        },
+        {
+          "interface": "accessibility",
+          "enabled": true,
+          "assertions": [
+            "canonical-id",
+            "parameters",
+            "risk",
+            "confirmation",
+            "shared-executor",
+            "distinct-provenance"
+          ],
+          "runtimeReason": null
+        }
+      ]
+    }
+  ],
+  "protocol": [
+    {
+      "capabilityId": "knowledge.search",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "theme.setMode",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navi.open",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navi.close",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navi.clearConversation",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navi.resetPosition",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navi.openConsole",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navi.startVoice",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navi.endVoice",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.openCommandSurface",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.closeCommandSurface",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.minimiseCommandSurface",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.restoreCommandSurface",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.toggleCommandSurface",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.openTerminal",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.openAiConsole",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.openInspector",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.openHistory",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.openActionKeyMode",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.closeActionKeyMode",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.getApplicationInfo",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.auditCapabilities",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.getCapabilityDelta",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.getCapabilityConformance",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.reportCapabilityIssue",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "system.exportCapabilityReports",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goHome",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goProjects",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goExperience",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goBlog",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goCv",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goCapabilities",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goBack",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.nextHeading",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.previousHeading",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goHeading",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goTop",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "navigation.goMainContent",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "project.list",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "project.search",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "project.view",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "project.filter",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "project.openExternal",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "experience.list",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "experience.view",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "experience.filter",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "article.list",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "article.search",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "article.view",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "article.filterByTag",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "article.openExternal",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "skill.list",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "skill.search",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "skill.filterByCategory",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "cv.view",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "cv.navigateSection",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "cv.exportJson",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "cv.print",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "inspector.getLastExecution",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "inspector.listHistory",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "inspector.filterHistory",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "accessibility.describeElement",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "accessibility.listPageActions",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "accessibility.moveFocus",
+      "status": "pass",
+      "failures": []
+    },
+    {
+      "capabilityId": "accessibility.activateFocused",
+      "status": "pass",
+      "failures": []
+    }
+  ]
+}

@@ -2,7 +2,42 @@ import type { Article, Experience, Project, Skill } from "@/data/content";
 
 export type Caller =
   "ui" | "terminal" | "agent" | "navigator" | "hotkey" | "accessibility";
+export type ActorKind = "human" | "machine" | "agent" | "service" | "embodied" | "legacy";
+export type InvocationProvenance = {
+  actor: { id: string; kind: ActorKind };
+  interface: Caller;
+  modality: "visual" | "keyboard" | "text" | "voice" | "api" | "assistive" | "embodied" | "unknown";
+  delegatedBy?: string;
+};
 export type Risk = "read" | "navigation" | "write" | "destructive";
+export type AuthorityGrant = {
+  schemaVersion: 1;
+  grantId: string;
+  subject: string;
+  capabilityId: string;
+  arguments: Record<string, unknown>;
+  target?: string;
+  risks: Risk[];
+  issuedAt: string;
+  expiresAt: string;
+  parent?: AuthorityGrant;
+};
+export type AuthorityDecision = {
+  state: "allowed" | "denied";
+  code: string;
+  source: "local-policy" | "grant";
+  grantId: string | null;
+  grantDigest: string | null;
+  parentGrantId: string | null;
+};
+export type RealisationStatus = "available" | "degraded" | "unavailable" | "indeterminate";
+export type AvailabilityEvidence = {
+  realisationId: string;
+  status: RealisationStatus;
+  reasonCode: string;
+  observedAt: string;
+  summary: string;
+};
 export type CapabilityParameter = {
   name: string;
   description: string;
@@ -90,6 +125,10 @@ export type CapabilityDefinition<
   navigator: { enabled: boolean };
   accessibility: { label: string; description?: string };
   risk: Risk;
+  realisation?: {
+    id: string;
+    inspect: (context: CapabilityContext) => AvailabilityEvidence | Promise<AvailabilityEvidence>;
+  };
   evidence: CapabilityEvidenceContract;
   requiresConfirmation?: boolean;
   execute: (params: TParams, context: CapabilityContext) => Promise<TResult>;
@@ -154,6 +193,10 @@ export type CapabilityExecution = {
   executionId: string;
   capabilityId: string;
   caller: Caller;
+  /** Required on newly recorded v3 events; optional here so persisted v2 fixtures remain readable. */
+  provenance?: InvocationProvenance;
+  authority?: AuthorityDecision;
+  availability?: AvailabilityEvidence;
   params: Record<string, unknown>;
   status: "success" | "failure";
   /** Compatibility alias remains `status`; this names handler completion explicitly. */
@@ -170,6 +213,12 @@ export type CapabilityExecution = {
   /** Legacy persisted field retained for v2 history compatibility. */ resolvedProtocol?: string;
   accessibilityLabel: string;
   confirmationStatus: "not-required" | "confirmed" | "declined";
+};
+export type InvocationSecurity = {
+  provenance?: InvocationProvenance;
+  grant?: AuthorityGrant;
+  target?: string;
+  now?: Date;
 };
 export type CanonicalCapabilityInvocation = {
   capabilityId: string;

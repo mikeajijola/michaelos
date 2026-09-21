@@ -83,6 +83,33 @@ test("Agent CLI publishes the machine envelope and shared execution identity", a
   await expect(console).toContainText(capabilityId);
 });
 
+test("runtime history preserves authority, availability, provenance and grounded retrieval", async ({ page }) => {
+  await openCapabilities(page);
+  await page.getByRole("button", { name: "Open Agent CLI" }).click();
+  const terminal = page.getByLabel("MikeOS Agent CLI");
+  await terminal.click();
+  await page.keyboard.type('run knowledge.search --query "AI architecture" --kind all --limit 8 --json');
+  await page.keyboard.press("Enter");
+  await expect.poll(() => page.evaluate(() => {
+      const events = JSON.parse(localStorage.getItem("michaelos.capability-history.v2") ?? "[]");
+      return events.find((entry: { capabilityId: string }) => entry.capabilityId === "knowledge.search");
+    })).not.toBeUndefined();
+  const event = await page.evaluate(() => {
+    const events = JSON.parse(localStorage.getItem("michaelos.capability-history.v2") ?? "[]");
+    return events.find((entry: { capabilityId: string }) => entry.capabilityId === "knowledge.search");
+  });
+  expect(event).toMatchObject({
+    capabilityId: "knowledge.search",
+    provenance: { actor: { id: "browser-session", kind: "human" }, interface: "terminal", modality: "text" },
+    authority: { state: "allowed", code: "LOCAL_EPHEMERAL_AUTHORITY" },
+    availability: { status: "available", reasonCode: "LOCAL_REALISATION_READY" },
+    result: { status: "matched", retrievalStrategy: "deterministic-lexical-v1" },
+  });
+  expect(event.result.hits.length).toBeGreaterThan(0);
+  expect(event.result.corpusDigest).toMatch(/^[a-f0-9]{64}$/);
+  expect(event.result.hits[0].evidenceSnippet).toBeTruthy();
+});
+
 test("Navi projects the same revision, digest and freshness", async ({ page }) => {
   test.skip(!hasNaviModelCredentials, "Navi browser proof requires configured model credentials.");
   await openCapabilities(page);
