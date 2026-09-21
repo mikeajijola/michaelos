@@ -89,6 +89,9 @@ test("Navi projects the same revision, digest and freshness", async ({ page }) =
 });
 
 test("responsive and reduced-motion modes retain operable, named controls", async ({ page }) => {
+  if (test.info().project.name === "reduced-motion") {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+  }
   await openCapabilities(page);
   await expect(page.getByRole("button", { name: "View capability conformance" })).toBeInViewport();
   await page.getByRole("button", { name: "View capability conformance" }).focus();

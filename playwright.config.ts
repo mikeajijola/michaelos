@@ -16,7 +16,7 @@ export default defineConfig({
     { name: "mobile", use: { ...devices["Pixel 7"] } },
     {
       name: "reduced-motion",
-      use: { ...devices["Desktop Chrome"], reducedMotion: "reduce" },
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
   webServer: {

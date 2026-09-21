@@ -11,6 +11,7 @@ import {
 import type {
   CapabilityContext,
   CapabilityDefinition,
+  CapabilityConformanceEnvelope,
   CapabilityManifestEntry,
   CapabilityParameter,
 } from "./types";

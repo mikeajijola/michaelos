@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { createCapabilityConformance } from "./conformance";
@@ -47,7 +48,7 @@ describe("capability conformance surfaces", () => {
       capability: { id: event.capabilityId }, params: {},
     });
     const navi = formatCapabilityConformance(envelope);
-    const page = renderToStaticMarkup(<ConformanceStatus conformance={envelope} />);
+    const page = renderToStaticMarkup(createElement(ConformanceStatus, { conformance: envelope }));
     for (const value of [envelope.freshness.state, envelope.subject.revision!, envelope.manifest.digest]) {
       expect(navi).toContain(value);
       expect(page).toContain(value);
@@ -63,7 +64,7 @@ describe("capability conformance surfaces", () => {
       observedAt: "2026-09-14T00:00:01.000Z",
     } as CapabilityExecution;
     const markup = renderToStaticMarkup(
-      <dl><ExecutionOutcome execution={execution} /></dl>,
+      createElement("dl", null, createElement(ExecutionOutcome, { execution })),
     );
     expect(markup).toContain("Execution status");
     expect(markup).toContain("Effect status");
