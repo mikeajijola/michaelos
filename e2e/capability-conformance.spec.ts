@@ -2,6 +2,11 @@ import { expect, test, type Page } from "@playwright/test";
 
 const capabilityId = "system.getCapabilityConformance";
 const actionKeys = "SYSTEM CAPABILITY CONFORMANCE ENTER";
+const hasNaviModelCredentials = Boolean(
+  process.env.AI_GATEWAY_API_KEY ||
+    process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
+    process.env.OPENAI_API_KEY,
+);
 
 async function openCapabilities(page: Page) {
   await page.goto("/capabilities");
@@ -23,11 +28,14 @@ test("capability page and Inspector expose one accessible conformance projection
   const status = await assertConformanceStatus(page);
 
   await page.getByRole("button", { name: "Open Agent CLI", exact: true }).click();
+  const console = page.getByRole("region", { name: "Agent Console" });
+  await console.getByRole("button", { name: "History", exact: true }).click();
+  await console.getByRole("button").filter({ hasText: capabilityId }).first().click();
   await page.getByRole("button", { name: "Inspector", exact: true }).click();
-  const inspector = page.getByLabel("Agent Console").getByText(capabilityId, { exact: true });
+  const inspector = console.getByText(capabilityId, { exact: true });
   await expect(inspector).toBeVisible();
-  await expect(page.getByLabel("Agent Console").getByText("Execution status")).toBeVisible();
-  await expect(page.getByLabel("Agent Console").getByText("Effect status")).toBeVisible();
+  await expect(console.getByText("Execution status")).toBeVisible();
+  await expect(console.getByText("Effect status")).toBeVisible();
 
   await status.screenshot({ path: testInfo.outputPath("capability-conformance.png") });
 });
@@ -35,22 +43,25 @@ test("capability page and Inspector expose one accessible conformance projection
 test("keyboard-only Action Keys execution reaches shared history and Inspector", async ({ page }) => {
   await openCapabilities(page);
 
-  await page.keyboard.press(process.platform === "darwin" ? "Meta+Alt+KeyK" : "Control+Alt+KeyK");
+  // Wait for the client provider to attach its global keyboard handler.
+  await page.waitForTimeout(500);
+  await page.keyboard.press(process.platform === "darwin" ? "Meta+Alt+K" : "Control+Alt+K");
   const dialog = page.getByRole("dialog", { name: "Action Key Mode" });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByLabel("Action Key")).toBeFocused();
+  await expect(dialog.getByRole("textbox", { name: "Action Key" })).toBeFocused();
   await page.keyboard.type(actionKeys);
   await page.keyboard.press("Enter");
   await expect(dialog).toBeHidden();
 
   await page.getByRole("button", { name: "Open Agent CLI", exact: true }).click();
-  await page.getByRole("button", { name: "History", exact: true }).click();
-  const historyEntry = page.getByRole("button").filter({ hasText: capabilityId }).first();
+  const console = page.getByRole("region", { name: "Agent Console" });
+  await console.getByRole("button", { name: "History", exact: true }).click();
+  const historyEntry = console.getByRole("button").filter({ hasText: capabilityId }).first();
   await expect(historyEntry).toContainText("hotkey");
   await historyEntry.press("Enter");
-  await page.getByRole("button", { name: "Inspector", exact: true }).click();
-  await expect(page.getByLabel("Agent Console")).toContainText(actionKeys);
-  await expect(page.getByLabel("Agent Console")).toContainText("Get current capability conformance");
+  await console.getByRole("button", { name: "Inspector", exact: true }).click();
+  await expect(console).toContainText(actionKeys);
+  await expect(console).toContainText("Get current capability conformance");
 });
 
 test("Agent CLI publishes the machine envelope and shared execution identity", async ({ page }) => {
@@ -64,12 +75,16 @@ test("Agent CLI publishes the machine envelope and shared execution identity", a
 
   await expect(terminal).toContainText('"freshness"');
   await expect(terminal).toContainText('"digest"');
-  await page.getByRole("button", { name: "Inspector", exact: true }).click();
-  await expect(page.getByLabel("Agent Console")).toContainText("terminal");
-  await expect(page.getByLabel("Agent Console")).toContainText(capabilityId);
+  const console = page.getByRole("region", { name: "Agent Console" });
+  await console.getByRole("button", { name: "History", exact: true }).click();
+  await console.getByRole("button").filter({ hasText: capabilityId }).first().click();
+  await console.getByRole("button", { name: "Inspector", exact: true }).click();
+  await expect(console).toContainText("terminal");
+  await expect(console).toContainText(capabilityId);
 });
 
 test("Navi projects the same revision, digest and freshness", async ({ page }) => {
+  test.skip(!hasNaviModelCredentials, "Navi browser proof requires configured model credentials.");
   await openCapabilities(page);
   await page.getByRole("button", { name: "View capability conformance" }).click();
   const statusText = await (await assertConformanceStatus(page)).innerText();
@@ -78,7 +93,7 @@ test("Navi projects the same revision, digest and freshness", async ({ page }) =
   expect(revision).toBeTruthy();
   expect(digest).toBeTruthy();
 
-  await page.getByRole("button", { name: "Open Navi" }).click();
+  await page.getByRole("button", { name: "Open Navi" }).click({ force: true });
   const navi = page.getByLabel("Navi Panel");
   await navi.getByLabel("Ask Navi to navigate MikeOS").fill("Show capability conformance");
   await navi.getByRole("button", { name: "Send request to Navi" }).click();

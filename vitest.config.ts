@@ -6,6 +6,6 @@ export default defineConfig({
   resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
   test: {
     environment: "node",
-    exclude: ["e2e/**", "node_modules/**"],
+    exclude: [".eve/**", ".next/**", "e2e/**", "node_modules/**", "test-results/**"],
   },
 });
