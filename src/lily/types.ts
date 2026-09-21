@@ -45,7 +45,7 @@ export type LilyMessage = {
   clarificationOptions?: LilyClarificationOption[];
 };
 export type LilyResultReference = {
-  kind: "project" | "article" | "experience";
+  kind: "project" | "article" | "experience" | "education" | "skill" | "recognition" | "profile";
   id: string;
   label: string;
   route?: string;

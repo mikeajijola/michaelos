@@ -29,6 +29,7 @@ import {
   evaluateCapabilityConformance,
   isCapabilityConformanceEnvelope,
 } from "./conformance";
+import { searchKnowledge } from "@/knowledge/retrieval";
 
 type Handler = (
   params: Record<string, unknown>,
@@ -156,6 +157,10 @@ const adjacentReadingHeading = (direction: "next" | "previous") => {
 };
 
 const handlers: Record<string, Handler> = {
+  "knowledge.search": async (p) => searchKnowledge(String(p.query), {
+    limit: p.limit === undefined ? undefined : Number(p.limit),
+    kinds: p.kind && p.kind !== "all" ? [String(p.kind) as never] : undefined,
+  }),
   "system.openCommandSurface": async (_, c) => {
     c.surface.open("terminal");
     return { open: true, tab: "terminal" };
@@ -897,6 +902,22 @@ const simple = (
   );
 
 export const capabilities: CapabilityDefinition[] = [
+  define(
+    base(
+      "knowledge.search",
+      "Search canonical knowledge",
+      "Retrieve grounded results across MichaelOS public knowledge domains.",
+      "run knowledge.search --query <query> --kind <kind> --limit <limit>",
+      ["KNOWLEDGE", "SEARCH", "<query>", "ENTER"],
+      "Search MichaelOS canonical knowledge",
+      [
+        text("query", "Cross-domain knowledge query."),
+        { name: "kind", description: "Optional knowledge kind filter.", type: "enum", required: false, values: ["all", "project", "article", "experience", "education", "skill", "recognition", "profile"], default: "all" },
+        { name: "limit", description: "Maximum result count.", type: "number", required: false, default: 8 },
+      ],
+      { query: "AI architecture", kind: "all", limit: 8 },
+    ),
+  ),
   define(
     base(
       "theme.setMode",

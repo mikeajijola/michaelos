@@ -1,5 +1,56 @@
 [
   {
+    "id": "knowledge.search",
+    "schemaVersion": 1,
+    "description": "Retrieve grounded results across MichaelOS public knowledge domains.",
+    "parameters": [
+      {
+        "name": "query",
+        "description": "Cross-domain knowledge query.",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "kind",
+        "description": "Optional knowledge kind filter.",
+        "type": "enum",
+        "required": false,
+        "values": [
+          "all",
+          "project",
+          "article",
+          "experience",
+          "education",
+          "skill",
+          "recognition",
+          "profile"
+        ],
+        "default": "all"
+      },
+      {
+        "name": "limit",
+        "description": "Maximum result count.",
+        "type": "number",
+        "required": false,
+        "default": 8
+      }
+    ],
+    "cliCommand": "run knowledge.search --query <query> --kind <kind> --limit <limit>",
+    "actionKeyTemplate": [
+      "KNOWLEDGE",
+      "SEARCH",
+      "<query>",
+      "ENTER"
+    ],
+    "accessibleLabel": "Search MichaelOS canonical knowledge",
+    "risk": "read",
+    "navigatorEnabled": true,
+    "evidence": {
+      "mode": "return-value",
+      "description": "The returned data is the observed outcome of this read operation."
+    }
+  },
+  {
     "id": "theme.setMode",
     "schemaVersion": 1,
     "description": "Switch MikeOS between its light and dark colour modes.",
