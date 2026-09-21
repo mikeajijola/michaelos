@@ -10,7 +10,10 @@ export type KnowledgeSearchResult = { schemaVersion: 1; query: string; corpusDig
 const flatten = (value: unknown): string => Array.isArray(value) ? value.map(flatten).join(" ") : value && typeof value === "object" ? Object.values(value).map(flatten).join(" ") : String(value ?? "");
 const record = (kind: KnowledgeKind, id: string, title: string, fields: Record<string, unknown>, route?: string): KnowledgeRecord => {
   const normalized = Object.fromEntries(Object.entries(fields).map(([key, value]) => [key, flatten(value)]));
-  return { ref: { kind, id, ...(route ? { route } : {}), sourceKey: `${kind}:${id}` }, title, text: Object.values(normalized).join(" "), aliases: aliases[id] ?? [], fields: normalized };
+  const slug = typeof fields.slug === "string" ? fields.slug : id;
+  const relatedAliases = Array.isArray(fields.relatedProjectIds) ? fields.relatedProjectIds.flatMap(key => aliases[String(key)] ?? []) : [];
+  const recordAliases = [...(aliases[id] ?? []), ...(aliases[slug] ?? []), ...relatedAliases, ...(slug.includes("ceoclaw") ? aliases.ceoclaw ?? [] : [])];
+  return { ref: { kind, id, ...(route ? { route } : {}), sourceKey: `${kind}:${id}` }, title, text: Object.values(normalized).join(" "), aliases: [...new Set(recordAliases)], fields: normalized };
 };
 export function buildKnowledgeCorpus(): KnowledgeRecord[] {
   const records = [

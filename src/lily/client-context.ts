@@ -48,6 +48,7 @@ export function buildLilyClientContext(input: {
       "article.search or article.list -> article.view using a returned article slug",
       "experience.list -> experience.view using a returned experience id",
       "a retrieval capability -> a grounded final response",
+      "knowledge.search -> a grounded cross-domain final response or an existing typed view capability using only returned references",
       "a reading-navigation request -> one navigation heading or page-position capability",
       "a directly requested website action -> the matching registered capability",
     ],

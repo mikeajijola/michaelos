@@ -191,6 +191,7 @@ export function CapabilityProvider({
         database.current
           ? database.current.query<T>(sql, bind)
           : Promise.reject(new Error("Local database is not ready.")),
+      inspectRuntime: () => database.current?.inspectRuntime() ?? { state: "initialising", reasonCode: null },
     }),
     [],
   );

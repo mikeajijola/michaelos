@@ -3,6 +3,7 @@ import { validateParams } from "./protocol";
 import { resolveCanonicalInvocation } from "./invocation";
 import { CapabilityError, type Caller, type CapabilityContext, type CapabilityExecution, type InvocationSecurity } from "./types";
 import { evaluateAuthority, inspectAvailability, localAvailability, normaliseProvenance } from "./runtime-governance";
+import { canonicalize } from "./conformance";
 
 export const HISTORY_KEY = "michaelos.capability-history.v2";
 export const TRANSCRIPT_KEY = "michaelos.terminal-transcript.v2";
@@ -41,10 +42,12 @@ export async function executeCapability(id: string, input: Record<string, unknow
     if (!capability) throw new CapabilityError("CAPABILITY_NOT_FOUND", `Capability "${id}" is not registered.`, id, "Run capabilities to discover valid IDs.");
     try { params = validateParams(capability, input); } catch (cause) { throw new CapabilityError("INVALID_PARAMETERS", cause instanceof Error ? cause.message : String(cause), input, `Run describe ${id} to inspect its parameters.`); }
     const now = security.now ?? new Date();
-    const browserGrant = !security.grant && provenance.actor.kind === "human" && ["ui", "terminal", "hotkey", "accessibility"].includes(provenance.interface) && (capability.risk === "write" || capability.risk === "destructive") ? {
+    const invocationDigest = capability.requiresConfirmation ? await crypto.subtle.digest("SHA-256", new TextEncoder().encode(canonicalize({ capabilityId: capability.id, arguments: params, target: security.target ?? null }))).then(bytes => Array.from(new Uint8Array(bytes), byte => byte.toString(16).padStart(2, "0")).join("")) : null;
+    const browserGrant = !security.grant && provenance.actor.kind === "human" && ["ui", "terminal", "hotkey", "accessibility"].includes(provenance.interface) && (capability.risk === "write" || capability.risk === "destructive") && (!capability.requiresConfirmation || params.confirm === true) ? {
       schemaVersion: 1 as const, grantId: `browser_${crypto.randomUUID()}`, subject: provenance.actor.id,
       capabilityId: capability.id, arguments: params, ...(security.target ? { target: security.target } : {}), risks: [capability.risk],
       issuedAt: now.toISOString(), expiresAt: new Date(now.getTime() + 60_000).toISOString(),
+      ...(invocationDigest ? { confirmation: { confirmedAt: now.toISOString(), invocationDigest } } : {}),
     } : undefined;
     const effectiveGrant = security.grant ?? browserGrant;
     authority = await evaluateAuthority({ capability, params, provenance, grant: effectiveGrant, target: security.target, now, consumedGrantIds });

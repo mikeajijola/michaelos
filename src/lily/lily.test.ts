@@ -22,6 +22,13 @@ import {
 } from "./presentation";
 
 describe("Lily proposal boundary", () => {
+  it("grounds broad cross-domain questions through one confirmed knowledge result", () => {
+    const request = "What has Mike done around AI architecture?";
+    expect(recoverLilyProposal(request, [])).toMatchObject({ capabilityId: "knowledge.search", arguments: { kind: "all", limit: 8 } });
+    const references = compactReferences({ hits: [{ ref: { kind: "project", id: "nexus-backstage", route: "/projects?project=nexus-backstage" }, title: "Nexus", evidenceSnippet: "Platform engineering evidence." }, { ref: { kind: "experience", id: "access-group", route: "/experience" }, title: "Enterprise architect", evidenceSnippet: "AI architecture experience." }] });
+    expect(references).toHaveLength(2);
+    expect(recoverLilyProposal(request, references, ["knowledge.search"])).toMatchObject({ kind: "final", message: expect.stringContaining("Platform engineering evidence.") });
+  });
   it("exposes every registered website capability to eve", () => {
     expect([...LILY_CAPABILITY_IDS].sort()).toEqual(
       capabilities.map((item) => item.id).sort(),

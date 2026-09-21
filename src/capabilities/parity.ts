@@ -1,5 +1,7 @@
 import { canonicalize } from "./conformance";
 import { resolveCanonicalInvocation } from "./invocation";
+import { parseProtocol, validateParams } from "./protocol";
+import { parseCommand } from "@/terminal/parser";
 import type { Caller, CapabilityDefinition } from "./types";
 
 export type ParityAssertion = { interface: Caller; enabled: boolean; assertions: string[]; runtimeReason: string | null };
@@ -22,13 +24,27 @@ export function generateParityMatrix(capabilities: CapabilityDefinition[]): Capa
 
 export function evaluateProtocolParity(capabilities: CapabilityDefinition[]) {
   return capabilities.map(capability => {
-    const defaults = Object.fromEntries(capability.params.map(param => [param.name, param.default ?? param.values?.[0] ?? (param.type === "number" ? 1 : param.type === "boolean" ? true : `fixture-${param.name}`)]));
+    const defaults = Object.fromEntries(capability.params.flatMap(param => {
+      if (!param.required && param.default === undefined) return [];
+      return [[param.name, param.default ?? param.values?.[0] ?? (param.type === "number" ? 1 : param.type === "boolean" ? true : `fixture-${param.name}`)]];
+    }));
     const invocation = resolveCanonicalInvocation(capability.id, defaults);
     const failures: string[] = [];
     if (capability.cli.enabled && !invocation.cliCommand) failures.push("terminal:missing-cli");
     if (capability.actionKeys.enabled && !invocation.actionKeys) failures.push("hotkey:missing-action-keys");
     if (invocation.capabilityId !== capability.id) failures.push("canonical-id:drift");
     if (canonicalize(invocation.arguments) !== canonicalize(defaults)) failures.push("parameters:drift");
+    if (invocation.actionKeys) {
+      const parsed = parseProtocol(invocation.actionKeys, capabilities);
+      if (parsed?.capability.id !== capability.id) failures.push("hotkey:capability-drift");
+      else if (canonicalize(parsed.params) !== canonicalize(validateParams(capability, defaults))) failures.push("hotkey:parameters-drift");
+    }
+    if (invocation.cliCommand) {
+      const parsed = parseCommand(invocation.cliCommand);
+      const params = Object.fromEntries(Object.entries(parsed.flags).filter(([key]) => key !== "json"));
+      if (parsed.command !== "run" || parsed.positional[0] !== capability.id) failures.push("terminal:capability-drift");
+      else if (canonicalize(validateParams(capability, params)) !== canonicalize(validateParams(capability, defaults))) failures.push("terminal:parameters-drift");
+    }
     return { capabilityId: capability.id, status: failures.length ? "fail" as const : "pass" as const, failures };
   });
 }
