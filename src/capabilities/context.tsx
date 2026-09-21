@@ -177,6 +177,7 @@ export function CapabilityProvider({
       toggle: () =>
         setSurface((s) => ({ ...s, open: !s.open, minimised: false })),
       selectTab: (tab) => setSurface((s) => ({ ...s, tab })),
+      getState: () => surfaceRef.current,
     }),
     [],
   );
@@ -203,6 +204,8 @@ export function CapabilityProvider({
       database: capabilityDatabase,
       getHistory: () => historyRef.current,
       getSelectedControl: () => selectedRef.current,
+      getLocation: () =>
+        `${window.location.pathname}${window.location.search}${window.location.hash}`,
     }),
     [capabilityDatabase, router, surfaceController],
   );

@@ -15,6 +15,25 @@ export type CapabilityExample = {
   description: string;
   params: Record<string, unknown>;
 };
+export type CapabilityEffectStatus = "observed" | "requested" | "indeterminate";
+export type CapabilityEvidence = {
+  kind: "return-value" | "postcondition" | "request" | "legacy";
+  summary: string;
+  details?: unknown;
+};
+export type CapabilityEvidenceResult = {
+  effectStatus: CapabilityEffectStatus;
+  evidence: CapabilityEvidence[];
+};
+export type CapabilityEvidenceContract = {
+  mode: "return-value" | "postcondition" | "request";
+  description: string;
+  observe?: (
+    result: unknown,
+    params: Record<string, unknown>,
+    context: CapabilityContext,
+  ) => CapabilityEvidenceResult | Promise<CapabilityEvidenceResult>;
+};
 export type AppData = {
   projects: Project[];
   experience: Experience[];
@@ -29,6 +48,7 @@ export type SurfaceController = {
   restore: () => void;
   toggle: () => void;
   selectTab: (tab: SurfaceTab) => void;
+  getState: () => { open: boolean; minimised: boolean; tab: SurfaceTab };
 };
 export type SelectedControl = {
   text: string;
@@ -51,6 +71,7 @@ export type CapabilityContext = {
   database: CapabilityDatabase;
   getHistory: () => CapabilityExecution[];
   getSelectedControl: () => SelectedControl | null;
+  getLocation: () => string;
 };
 export type CapabilityDefinition<
   TParams extends Record<string, unknown> = Record<string, unknown>,
@@ -69,6 +90,7 @@ export type CapabilityDefinition<
   navigator: { enabled: boolean };
   accessibility: { label: string; description?: string };
   risk: Risk;
+  evidence: CapabilityEvidenceContract;
   requiresConfirmation?: boolean;
   execute: (params: TParams, context: CapabilityContext) => Promise<TResult>;
 };
@@ -82,6 +104,31 @@ export type CapabilityManifestEntry = {
   accessibleLabel: string | null;
   risk: Risk;
   navigatorEnabled: boolean;
+  evidence: Omit<CapabilityEvidenceContract, "observe">;
+};
+export type CapabilityFreshness = "current" | "stale" | "indeterminate";
+export type CapabilityFreshnessReason =
+  | "SUBJECT_REVISION_UNAVAILABLE"
+  | "WORKTREE_DIRTY"
+  | "CONFORMANCE_ARTIFACT_INVALID"
+  | "SUBJECT_REVISION_MISMATCH"
+  | "MANIFEST_DIGEST_MISMATCH";
+export type CapabilityConformanceEnvelope = {
+  schemaVersion: 1;
+  tool: { name: "michaelos-capability-conformance"; version: "1.0.0" };
+  repository: "mikeajijola/michaelos";
+  subject: { revision: string | null };
+  manifest: {
+    schemaVersion: 1;
+    algorithm: "sha256";
+    digest: string;
+    path: "capabilities/generated-manifest.json";
+  };
+  generatedAt: string;
+  testedAt: string | null;
+  audit: import("./governance").CapabilityAudit;
+  evidence: { kind: "test" | "build" | "ci"; reference: string }[];
+  freshness: { state: CapabilityFreshness; reason: CapabilityFreshnessReason | null };
 };
 export type CapabilityChange = {
   id: string;
@@ -109,6 +156,11 @@ export type CapabilityExecution = {
   caller: Caller;
   params: Record<string, unknown>;
   status: "success" | "failure";
+  /** Compatibility alias remains `status`; this names handler completion explicitly. */
+  executionStatus: "success" | "failure";
+  effectStatus: CapabilityEffectStatus;
+  evidence: CapabilityEvidence[];
+  observedAt: string | null;
   result: unknown | null;
   error: CapabilityErrorShape | null;
   durationMs: number;

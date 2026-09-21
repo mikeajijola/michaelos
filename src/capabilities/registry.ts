@@ -11,6 +11,7 @@ import {
 import type {
   CapabilityContext,
   CapabilityDefinition,
+  CapabilityConformanceEnvelope,
   CapabilityManifestEntry,
   CapabilityParameter,
 } from "./types";
@@ -21,6 +22,13 @@ import {
   getCapabilityDelta,
 } from "./governance";
 import baselineManifest from "../../capabilities/baseline-manifest.json";
+import generatedManifest from "../../capabilities/generated-manifest.json";
+import {
+  createCapabilityConformance,
+  digestCapabilityManifest,
+  evaluateCapabilityConformance,
+  isCapabilityConformanceEnvelope,
+} from "./conformance";
 
 type Handler = (
   params: Record<string, unknown>,
@@ -165,8 +173,9 @@ const handlers: Record<string, Handler> = {
     return { minimised: false };
   },
   "system.toggleCommandSurface": async (_, c) => {
+    const open = !c.surface.getState().open;
     c.surface.toggle();
-    return { toggled: true };
+    return { toggled: true, open };
   },
   "system.openTerminal": async (_, c) => {
     c.surface.open("terminal");
@@ -251,6 +260,59 @@ const handlers: Record<string, Handler> = {
       generateCapabilityManifest(capabilities),
       baselineManifest as unknown as CapabilityManifestEntry[],
     ),
+  "system.getCapabilityConformance": async () => {
+    const revision = process.env.NEXT_PUBLIC_MIKEOS_REVISION || null;
+    const serializedArtifact =
+      process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_ARTIFACT;
+    if (!serializedArtifact) {
+      const publishedEntries = generatedManifest as unknown as CapabilityManifestEntry[];
+      return {
+        schemaVersion: 1,
+        tool: { name: "michaelos-capability-conformance", version: "1.0.0" },
+        repository: "mikeajijola/michaelos",
+        subject: { revision: null },
+        manifest: {
+          schemaVersion: 1,
+          algorithm: "sha256",
+          digest: await digestCapabilityManifest(publishedEntries),
+          path: "capabilities/generated-manifest.json",
+        },
+        generatedAt:
+          process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP ??
+          new Date(0).toISOString(),
+        testedAt: null,
+        audit: auditCapabilities(capabilities),
+        evidence: [],
+        freshness: { state: "indeterminate", reason: "SUBJECT_REVISION_UNAVAILABLE" },
+      } satisfies CapabilityConformanceEnvelope;
+    }
+    let artifact: unknown;
+    try {
+      artifact = JSON.parse(serializedArtifact);
+    } catch {
+      artifact = null;
+    }
+    if (!isCapabilityConformanceEnvelope(artifact)) {
+      return createCapabilityConformance({
+        revision: null,
+        indeterminateReason: "CONFORMANCE_ARTIFACT_INVALID",
+        entries: generateCapabilityManifest(capabilities),
+        audit: auditCapabilities(capabilities),
+        timestamp:
+          process.env.NEXT_PUBLIC_MIKEOS_CONFORMANCE_TIMESTAMP ??
+          new Date(0).toISOString(),
+      });
+    }
+    return evaluateCapabilityConformance(artifact, {
+      revision,
+      indeterminateReason:
+        process.env.NEXT_PUBLIC_MIKEOS_REVISION_REASON === "WORKTREE_DIRTY"
+          ? "WORKTREE_DIRTY"
+          : undefined,
+      entries: generateCapabilityManifest(capabilities),
+      audit: auditCapabilities(capabilities),
+    });
+  },
   "system.reportCapabilityIssue": async (p, c) => {
     const report = {
       id: `report_${crypto.randomUUID()}`,
@@ -315,8 +377,9 @@ const handlers: Record<string, Handler> = {
     return { path: "/capabilities" };
   },
   "navigation.goBack": async (_, c) => {
+    const from = c.getLocation();
     c.back();
-    return { back: true };
+    return { back: true, from };
   },
   "navigation.nextHeading": async () => adjacentReadingHeading("next"),
   "navigation.previousHeading": async () =>
@@ -593,6 +656,180 @@ type Spec = Omit<CapabilityDefinition, "execute" | "examples"> & {
 // from the handlers prevents the conversational interface from drifting into
 // a second, incomplete capability list as the website evolves.
 const navigatorIds = new Set(Object.keys(handlers));
+const requestedEffectIds = new Set([
+  "navi.clearConversation", "navi.resetPosition", "navi.startVoice", "navi.endVoice",
+  "project.openExternal", "article.openExternal",
+  "cv.exportJson", "cv.print", "accessibility.activateFocused",
+]);
+
+const surfaceTabs: Record<string, import("./types").SurfaceTab> = {
+  "system.openCommandSurface": "terminal",
+  "system.openTerminal": "terminal",
+  "system.openAiConsole": "lily",
+  "system.openInspector": "inspector",
+  "system.openHistory": "history",
+  "navi.openConsole": "lily",
+};
+
+const pathCapabilities = new Set([
+  "navigation.goHome", "navigation.goProjects", "navigation.goExperience",
+  "navigation.goBlog", "navigation.goCv", "navigation.goCapabilities",
+  "project.view", "experience.view", "article.view", "cv.view", "cv.navigateSection",
+]);
+
+const nextPaint = () => new Promise<void>((resolve) => {
+  if (typeof requestAnimationFrame === "function") requestAnimationFrame(() => resolve());
+  else setTimeout(resolve, 0);
+});
+
+async function observeUntil(read: () => unknown, expected: (value: unknown) => boolean) {
+  let actual = read();
+  for (let attempt = 0; attempt < 4 && !expected(actual); attempt += 1) {
+    await nextPaint();
+    actual = read();
+  }
+  return actual;
+}
+
+const postconditionEvidence = (id: string): CapabilityDefinition["evidence"] | null => {
+  const observed = (summary: string, details: unknown) => ({
+    effectStatus: "observed" as const,
+    evidence: [{ kind: "postcondition" as const, summary, details }],
+  });
+  const indeterminate = (summary: string, details: unknown) => ({
+    effectStatus: "indeterminate" as const,
+    evidence: [{ kind: "postcondition" as const, summary, details }],
+  });
+  if (id === "theme.setMode") return {
+    mode: "postcondition",
+    description: "The document colour mode is observed after the theme request.",
+    observe: async (_result, params) => {
+      const expected = String(params.mode);
+      const actual = await observeUntil(() => document.documentElement.dataset.theme, value => value === expected);
+      return actual === expected
+        ? observed("The document colour mode matches the requested mode.", { expected, actual })
+        : indeterminate("The requested document colour mode was not observed.", { expected, actual });
+    },
+  };
+  if (surfaceTabs[id]) return {
+    mode: "postcondition",
+    description: "The Agent Console open state and selected client are observed after execution.",
+    observe: async (_result, _params, context) => {
+      const expected = { open: true, tab: surfaceTabs[id] };
+      const actual = await observeUntil(() => context.surface.getState(), value => {
+        const state = value as ReturnType<CapabilityContext["surface"]["getState"]>;
+        return state.open && state.tab === expected.tab;
+      });
+      const state = actual as ReturnType<CapabilityContext["surface"]["getState"]>;
+      return state.open && state.tab === expected.tab
+        ? observed("The requested Agent Console client is open.", { expected, actual })
+        : indeterminate("The requested Agent Console client was not observed.", { expected, actual });
+    },
+  };
+  if (id === "system.closeCommandSurface") return {
+    mode: "postcondition",
+    description: "The Agent Console closed state is observed after execution.",
+    observe: async (_result, _params, context) => {
+      const actual = await observeUntil(() => context.surface.getState(), value => !(value as { open: boolean }).open);
+      return !(actual as { open: boolean }).open
+        ? observed("The Agent Console is closed.", actual)
+        : indeterminate("The Agent Console remained open.", actual);
+    },
+  };
+  if (id === "system.minimiseCommandSurface") return {
+    mode: "postcondition",
+    description: "The Agent Console minimised state is observed after execution.",
+    observe: async (_result, _params, context) => {
+      const actual = await observeUntil(
+        () => context.surface.getState(),
+        value => (value as { open: boolean; minimised: boolean }).open
+          && (value as { open: boolean; minimised: boolean }).minimised,
+      );
+      const state = actual as { open: boolean; minimised: boolean };
+      return state.open && state.minimised
+        ? observed("The Agent Console is minimised.", {
+            expected: { open: true, minimised: true },
+            actual,
+          })
+        : indeterminate("The Agent Console minimised state was not observed.", {
+            expected: { open: true, minimised: true },
+            actual,
+          });
+    },
+  };
+  if (id === "system.restoreCommandSurface") return {
+    mode: "postcondition", description: "The Agent Console restored state is observed after execution.",
+    observe: async (_r, _p, context) => {
+      const actual = await observeUntil(() => context.surface.getState(), value => (value as { open: boolean }).open);
+      return (actual as { open: boolean }).open ? observed("The Agent Console is open.", actual) : indeterminate("The Agent Console did not restore.", actual);
+    },
+  };
+  if (id === "system.toggleCommandSurface") return {
+    mode: "postcondition", description: "The resulting Agent Console state is observed after execution.",
+    observe: async (result, _p, context) => {
+      const expected = (result as { open?: boolean } | null)?.open;
+      const actual = await observeUntil(() => context.surface.getState(), value => (value as { open: boolean }).open === expected);
+      return (actual as { open: boolean }).open === expected
+        ? observed("The resulting Agent Console state was observed.", { expected, actual })
+        : indeterminate("The toggled Agent Console state was not observed.", { expected, actual });
+    },
+  };
+  if (["system.openActionKeyMode", "system.closeActionKeyMode"].includes(id)) return {
+    mode: "postcondition", description: "The Action Key dialog presence is observed after execution.",
+    observe: async () => {
+      const expected = id === "system.openActionKeyMode";
+      const actual = await observeUntil(() => Boolean(document.querySelector("#action-key-input")), value => value === expected);
+      return actual === expected ? observed(`Action Key Mode is ${expected ? "open" : "closed"}.`, { expected, actual }) : indeterminate("The requested Action Key Mode state was not observed.", { expected, actual });
+    },
+  };
+  if (["navi.open", "navi.close"].includes(id)) return {
+    mode: "postcondition", description: "The compact Navi panel presence is observed after execution.",
+    observe: async () => {
+      const expected = id === "navi.open";
+      const actual = await observeUntil(() => Boolean(document.querySelector('[aria-label="Navi Panel"]')), value => value === expected);
+      return actual === expected ? observed(`The Navi panel is ${expected ? "open" : "closed"}.`, { expected, actual }) : indeterminate("The requested Navi panel state was not observed.", { expected, actual });
+    },
+  };
+  if (id === "system.reportCapabilityIssue") return {
+    mode: "postcondition", description: "The persisted capability report is read back from the local database.",
+    observe: async (result, _params, context) => {
+      const expected = (result as { report?: { id?: string } } | null)?.report?.id;
+      const rows = expected
+        ? await context.database.query<{ id: string }>("SELECT id FROM capability_reports WHERE id = ?", [expected])
+        : [];
+      return rows.some(({ id: reportId }) => reportId === expected)
+        ? observed("The capability report was persisted and read back.", { expected })
+        : indeterminate("The capability report could not be read back after persistence.", { expected });
+    },
+  };
+  if (pathCapabilities.has(id)) return {
+    mode: "postcondition", description: "The browser route is observed after navigation completes.",
+    observe: async (result, _params, context) => {
+      const expected = (result as { path?: string } | null)?.path;
+      const actual = await observeUntil(() => context.getLocation(), value => expected === value);
+      return typeof expected === "string" && expected === actual
+        ? observed("The browser reached the requested route.", { expected, actual })
+        : indeterminate("The requested browser route was not observed.", { expected, actual });
+    },
+  };
+  if (id === "navigation.goBack") return {
+    mode: "postcondition", description: "A browser route change is observed after back navigation.",
+    observe: async (result, _params, context) => {
+      const from = (result as { from?: string } | null)?.from;
+      const actual = await observeUntil(() => context.getLocation(), value => value !== from);
+      return actual !== from ? observed("Back navigation changed the browser route.", { from, actual }) : indeterminate("A route change after back navigation was not observed.", { from, actual });
+    },
+  };
+  if (["navigation.nextHeading", "navigation.previousHeading", "navigation.goHeading", "navigation.goTop", "navigation.goMainContent"].includes(id)) return {
+    mode: "postcondition", description: "The requested reading target is observed as document focus.",
+    observe: (_result) => {
+      const actual = document.activeElement as HTMLElement | null;
+      const valid = actual === document.querySelector("main") || /^H[1-6]$/.test(actual?.tagName ?? "");
+      return valid ? observed("Document focus moved to the requested reading target.", { tagName: actual?.tagName, text: actual?.textContent?.trim() }) : indeterminate("The requested reading target was not observed as focused.", { tagName: actual?.tagName });
+    },
+  };
+  return null;
+};
 const define = (spec: Spec): CapabilityDefinition => ({
   ...spec,
   examples: [
@@ -623,6 +860,21 @@ const base = (
   navigator: { enabled: navigatorIds.has(id) },
   accessibility: { label: accessibility },
   risk: "read",
+  evidence: id === "accessibility.moveFocus"
+    ? {
+        mode: "postcondition",
+        description: "The focused capability control is observed after the handler completes.",
+        observe: (result) => {
+          const expected = (result as { focused?: string } | null)?.focused;
+          const actual = (document.activeElement as HTMLElement | null)?.dataset.capabilityId;
+          return expected && actual === expected
+            ? { effectStatus: "observed", evidence: [{ kind: "postcondition", summary: "Focus moved to the requested capability control.", details: { expected, actual } }] }
+            : { effectStatus: "indeterminate", evidence: [{ kind: "postcondition", summary: "The requested focus target could not be observed.", details: { expected, actual } }] };
+        },
+      }
+    : postconditionEvidence(id) ?? (requestedEffectIds.has(id)
+      ? { mode: "request", description: "The handler proves that the effect was requested, not that the resulting state was observed." }
+      : { mode: "return-value", description: "The returned data is the observed outcome of this read operation." }),
   params,
   example,
 });
@@ -811,6 +1063,13 @@ export const capabilities: CapabilityDefinition[] = [
     "Compare the current generated manifest with the accepted baseline.",
     ["SYSTEM", "CAPABILITY", "DELTA"],
     "Compare capabilities with the accepted baseline",
+  ),
+  simple(
+    "system.getCapabilityConformance",
+    "Get capability conformance",
+    "Report the exact revision, manifest digest, audit evidence, and freshness of the published capability contract.",
+    ["SYSTEM", "CAPABILITY", "CONFORMANCE"],
+    "Get current capability conformance",
   ),
   define({
     ...base(

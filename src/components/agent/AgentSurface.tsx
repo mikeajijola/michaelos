@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { useCapabilities } from "@/capabilities/context";
 import { CapabilityInfo } from "@/components/common/CapabilityInfo";
+import { ExecutionOutcome } from "@/components/common/ExecutionOutcome";
 import { runCommand } from "@/terminal/commands";
 import type { SurfaceTab } from "@/capabilities/types";
 import { LilyConversation } from "@/components/lily/LilyConversation";
@@ -220,7 +221,7 @@ function ExecutionHistory() {
               {item.caller} · {new Date(item.timestamp).toLocaleString()}
             </small>
           </span>
-          <b className={item.status}>{item.status}</b>
+          <b className={item.status}>{item.status} · {item.effectStatus}</b>
         </button>
       ))}
     </div>
@@ -250,8 +251,7 @@ export function ExecutionInspector({ compact = false }: { compact?: boolean }) {
         <dd>
           <span className="caller">{last.caller}</span>
         </dd>
-        <dt>Status</dt>
-        <dd className={last.status}>{last.status}</dd>
+        <ExecutionOutcome execution={last} />
         <dt>Parameters</dt>
         <dd>
           <code>{JSON.stringify(last.params)}</code>
