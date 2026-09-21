@@ -221,6 +221,14 @@ export function recoverLilyProposal(
     };
   }
 
+  if (/\b(what has (?:mike|michael) done|across (?:his|mikes?)|background (?:in|on)|work (?:around|across)|knowledge (?:about|on))\b/.test(text)) {
+    if (completedCapabilityIds.includes("knowledge.search")) {
+      const grounded = references.slice(0, 4).map(reference => `${reference.label}: ${reference.summary ?? "matching canonical record"}`);
+      return { kind: "final", message: grounded.length ? grounded.join("\n") : "The confirmed knowledge search returned no matching canonical records." };
+    }
+    return { kind: "capability", capabilityId: "knowledge.search", arguments: { query: searchQueryFromRequest(request), kind: "all", limit: 8 }, message: "I’ll search MikeOS’s canonical knowledge across domains.", needsAnotherTurn: true };
+  }
+
   if (
     /\b(article|articles|writing|writings|blog|post|posts)\b/.test(text) ||
     /\b(company as code|semantic alerts?|new class of consumer|machine customers?|agentic commerce|ceoclaw|ceo claw)\b/.test(text)
@@ -424,6 +432,13 @@ export const lilyProposalSchema = {
 export function compactReferences(result: unknown): LilyResultReference[] {
   if (!result || typeof result !== "object") return [];
   const value = result as Record<string, unknown>;
+  if (Array.isArray(value.hits)) return value.hits.slice(0, 12).flatMap(hit => {
+    if (!hit || typeof hit !== "object") return [];
+    const candidate = hit as Record<string, unknown>;
+    const ref = candidate.ref as Record<string, unknown> | undefined;
+    if (!ref || !["project", "article", "experience", "education", "skill", "recognition", "profile"].includes(String(ref.kind)) || !ref.id) return [];
+    return [{ kind: String(ref.kind) as LilyResultReference["kind"], id: String(ref.id), label: String(candidate.title ?? ref.id), route: typeof ref.route === "string" ? ref.route : undefined, summary: String(candidate.evidenceSnippet ?? "") }];
+  });
   const rows = (value.projects ?? value.articles ?? value.experience) as
     Array<Record<string, unknown>> | undefined;
   if (!Array.isArray(rows)) return [];

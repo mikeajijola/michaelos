@@ -41,7 +41,7 @@ const withinParent = (child: AuthorityGrant, parent: AuthorityGrant) =>
   (!parent.target || child.target === parent.target);
 
 export async function evaluateAuthority(input: {
-  capability: Pick<CapabilityDefinition, "id" | "risk">;
+  capability: Pick<CapabilityDefinition, "id" | "risk" | "requiresConfirmation">;
   params: Record<string, unknown>;
   provenance: InvocationProvenance;
   grant?: AuthorityGrant;
@@ -64,6 +64,12 @@ export async function evaluateAuthority(input: {
   const now = (input.now ?? new Date()).getTime();
   if (!Number.isFinite(Date.parse(grant.expiresAt)) || Date.parse(grant.expiresAt) <= now) return deny("AUTHORITY_EXPIRED", grant, grantDigest);
   if (Date.parse(grant.issuedAt) > now) return deny("AUTHORITY_NOT_YET_VALID", grant, grantDigest);
+  if (capability.requiresConfirmation) {
+    const invocationDigest = await digest({ capabilityId: capability.id, arguments: params, target: input.target ?? null });
+    if (!grant.confirmation) return deny("AUTHORITY_CONFIRMATION_REQUIRED", grant, grantDigest);
+    if (grant.confirmation.invocationDigest !== invocationDigest) return deny("AUTHORITY_CONFIRMATION_MISMATCH", grant, grantDigest);
+    if (!Number.isFinite(Date.parse(grant.confirmation.confirmedAt)) || Date.parse(grant.confirmation.confirmedAt) > now) return deny("AUTHORITY_CONFIRMATION_INVALID", grant, grantDigest);
+  }
   if (grant.parent && !withinParent(grant, grant.parent)) return deny("AUTHORITY_PARENT_WIDENING", grant, grantDigest);
   return { state: "allowed", code: "EXACT_GRANT_ALLOWED", source: "grant", grantId: grant.grantId, grantDigest, parentGrantId: grant.parent?.grantId ?? null };
 }

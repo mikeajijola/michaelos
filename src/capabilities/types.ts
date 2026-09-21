@@ -21,6 +21,7 @@ export type AuthorityGrant = {
   issuedAt: string;
   expiresAt: string;
   parent?: AuthorityGrant;
+  confirmation?: { confirmedAt: string; invocationDigest: string };
 };
 export type AuthorityDecision = {
   state: "allowed" | "denied";
@@ -96,6 +97,7 @@ export type SelectedControl = {
 export type CapabilityDatabase = {
   exec: (sql: string, bind?: unknown[]) => Promise<unknown>;
   query: <T>(sql: string, bind?: unknown[]) => Promise<T[]>;
+  inspectRuntime: () => { state: "initialising" | "opfs" | "memory" | "unavailable"; reasonCode: string | null };
 };
 export type CapabilityContext = {
   caller: Caller;

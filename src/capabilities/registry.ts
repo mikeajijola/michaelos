@@ -431,22 +431,9 @@ const handlers: Record<string, Handler> = {
     return { projects: rows, count: rows.length };
   },
   "project.search": async (p) => {
-    const rows = projects.filter((x) =>
-      contains(
-        [
-          x.name,
-          x.subtitle ?? "",
-          x.summary,
-          x.description,
-          x.role,
-          x.technologies.join(" "),
-          x.themes.join(" "),
-          entityAliases(x.slug).join(" "),
-        ],
-        p.query,
-      ),
-    );
-    return { projects: rows, count: rows.length, query: p.query };
+    const retrieval = await searchKnowledge(String(p.query), { kinds: ["project"], limit: 25 });
+    const rows = retrieval.hits.map(hit => projects.find(item => item.id === hit.ref.id)).filter((item): item is (typeof projects)[number] => Boolean(item));
+    return { projects: rows, count: rows.length, query: p.query, retrieval };
   },
   "project.view": async (p, c) => {
     const project = findProject(p.slug);
@@ -485,41 +472,21 @@ const handlers: Record<string, Handler> = {
     c.navigate(path);
     return { experience: item, path, message: `Opened ${item.title}` };
   },
-  "experience.filter": async (p) => ({
-    experience: experience.filter((x) =>
-      contains(
-        [x.organisation, x.title, x.summary, x.achievements.join(" ")],
-        p.query,
-      ),
-    ),
-    query: p.query,
-  }),
+  "experience.filter": async (p) => {
+    const retrieval = await searchKnowledge(String(p.query), { kinds: ["experience"], limit: 25 });
+    return { experience: retrieval.hits.map(hit => experience.find(item => item.id === hit.ref.id)).filter((item): item is (typeof experience)[number] => Boolean(item)), query: p.query, retrieval };
+  },
   "article.list": async () => ({ articles }),
-  "article.search": async (p) => ({
-    articles: articles.filter((x) =>
-      contains(
-        [
-          x.title,
-          x.alternativeTitle ?? "",
-          x.summary,
-          x.excerpt,
-          x.tags.join(" "),
-          x.sections.map((section) => section.heading).join(" "),
-          x.sections
-            .flatMap((section) => [
-              ...section.paragraphs,
-              section.pullQuote ?? "",
-              ...(section.items?.flatMap((item) => [item.title, item.body]) ?? []),
-            ])
-            .join(" "),
-          entityAliases(x.slug).join(" "),
-          x.slug.includes("ceoclaw") ? entityAliases("ceoclaw").join(" ") : "",
-        ],
-        p.query,
-      ),
-    ),
-    query: p.query,
-  }),
+  "article.search": async (p) => {
+    const retrieval = await searchKnowledge(String(p.query), { kinds: ["article"], limit: 25 });
+    const rows = articles.filter((x) => contains([
+      x.title, x.alternativeTitle ?? "", x.summary, x.excerpt, x.tags.join(" "),
+      x.sections.map((section) => section.heading).join(" "),
+      x.sections.flatMap((section) => [...section.paragraphs, section.pullQuote ?? "", ...(section.items?.flatMap((item) => [item.title, item.body]) ?? [])]).join(" "),
+      entityAliases(x.slug).join(" "), x.slug.includes("ceoclaw") ? entityAliases("ceoclaw").join(" ") : "",
+    ], p.query));
+    return { articles: rows, query: p.query, retrieval };
+  },
   "article.view": async (p, c) => {
     const article = findArticle(p.slug);
     const path = `/blog?article=${article.slug}`;
@@ -845,6 +812,17 @@ const define = (spec: Spec): CapabilityDefinition => ({
   ],
   execute: handlers[spec.id],
 });
+const databaseRealisation = {
+  id: "sqlite-browser-state",
+  inspect: (context: CapabilityContext) => {
+    const runtime = context.database.inspectRuntime();
+    const observedAt = new Date().toISOString();
+    if (runtime.state === "opfs") return { realisationId: "sqlite-opfs", status: "available" as const, reasonCode: "OPFS_DURABLE", observedAt, summary: "SQLite is backed by durable OPFS storage." };
+    if (runtime.state === "memory") return { realisationId: "sqlite-memory", status: "degraded" as const, reasonCode: "OPFS_UNAVAILABLE_MEMORY_FALLBACK", observedAt, summary: "SQLite is available in memory but durable OPFS persistence is unavailable." };
+    if (runtime.state === "unavailable") return { realisationId: "sqlite-browser-state", status: "unavailable" as const, reasonCode: runtime.reasonCode ?? "DATABASE_UNAVAILABLE", observedAt, summary: "The browser database realisation is unavailable." };
+    return { realisationId: "sqlite-browser-state", status: "indeterminate" as const, reasonCode: "DATABASE_INITIALISING", observedAt, summary: "The browser database realisation has not finished initialization." };
+  },
+};
 const base = (
   id: string,
   title: string,
@@ -1136,14 +1114,16 @@ export const capabilities: CapabilityDefinition[] = [
       { reportType: "qa", severity: "warning", details: "Describe the issue." },
     ),
     risk: "write",
+    realisation: databaseRealisation,
   }),
-  simple(
-    "system.exportCapabilityReports",
-    "Export capability reports",
-    "Download locally stored capability reports as JSON.",
-    ["SYSTEM", "EXPORT", "CAPABILITY", "REPORTS"],
-    "Export local capability reports",
-  ),
+  define({ ...base(
+      "system.exportCapabilityReports",
+      "Export capability reports",
+      "Download locally stored capability reports as JSON.",
+      "run system.exportCapabilityReports",
+      ["SYSTEM", "EXPORT", "CAPABILITY", "REPORTS", "ENTER"],
+      "Export local capability reports",
+    ), realisation: databaseRealisation }),
   ...[
     ["Home", "/", "HOME"],
     ["Projects", "/projects", "PROJECTS"],
