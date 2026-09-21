@@ -5,8 +5,9 @@ import { readFileSync } from "node:fs";
 
 const gitSubject = () => {
   try {
-    if (execFileSync("git", ["status", "--porcelain"], { encoding: "utf8" }).trim())
-      return { revision: "", reason: "WORKTREE_DIRTY" };
+    execFileSync("git", ["diff-index", "--quiet", "HEAD", "--"], {
+      stdio: "ignore",
+    });
     return {
       revision: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
       reason: "",

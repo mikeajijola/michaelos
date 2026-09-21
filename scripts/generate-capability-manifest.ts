@@ -12,6 +12,16 @@ const git = (args: string[]) => {
     return null;
   }
 };
+const trackedWorktreeDirty = () => {
+  try {
+    execFileSync("git", ["diff-index", "--quiet", "HEAD", "--"], {
+      stdio: "ignore",
+    });
+    return false;
+  } catch {
+    return true;
+  }
+};
 const suppliedRevision = () => process.env.MIKEOS_REVISION || process.env.GITHUB_SHA || process.env.VERCEL_GIT_COMMIT_SHA;
 
 async function main() {
@@ -21,8 +31,7 @@ async function main() {
   const artifactPath = outputArg?.slice("--output=".length) ||
     "capabilities/conformance.json";
   const head = git(["rev-parse", "HEAD"]);
-  const worktreeStatus = git(["status", "--porcelain"]);
-  const worktreeDirty = worktreeStatus !== null && worktreeStatus !== "";
+  const worktreeDirty = trackedWorktreeDirty();
   const provided = suppliedRevision();
   if (requireExactRevision && !provided) throw new Error("MIKEOS_REVISION, GITHUB_SHA, or VERCEL_GIT_COMMIT_SHA is required");
   if (requireExactRevision && !head) throw new Error("Checked-out Git HEAD is required for exact revision verification");
